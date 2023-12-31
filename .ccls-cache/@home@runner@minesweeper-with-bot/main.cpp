@@ -11,10 +11,9 @@ bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
                  vector<vector<bool>> &boolGameBoard,
                  vector<vector<int>> &gameBoard);
 int returnCornerLocation(vector<vector<bool>> &boolGameBoard,
- vector<vector<int>> &gameBoard, int i, int j, int maxNumberOfRows, int maxNumberOfColumns
+ vector<vector<int>> &gameBoard, int i, int j, int maxNumberOfRows, int maxNumberOfColumns);
 
 int main() {
-
   // define variable
   int maxNumberOfRows = 0, maxNumberOfColumns = 0, maxNumOfMines = 0,
       displaySubtract = 0;
@@ -123,16 +122,17 @@ int main() {
               bool isCorner =
                   checkCorner(i, j, maxNumberOfRows, maxNumberOfColumns,
                               boolGameBoard, gameBoard);
-              //cout << endl << "corner found" << endl;
+              // cout << endl << "corner found" << endl;
               if (isCorner == true && gameBoard[i][j] == 1) {
                 cout << "Corner: " << j << ", " << maxNumberOfRows - 1 - i << endl;
+                int cornerLocation = returnCornerLocation(boolGameBoard, gameBoard, i, j, maxNumberOfRows, maxNumberOfColumns); 
+                cout << "location = " << cornerLocation << endl;
               }
             }
           }
         }
       }
 
-      
       cout << "Enter Next Point (-1 to exit): " << endl;
 
       userCol = getInputX(maxNumberOfColumns);
@@ -192,7 +192,6 @@ int main() {
 bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
                  vector<vector<bool>> &boolGameBoard,
                  vector<vector<int>> &gameBoard) {
-
   bool checkVert = false;
   bool checkHor = false;
 
@@ -219,19 +218,49 @@ bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
     }
   }
 
-// if its revealed, checkHor = true
+  // if its revealed, checkHor = true
 
-// if(check vert and hor == true){
-if (checkVert == true && checkHor == true) {
-  return true;
+  // if(check vert and hor == true){
+  if (checkVert == true && checkHor == true) {
+    return true;
+  }
+  // return true;
+  // }
+
+  return false;
 }
-// return true;
-// }
 
-return false;
-}
+int returnCornerLocation(vector<vector<bool>> &boolGameBoard, vector<vector<int>> &gameBoard,
+                          int i, int j, int maxNumberOfRows, int maxNumberOfColumns){
 
-int returnCornerLocation(vector<vector<bool>> &boolGameBoard,
- vector<vector<int>> &gameBoard, int i, int j, int maxNumberOfRows, int maxNumberOfColumns){
-  returnu 0; 
+  int cornerLocation = 0;
+  //  1 |  | 2
+  //    |ij|
+  //  3 |  | 4
+
+  if(boolGameBoard[i+1][j] && boolGameBoard[i][j+1]){
+    if(!boolGameBoard[i+1][j+1]){
+    return 4;
+    }
+  }
+  if(boolGameBoard[i+1][j] && boolGameBoard[i][j-1])
+  {
+    if(!boolGameBoard[i+1][j-1]){
+    return 3;
+    }
+  }
+
+  if(boolGameBoard[i-1][j] && boolGameBoard[i][j+1])
+  {
+    if(!boolGameBoard[i-1][j+1]){
+    return 2;
+    }
+  }
+  if(boolGameBoard[i-1][j] && boolGameBoard[i][j-1]){
+    if(!boolGameBoard[i-1][j-1]){
+    return 1;
+    }
+  }
+  
+  return 0; 
 }
