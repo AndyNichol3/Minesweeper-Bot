@@ -1,0 +1,7 @@
+design of the bot
+
+randomly generate the first index and use that to do the initial game
+
+path through all of the initial circle and revealed squares
+identify all of the "corner 1's" to use
+
