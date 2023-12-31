@@ -119,17 +119,24 @@ int main() {
                               boolGameBoard, gameBoard);
               // cout << endl << "corner found" << endl;
               if (isCorner == true && gameBoard[i][j] == 1) {
-                cout << "Corner: " << j << ", " << maxNumberOfRows - 1 - i
-                     << endl;
+               
                 int cornerLocation =
                     returnCornerLocation(boolGameBoard, gameBoard, i, j,
                                          maxNumberOfRows, maxNumberOfColumns);
-                cout << "location = " << cornerLocation << endl;
+                //cout << "location = " << cornerLocation << endl;
+                if (cornerLocation != 0) {
+                  cout << "Corner: " << j << ", " << maxNumberOfRows - 1 - i
+                   << endl;
+                  boolFlagLocation[i][j] = true; 
+                }
               }
             }
           }
         }
       }
+
+
+      // store a map of saved moves
 
       cout << "Enter Next Point (-1 to exit): " << endl;
 
