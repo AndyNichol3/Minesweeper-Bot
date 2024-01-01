@@ -39,3 +39,82 @@ if board[i-1][j-1] ==
 // run through inputs until out
 
 // CODE WAS HERE
+
+
+
+/*
+bool nextMoves = false;
+while (!nextMoves) {
+  int changes = 0;
+  for (const auto &mineLocation : knownMines) {
+    int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+    int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
+    // fix the indexing because this jumps all over the palce
+    // make it go in a circle and not all around
+    for (int index = -1; index < 7; index++) {
+      // bool
+      int x = mineLocation.first + defIndexX[index];
+      int y = mineLocation.second + defIndexY[index];
+
+      if (x < 0 || x > maxNumberOfRows - 1 || y < 0 ||
+          y > maxNumberOfColumns - 1) {
+        continue;
+      }
+      bool check = boolGameBoard[x][y];
+
+      int x2 = mineLocation.first + defIndexX[index + 1];
+      int y2 = mineLocation.second + defIndexY[index + 1];
+      if (x2 < 0 || x2 > maxNumberOfRows - 1 || y2 < 0 ||
+          y2 > maxNumberOfColumns - 1) {
+        continue;
+      }
+
+      bool check2 = boolGameBoard[x2][y2];
+      if (check && !check2) {
+        cout << endl << "ENTERED" << endl;
+        changes++;
+        if (!check) {
+          // check location is next coord
+
+          userRow = x, userCol = y;
+          round++;
+          win = completeBotRound(maxNumberOfColumns, maxNumberOfRows,
+                                 boolGameBoard, gameBoard, maxNumOfMines,
+                                 userRow, userCol, round);
+          if (win == true) {
+            break;
+          }
+        } else {
+          // check location is next coord
+
+          userRow = x2, userCol = y2;
+          round++;
+          win = completeBotRound(maxNumberOfColumns, maxNumberOfRows,
+                                 boolGameBoard, gameBoard, maxNumOfMines,
+                                 userRow, userCol, round);
+          if (win == true) {
+            break;
+          }
+        }
+      }
+    }
+  }
+  if (changes == 0) {
+    nextMoves = true;
+  }
+}
+*/
+
+
+
+
+// given a tile
+// if the tile is not revealed continue
+// if the tile == 0 continue
+// give the tile
+  // check all 8 tiles around it,
+  // tally the number of know mines in those 8
+    // if tally == value of the tile
+      // anything adjacent shoudl be valid to click
+        // cycle through 8 adjacent tiles
+          // if the tile is not revealed and is in bounds, reveal

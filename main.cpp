@@ -85,13 +85,7 @@ int main() {
               << maxNumberOfRows - 1 - mineLocation.first << ")\n";
   }
 
-  // while(botCanStillPlay) {
-  // given the location of a mine
-  // if there exists an unrevealed tile within the 8 immediade sorrunding tiles
-  // that is adjacent to a revaled tile with the value of 1 play the unrevealed
-  // round and restart
-
-  //  }
+  cout << endl << "TEST SET 1" << endl;
 
   for (const auto &mineLocation : knownMines) {
     bool botCanStillPlay = true;
@@ -144,12 +138,13 @@ int main() {
           bool xCriteria = (abs(X - X2) == 0 && abs(Y - Y2) <= 1);
           bool yCriteria = (abs(Y - Y2) == 0 && abs(X - X2) <= 1);
           if (yCriteria || xCriteria) {
-            if(boolGameBoard[X][Y] || boolFlagLocation[X][Y]){
-              continue; 
+            if (!boolGameBoard[X][Y] && !boolFlagLocation[X][Y]) {
+              itterations++;
+
+              completeBotRound(maxNumberOfColumns, maxNumberOfRows,
+                               boolGameBoard, gameBoard, maxNumOfMines, X, Y,
+                               round);
             }
-            itterations++;
-            completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                             gameBoard, maxNumOfMines, X, Y, round);
           }
         }
       }
@@ -160,68 +155,66 @@ int main() {
     }
   }
 
-  /*
-  bool nextMoves = false;
-  while (!nextMoves) {
-    int changes = 0;
-    for (const auto &mineLocation : knownMines) {
+  // given a tile
+  // if the tile is not revealed continue
+  // if the tile == 0 continue
+  // give the tile
+  // check all 8 tiles around it,
+  // tally the number of know mines in those 8
+  // if tally == value of the tile
+  // anything adjacent shoudl be valid to click
+  // cycle through 8 adjacent tiles
+  // if the tile is not revealed and is in bounds, reveal
+
+  cout << endl << "TEST SET 2" << endl;
+  for (int i = 0; i < maxNumberOfRows; ++i) {
+    for (int j = 0; j < maxNumberOfColumns; ++j) {
+      if (boolGameBoard[i][j] == false) {
+        continue;
+      }
+      if (gameBoard[i][j] == 0) {
+        continue;
+      }
+
+      int knownMineTally = 0;
       int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
       int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
-      // fix the indexing because this jumps all over the palce
-      // make it go in a circle and not all around
-      for (int index = -1; index < 7; index++) {
-        // bool
-        int x = mineLocation.first + defIndexX[index];
-        int y = mineLocation.second + defIndexY[index];
 
-        if (x < 0 || x > maxNumberOfRows - 1 || y < 0 ||
-            y > maxNumberOfColumns - 1) {
-          continue;
+      for (int index = 0; index < 8; index++) {
+        int X = i + defIndexX[index];
+        int Y = j + defIndexY[index];
+
+        pair<int, int> currentLoc = {X, Y};
+        if (knownMines.find(currentLoc) != knownMines.end()) {
+          knownMineTally++;
         }
-        bool check = boolGameBoard[x][y];
+      }
 
-        int x2 = mineLocation.first + defIndexX[index + 1];
-        int y2 = mineLocation.second + defIndexY[index + 1];
-        if (x2 < 0 || x2 > maxNumberOfRows - 1 || y2 < 0 ||
-            y2 > maxNumberOfColumns - 1) {
-          continue;
-        }
+      if (knownMineTally == gameBoard[i][j]) {
+        for (int index2 = 0; index2 < 8; index2++) {
+          int X2 = i + defIndexX[index2];
+          int Y2 = j + defIndexY[index2];
 
-        bool check2 = boolGameBoard[x2][y2];
-        if (check && !check2) {
-          cout << endl << "ENTERED" << endl;
-          changes++;
-          if (!check) {
-            // check location is next coord
-
-            userRow = x, userCol = y;
-            round++;
-            win = completeBotRound(maxNumberOfColumns, maxNumberOfRows,
-                                   boolGameBoard, gameBoard, maxNumOfMines,
-                                   userRow, userCol, round);
-            if (win == true) {
-              break;
-            }
-          } else {
-            // check location is next coord
-
-            userRow = x2, userCol = y2;
-            round++;
-            win = completeBotRound(maxNumberOfColumns, maxNumberOfRows,
-                                   boolGameBoard, gameBoard, maxNumOfMines,
-                                   userRow, userCol, round);
-            if (win == true) {
-              break;
-            }
+          if (X2 < 0 || X2 >= maxNumberOfRows || Y2 < 0 ||
+              Y2 >= maxNumberOfColumns) {
+            continue;
           }
+          if (boolGameBoard[X2][Y2] || boolFlagLocation[X2][Y2]) {
+            continue;
+          }
+          pair<int, int> newLoc = {X2, Y2};
+          if (knownMines.find(newLoc) != knownMines.end()) {
+            continue;
+          }
+          completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                           gameBoard, maxNumOfMines, X2, Y2, round);
         }
       }
     }
-    if (changes == 0) {
-      nextMoves = true;
-    }
   }
-  */
+
+  
+  
 
   win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard, gameBoard,
                  maxNumOfMines, round);
