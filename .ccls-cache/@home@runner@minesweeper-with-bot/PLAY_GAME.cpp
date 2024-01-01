@@ -1,4 +1,5 @@
 #include "PLAY_GAME.h"
+#include "BOT_FUNCTIONS.h"
 #include <cmath>
 #include <cstdlib>
 #include <iomanip>
@@ -40,7 +41,7 @@ void recursiveRevealExplosion(vector<vector<int>> &gameBoard,
     }
   }
 }
-
+/*
 bool playGame(int maxNumberOfColumns, int maxNumberOfRows,
               vector<vector<bool>> &boolGameBoard,
               vector<vector<int>> &gameBoard, int maxNumOfMines) {
@@ -95,6 +96,34 @@ bool playGame(int maxNumberOfColumns, int maxNumberOfRows,
     }
   }
 
+  return win;
+}
+
+*/
+
+bool playGame(int maxNumberOfColumns, int maxNumberOfRows,
+              vector<vector<bool>> &boolGameBoard,
+              vector<vector<int>> &gameBoard, int maxNumOfMines, int round) {
+  bool gameOver = false, win = false;
+  int maxDisplay = maxNumberOfRows * maxNumberOfColumns;
+  while (gameOver == false) {
+
+    round++;
+    printRoundHeader(round);
+
+    int userRow = -2, userCol = -2;
+
+    gameOver = playRoundUser(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                             gameBoard, maxNumOfMines, userRow, userCol);
+
+    int revealTally = printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
+                                     maxNumberOfColumns);
+
+    if (revealTally == (maxDisplay - maxNumOfMines)) {
+      gameOver = true;
+      win = true;
+    }
+  }
   return win;
 }
 

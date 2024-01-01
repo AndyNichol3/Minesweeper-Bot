@@ -6,7 +6,6 @@
 #include <iostream>
 #include <queue>
 #include <set>
-
 #include <vector>
 
 using namespace std;
@@ -147,20 +146,23 @@ int main() {
     for (const auto &mineLocation : knownMines) {
       int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
       int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
-        // fix the indexing because this jumps all over the palce
+      // fix the indexing because this jumps all over the palce
       // make it go in a circle and not all around
       for (int index = -1; index < 7; index++) {
+        // bool
         int x = mineLocation.first + defIndexX[index];
         int y = mineLocation.second + defIndexY[index];
 
-        if(x < 0 || x > maxNumberOfRows-1 || y < 0 || y > maxNumberOfColumns-1) {
+        if (x < 0 || x > maxNumberOfRows - 1 || y < 0 ||
+            y > maxNumberOfColumns - 1) {
           continue;
         }
         bool check = boolGameBoard[x][y];
 
         int x2 = mineLocation.first + defIndexX[index + 1];
         int y2 = mineLocation.second + defIndexY[index + 1];
-        if(x2 < 0 || x2 > maxNumberOfRows-1 || y2 < 0 || y2 > maxNumberOfColumns-1) {
+        if (x2 < 0 || x2 > maxNumberOfRows - 1 || y2 < 0 ||
+            y2 > maxNumberOfColumns - 1) {
           continue;
         }
 
@@ -216,24 +218,9 @@ int main() {
   // calculate squares to input
   // run through inputs until out
 
-  while (gameOver == false) {
-
-    round++;
-    printRoundHeader(round);
-
-    userRow = -2, userCol = -2;
-
-    gameOver = playRoundUser(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                             gameBoard, maxNumOfMines, userRow, userCol);
-
-    revealTally = printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
-                                 maxNumberOfColumns);
-
-    if (revealTally == (maxDisplay - maxNumOfMines)) {
-      gameOver = true;
-      win = true;
-    }
-  }
+  // CODE WAS HERE
+  win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard, gameBoard,
+                 maxNumOfMines, round);
   // all bot code should exist here; the entire point should be to calculate
   // the inputs for row and columns
 
