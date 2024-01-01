@@ -207,3 +207,67 @@ void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
                            maxNumberOfRows, maxNumberOfColumns);
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns);
 }
+
+bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
+                      vector<vector<bool>> &boolGameBoard,
+                      vector<vector<int>> &gameBoard, int maxNumOfMines,
+                      int userRow, int userCol, int round) {
+  int maxDisplay = maxNumberOfRows * maxNumberOfColumns;
+  bool win = false;
+  // round++;
+  printRoundHeader(round);
+
+  bool gameOver =
+      playRoundBot(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                   gameBoard, maxNumOfMines, userRow, userCol);
+
+  int revealTally = printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
+                                   maxNumberOfColumns);
+
+  if (revealTally == (maxDisplay - maxNumOfMines)) {
+    gameOver = true;
+    win = true;
+  }
+
+  return win;
+}
+
+set<pair<int, int>>
+calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
+                           vector<vector<bool>> &boolGameBoard,
+                           vector<vector<int>> &gameBoard,
+                           vector<vector<int>> &boolFlagLocation) {
+  set<pair<int, int>> knownMines;
+  for (int i = 0; i < maxNumberOfRows; i++) {
+    for (int j = 0; j < maxNumberOfColumns; j++) {
+      if (gameBoard[i][j] != 0) {
+        if (boolGameBoard[i][j] == true) {
+          bool isCorner = checkCorner(i, j, maxNumberOfRows, maxNumberOfColumns,
+                                      boolGameBoard, gameBoard);
+          // cout << endl << "corner found" << endl;
+          if (isCorner == true && gameBoard[i][j] == 1) {
+
+            int cornerLocation =
+                returnCornerLocation(boolGameBoard, gameBoard, i, j,
+                                     maxNumberOfRows, maxNumberOfColumns);
+            // cout << "location = " << cornerLocation << endl;
+            if (cornerLocation != 0) {
+              // cout << "Corner: " << j << ", " << maxNumberOfRows - 1 - i <<
+              // endl;
+
+              boolFlagLocation[i][j] = true;
+              pair<int, int> mineLocation = {i, j};
+              pair<int, int> temp = adjustIndex(cornerLocation, mineLocation);
+              if (knownMines.count(temp) == 0) {
+                knownMines.insert(temp);
+              }
+              // knownMines.push({i, j});
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return knownMines;
+}

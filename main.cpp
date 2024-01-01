@@ -58,8 +58,7 @@ int main() {
   vector<vector<bool>> boolFlagLocation(
       maxNumberOfRows, vector<bool>(maxNumberOfColumns, false));
 
-
-  //initalizeGameBoard
+  // initalizeGameBoard
   initalizeBotGameBoard(boolGameBoard, gameBoard, maxNumberOfRows,
                         maxNumberOfColumns, maxNumOfMines);
 
@@ -75,40 +74,13 @@ int main() {
   cout << "Bots flagged Point: " << endl;
 
   set<pair<int, int>> knownMines;
+  knownMines = calculateInitialKnownMines(maxNumberOfColumns, maxNumberOfRows, boolGameBoard, gameBoard, boolFlagLocation);
+
   //  knownMines.push({2, 3});
   //  knownMines.pop();
 
   // calculate all of the mines
-  for (int i = 0; i < maxNumberOfRows; i++) {
-    for (int j = 0; j < maxNumberOfColumns; j++) {
-      if (gameBoard[i][j] != 0) {
-        if (boolGameBoard[i][j] == true) {
-          bool isCorner = checkCorner(i, j, maxNumberOfRows, maxNumberOfColumns,
-                                      boolGameBoard, gameBoard);
-          // cout << endl << "corner found" << endl;
-          if (isCorner == true && gameBoard[i][j] == 1) {
 
-            int cornerLocation =
-                returnCornerLocation(boolGameBoard, gameBoard, i, j,
-                                     maxNumberOfRows, maxNumberOfColumns);
-            // cout << "location = " << cornerLocation << endl;
-            if (cornerLocation != 0) {
-              // cout << "Corner: " << j << ", " << maxNumberOfRows - 1 - i <<
-              // endl;
-
-              boolFlagLocation[i][j] = true;
-              pair<int, int> mineLocation = {i, j};
-              pair<int, int> temp = adjustIndex(cornerLocation, mineLocation);
-              if (knownMines.count(temp) == 0) {
-                knownMines.insert(temp);
-              }
-              // knownMines.push({i, j});
-            }
-          }
-        }
-      }
-    }
-  }
   // adjust i and j
   int userRow = -2, userCol = -2;
 
@@ -147,40 +119,26 @@ int main() {
           cout << endl << "ENTERED" << endl;
           changes++;
           if (!check) {
-            // check2 loaction is next coord
-            round++;
-            printRoundHeader(round);
+            // check location is next coord
 
             userRow = x, userCol = y;
-
-            gameOver =
-                playRoundBot(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                             gameBoard, maxNumOfMines, userRow, userCol);
-
-            revealTally = printBoolBoard(boolGameBoard, gameBoard,
-                                         maxNumberOfRows, maxNumberOfColumns);
-
-            if (revealTally == (maxDisplay - maxNumOfMines)) {
-              gameOver = true;
-              win = true;
+            round++;
+            win = completeBotRound(maxNumberOfColumns, maxNumberOfRows,
+                                   boolGameBoard, gameBoard, maxNumOfMines,
+                                   userRow, userCol, round);
+            if (win == true) {
+              break;
             }
           } else {
             // check location is next coord
-            round++;
-            printRoundHeader(round);
 
             userRow = x2, userCol = y2;
-
-            gameOver =
-                playRoundBot(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                             gameBoard, maxNumOfMines, userRow, userCol);
-
-            revealTally = printBoolBoard(boolGameBoard, gameBoard,
-                                         maxNumberOfRows, maxNumberOfColumns);
-
-            if (revealTally == (maxDisplay - maxNumOfMines)) {
-              gameOver = true;
-              win = true;
+            round++;
+            win = completeBotRound(maxNumberOfColumns, maxNumberOfRows,
+                                   boolGameBoard, gameBoard, maxNumOfMines,
+                                   userRow, userCol, round);
+            if (win == true) {
+              break;
             }
           }
         }
@@ -194,8 +152,6 @@ int main() {
   win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard, gameBoard,
                  maxNumOfMines, round);
 
-  // remove when implement back in
-  // bool win = false;
   if (win == true) {
     printWin();
 

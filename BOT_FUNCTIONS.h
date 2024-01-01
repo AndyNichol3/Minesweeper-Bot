@@ -1,6 +1,7 @@
 #ifndef BOT_FUNCTIONS_H
 #define BOT_FUNCTIONS_H
 
+#include <set>
 #include <vector>
 using namespace std;
 
@@ -24,5 +25,14 @@ pair<int, int> adjustIndex(int cornerLocation, pair<int, int> mineLocation);
 void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
                            vector<vector<int>> &gameBoard, int maxNumberOfRows,
                            int maxNumberOfColumns, int maxNumOfMines);
+bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
+                      vector<vector<bool>> &boolGameBoard,
+                      vector<vector<int>> &gameBoard, int maxNumOfMines,
+                      int userRow, int userCol, int round);
+set<pair<int, int>>
+calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
+                           vector<vector<bool>> &boolGameBoard,
+                           vector<vector<int>> &gameBoard,
+                           vector<vector<int>> &boolFlagLocation);
 
 #endif
