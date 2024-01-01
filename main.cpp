@@ -58,36 +58,12 @@ int main() {
   vector<vector<bool>> boolFlagLocation(
       maxNumberOfRows, vector<bool>(maxNumberOfColumns, false));
 
-  // handles all of the creation, and the round 1 of them game
-  // since the game cannot be lost on round one and the variables
-  // are not reused anywhere else
 
-  // initalizeGameBoard(boolGameBoard, gameBoard, maxNumberOfRows,
-  //             maxNumberOfColumns, maxNumOfMines);
-  //{
-  printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns);
-  printRoundHeader(1);
+  //initalizeGameBoard
+  initalizeBotGameBoard(boolGameBoard, gameBoard, maxNumberOfRows,
+                        maxNumberOfColumns, maxNumOfMines);
 
-  // cout << "Enter Starting Point (-1 to exit): " << endl;
-  cout << "the bot will now start" << endl;
-  srand(time(NULL));
-  int userStartCol = rand() % (maxNumberOfColumns - 1);
-  cout << "bot chose X: " << userStartCol << endl;
-  int userStartRow = rand() % (maxNumberOfRows - 1);
-  cout << "bot chose Y: " << maxNumberOfRows - 1 - userStartRow << endl;
-
-  cout << endl;
-
-  boolGameBoard[userStartRow][userStartCol] = true;
-
-  fillWithMines(gameBoard, userStartRow, userStartCol, maxNumOfMines,
-                maxNumberOfRows, maxNumberOfColumns);
-  fillWithInts(gameBoard, maxNumberOfRows, maxNumberOfColumns);
-  recursiveRevealExplosion(gameBoard, boolGameBoard, userStartRow, userStartCol,
-                           maxNumberOfRows, maxNumberOfColumns);
-  printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns);
-  // }
-
+  // OG
   // bool win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
   //         gameBoard, maxNumOfMines);
 
@@ -214,28 +190,9 @@ int main() {
       nextMoves = true;
     }
   }
-  // until games over
-  // calculate squares to input
-  // run through inputs until out
 
-  // CODE WAS HERE
   win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard, gameBoard,
                  maxNumOfMines, round);
-  // all bot code should exist here; the entire point should be to calculate
-  // the inputs for row and columns
-
-  // store a map of saved moves
-  // while loop to mark them as flags
-
-  // find the safe moves
-  // while loop to reveal them
-
-  // check if the game is over
-  // if no, then repeat
-
-  // end bot code
-
-  // }
 
   // remove when implement back in
   // bool win = false;

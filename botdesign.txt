@@ -15,3 +15,27 @@ given a known mine location,
   access the 8 sorrunding tiles. store the ones = 1 in a revealed tally
 
 if board[i-1][j-1] ==
+
+
+
+// all bot code should exist here; the entire point should be to calculate
+// the inputs for row and columns
+
+// store a map of saved moves
+// while loop to mark them as flags
+
+// find the safe moves
+// while loop to reveal them
+
+// check if the game is over
+// if no, then repeat
+
+// end bot code
+
+// }
+
+// until games over
+// calculate squares to input
+// run through inputs until out
+
+// CODE WAS HERE

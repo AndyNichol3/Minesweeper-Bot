@@ -5,8 +5,8 @@
 #include <iomanip>
 #include <iostream>
 #include <limits>
-#include <vector>
 #include <set>
+#include <vector>
 using namespace std;
 
 bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
@@ -85,105 +85,125 @@ int returnCornerLocation(vector<vector<bool>> &boolGameBoard,
 }
 
 bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
-vector<vector<bool>> &boolGameBoard,
-vector<vector<int>> &gameBoard, int maxNumOfMines, int userRow, int userCol){
-  bool gameOver = false; 
+                  vector<vector<bool>> &boolGameBoard,
+                  vector<vector<int>> &gameBoard, int maxNumOfMines,
+                  int userRow, int userCol) {
+  bool gameOver = false;
   bool revealedTile = false;
-    while (!revealedTile) {
+  while (!revealedTile) {
 
-      cout << "Bot Plays: " << endl;
+    cout << "Bot Plays: " << endl;
 
-      cout << "bot chose X: " << userCol << endl;
+    cout << "bot chose X: " << userCol << endl;
 
-      cout << "bot chose Y: " << maxNumberOfRows - 1 - userRow << endl;
+    cout << "bot chose Y: " << maxNumberOfRows - 1 - userRow << endl;
 
-     // userCol = getInputX(maxNumberOfColumns);
-     // userRow = getInputY(maxNumberOfRows);
+    // userCol = getInputX(maxNumberOfColumns);
+    // userRow = getInputY(maxNumberOfRows);
 
-
-      if (boolGameBoard[userRow][userCol] == true) {
-        cout << "You have already revealed this tile!\n" << endl;
-      } else {
-        revealedTile = true;
-        break;
-      }
-    }
-
-    if (gameBoard[userRow][userCol] == -1) {
-      gameOver = true;
-      cout << "you hit a mine!" << endl;
-      boolGameBoard[userRow][userCol] = true;
-
+    if (boolGameBoard[userRow][userCol] == true) {
+      cout << "You have already revealed this tile!\n" << endl;
     } else {
-      boolGameBoard[userRow][userCol] = true;
-      if (gameBoard[userRow][userCol] == 0) {
-        recursiveRevealExplosion(gameBoard, boolGameBoard, userRow, userCol,
-                                 maxNumberOfRows, maxNumberOfColumns);
-      }
+      revealedTile = true;
+      break;
     }
+  }
 
-    return gameOver; 
+  if (gameBoard[userRow][userCol] == -1) {
+    gameOver = true;
+    cout << "you hit a mine!" << endl;
+    boolGameBoard[userRow][userCol] = true;
+
+  } else {
+    boolGameBoard[userRow][userCol] = true;
+    if (gameBoard[userRow][userCol] == 0) {
+      recursiveRevealExplosion(gameBoard, boolGameBoard, userRow, userCol,
+                               maxNumberOfRows, maxNumberOfColumns);
+    }
+  }
+
+  return gameOver;
 }
 
 bool playRoundUser(int maxNumberOfColumns, int maxNumberOfRows,
-vector<vector<bool>> &boolGameBoard,
-vector<vector<int>> &gameBoard, int maxNumOfMines, int userRow, int userCol){
+                   vector<vector<bool>> &boolGameBoard,
+                   vector<vector<int>> &gameBoard, int maxNumOfMines,
+                   int userRow, int userCol) {
 
-    bool gameOver = false; 
-    bool revealedTile = false;
-      while (!revealedTile) {
+  bool gameOver = false;
+  bool revealedTile = false;
+  while (!revealedTile) {
 
-        cout << "Enter Next Point (-1 to exit): " << endl;
+    cout << "Enter Next Point (-1 to exit): " << endl;
 
-        userCol = getInputX(maxNumberOfColumns);
-        userRow = getInputY(maxNumberOfRows);
+    userCol = getInputX(maxNumberOfColumns);
+    userRow = getInputY(maxNumberOfRows);
 
+    if (boolGameBoard[userRow][userCol] == true) {
+      cout << "You have already revealed this tile!\n" << endl;
+    } else {
+      revealedTile = true;
+      break;
+    }
+  }
 
-        if (boolGameBoard[userRow][userCol] == true) {
-          cout << "You have already revealed this tile!\n" << endl;
-        } else {
-          revealedTile = true;
-          break;
-        }
-      }
+  if (gameBoard[userRow][userCol] == -1) {
+    gameOver = true;
+    cout << "you hit a mine!" << endl;
+    boolGameBoard[userRow][userCol] = true;
 
-      if (gameBoard[userRow][userCol] == -1) {
-        gameOver = true;
-        cout << "you hit a mine!" << endl;
-        boolGameBoard[userRow][userCol] = true;
+  } else {
+    boolGameBoard[userRow][userCol] = true;
+    if (gameBoard[userRow][userCol] == 0) {
+      recursiveRevealExplosion(gameBoard, boolGameBoard, userRow, userCol,
+                               maxNumberOfRows, maxNumberOfColumns);
+    }
+  }
 
-      } else {
-        boolGameBoard[userRow][userCol] = true;
-        if (gameBoard[userRow][userCol] == 0) {
-          recursiveRevealExplosion(gameBoard, boolGameBoard, userRow, userCol,
-                                   maxNumberOfRows, maxNumberOfColumns);
-        }
-      }
-
-      return gameOver; 
-  
+  return gameOver;
 }
 
-
-pair<int,int> adjustIndex(int cornerLocation, pair<int,int> mineLocation){
+pair<int, int> adjustIndex(int cornerLocation, pair<int, int> mineLocation) {
 
   if (cornerLocation == 1) {
-    mineLocation.first --; 
-    mineLocation.second --;
-  }
-  else if (cornerLocation == 2) {
-    mineLocation.first --;
-    mineLocation.second ++; 
-  }
-  else if (cornerLocation == 3) {
-    mineLocation.first ++;
-    mineLocation.second --;
-  }
-  else if (cornerLocation == 4) {
-    mineLocation.first ++;
-    mineLocation.second ++;
+    mineLocation.first--;
+    mineLocation.second--;
+  } else if (cornerLocation == 2) {
+    mineLocation.first--;
+    mineLocation.second++;
+  } else if (cornerLocation == 3) {
+    mineLocation.first++;
+    mineLocation.second--;
+  } else if (cornerLocation == 4) {
+    mineLocation.first++;
+    mineLocation.second++;
   }
 
   return mineLocation;
+}
 
+void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
+                           vector<vector<int>> &gameBoard, int maxNumberOfRows,
+                           int maxNumberOfColumns, int maxNumOfMines) {
+  printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns);
+  printRoundHeader(1);
+
+  // cout << "Enter Starting Point (-1 to exit): " << endl;
+  cout << "the bot will now start" << endl;
+  srand(time(NULL));
+  int userStartCol = rand() % (maxNumberOfColumns - 1);
+  cout << "bot chose X: " << userStartCol << endl;
+  int userStartRow = rand() % (maxNumberOfRows - 1);
+  cout << "bot chose Y: " << maxNumberOfRows - 1 - userStartRow << endl;
+
+  cout << endl;
+
+  boolGameBoard[userStartRow][userStartCol] = true;
+
+  fillWithMines(gameBoard, userStartRow, userStartCol, maxNumOfMines,
+                maxNumberOfRows, maxNumberOfColumns);
+  fillWithInts(gameBoard, maxNumberOfRows, maxNumberOfColumns);
+  recursiveRevealExplosion(gameBoard, boolGameBoard, userStartRow, userStartCol,
+                           maxNumberOfRows, maxNumberOfColumns);
+  printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns);
 }
