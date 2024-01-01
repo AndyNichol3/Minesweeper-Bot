@@ -144,6 +144,9 @@ int main() {
           bool xCriteria = (abs(X - X2) == 0 && abs(Y - Y2) <= 1);
           bool yCriteria = (abs(Y - Y2) == 0 && abs(X - X2) <= 1);
           if (yCriteria || xCriteria) {
+            if(boolGameBoard[X][Y] || boolFlagLocation[X][Y]){
+              continue; 
+            }
             itterations++;
             completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                              gameBoard, maxNumOfMines, X, Y, round);
