@@ -5,9 +5,13 @@
 #include "PLAY_GAME.h"
 #include <iostream>
 #include <queue>
+#include <set>
+
 #include <vector>
 
 using namespace std;
+
+pair<int,int> adjustIndex(int cornerLocation, pair<int,int> mineLocation);
 
 int main() {
   // define variable
@@ -97,7 +101,7 @@ int main() {
   int maxDisplay = maxNumberOfRows * maxNumberOfColumns;
   cout << "Bots flagged Point: " << endl;
 
-  queue<pair<int, int>> knownMines;
+  set<pair<int, int>> knownMines;
   //  knownMines.push({2, 3});
   //  knownMines.pop();
 
@@ -120,7 +124,12 @@ int main() {
               // endl;
 
               boolFlagLocation[i][j] = true;
-              knownMines.push({i, j});
+              pair<int,int> mineLocation = {i,j};
+              pair<int,int> temp = adjustIndex(cornerLocation, mineLocation); 
+              if(knownMines.count(temp) == 0){
+                knownMines.insert(temp); 
+              }
+             // knownMines.push({i, j});
             }
           }
         }
@@ -130,6 +139,7 @@ int main() {
   // adjust i and j
   int userRow = -2, userCol = -2;
 
+  /*
   while (!knownMines.empty()) {
 
     auto mineLocation = knownMines.front();
@@ -137,6 +147,12 @@ int main() {
               << maxNumberOfRows - 1 - mineLocation.first << ")\n";
     knownMines.pop();
   }
+  */
+  for (const auto& mineLocation : knownMines) {
+      std::cout << "Mine at coordinates (" << mineLocation.second << ", "
+                << maxNumberOfRows - 1 - mineLocation.first << ")\n";
+  }
+  
   // until games over
   // calculate squares to input
   // run through inputs until out
@@ -183,4 +199,28 @@ int main() {
   } else {
     printLose();
   }
+}
+
+
+pair<int,int> adjustIndex(int cornerLocation, pair<int,int> mineLocation){
+  
+  if (cornerLocation == 1) {
+    mineLocation.first --; 
+    mineLocation.second --;
+  }
+  else if (cornerLocation == 2) {
+    mineLocation.first --;
+    mineLocation.second ++; 
+  }
+  else if (cornerLocation == 3) {
+    mineLocation.first ++;
+    mineLocation.second --;
+  }
+  else if (cornerLocation == 4) {
+    mineLocation.first ++;
+    mineLocation.second ++;
+  }
+  
+  return mineLocation;
+  
 }
