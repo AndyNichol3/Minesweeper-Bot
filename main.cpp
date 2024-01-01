@@ -116,8 +116,9 @@ int main() {
                                      maxNumberOfRows, maxNumberOfColumns);
             // cout << "location = " << cornerLocation << endl;
             if (cornerLocation != 0) {
-              cout << "Corner: " << j << ", " << maxNumberOfRows - 1 - i
-                   << endl;
+              // cout << "Corner: " << j << ", " << maxNumberOfRows - 1 - i <<
+              // endl;
+
               boolFlagLocation[i][j] = true;
               knownMines.push({i, j});
             }
@@ -126,14 +127,20 @@ int main() {
       }
     }
   }
-   int userRow = -2, userCol = -2;
+  // adjust i and j
+  int userRow = -2, userCol = -2;
 
   while (!knownMines.empty()) {
 
+    auto mineLocation = knownMines.front();
+    std::cout << "Mine at coordinates (" << mineLocation.second << ", "
+              << maxNumberOfRows - 1 - mineLocation.first << ")\n";
     knownMines.pop();
   }
+  // until games over
+  // calculate squares to input
+  // run through inputs until out
 
-  
   while (gameOver == false) {
 
     round++;
@@ -142,7 +149,7 @@ int main() {
     userRow = -2, userCol = -2;
 
     gameOver = playRoundUser(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                            gameBoard, maxNumOfMines, userRow, userCol);
+                             gameBoard, maxNumOfMines, userRow, userCol);
 
     revealTally = printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
                                  maxNumberOfColumns);
@@ -152,29 +159,28 @@ int main() {
       win = true;
     }
   }
-    // all bot code should exist here; the entire point should be to calculate
-    // the inputs for row and columns
+  // all bot code should exist here; the entire point should be to calculate
+  // the inputs for row and columns
 
-    // store a map of saved moves
-    // while loop to mark them as flags
+  // store a map of saved moves
+  // while loop to mark them as flags
 
-    // find the safe moves
-    // while loop to reveal them
+  // find the safe moves
+  // while loop to reveal them
 
-    // check if the game is over
-    // if no, then repeat
+  // check if the game is over
+  // if no, then repeat
 
-    // end bot code
+  // end bot code
 
-    // }
+  // }
 
-    // remove when implement back in
-    // bool win = false;
-    if (win == true) {
-      printWin();
+  // remove when implement back in
+  // bool win = false;
+  if (win == true) {
+    printWin();
 
-    } else {
-      printLose();
-    }
+  } else {
+    printLose();
   }
-
+}
