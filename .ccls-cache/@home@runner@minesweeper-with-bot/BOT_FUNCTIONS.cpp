@@ -236,7 +236,7 @@ set<pair<int, int>>
 calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
                            vector<vector<bool>> &boolGameBoard,
                            vector<vector<int>> &gameBoard,
-                           vector<vector<int>> &boolFlagLocation) {
+                           vector<vector<bool>> &boolFlagLocation) {
   set<pair<int, int>> knownMines;
   for (int i = 0; i < maxNumberOfRows; i++) {
     for (int j = 0; j < maxNumberOfColumns; j++) {
