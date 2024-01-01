@@ -11,8 +11,6 @@
 
 using namespace std;
 
-pair<int,int> adjustIndex(int cornerLocation, pair<int,int> mineLocation);
-
 int main() {
   // define variable
   int maxNumberOfRows = 0, maxNumberOfColumns = 0, maxNumOfMines = 0,
@@ -77,7 +75,7 @@ int main() {
   int userStartCol = rand() % (maxNumberOfColumns - 1);
   cout << "bot chose X: " << userStartCol << endl;
   int userStartRow = rand() % (maxNumberOfRows - 1);
-  cout << "bot chose Y: " << userStartRow << endl;
+  cout << "bot chose Y: " << maxNumberOfRows - 1 - userStartRow << endl;
 
   cout << endl;
 
@@ -124,12 +122,12 @@ int main() {
               // endl;
 
               boolFlagLocation[i][j] = true;
-              pair<int,int> mineLocation = {i,j};
-              pair<int,int> temp = adjustIndex(cornerLocation, mineLocation); 
-              if(knownMines.count(temp) == 0){
-                knownMines.insert(temp); 
+              pair<int, int> mineLocation = {i, j};
+              pair<int, int> temp = adjustIndex(cornerLocation, mineLocation);
+              if (knownMines.count(temp) == 0) {
+                knownMines.insert(temp);
               }
-             // knownMines.push({i, j});
+              // knownMines.push({i, j});
             }
           }
         }
@@ -139,20 +137,81 @@ int main() {
   // adjust i and j
   int userRow = -2, userCol = -2;
 
-  /*
-  while (!knownMines.empty()) {
-
-    auto mineLocation = knownMines.front();
+  for (const auto &mineLocation : knownMines) {
     std::cout << "Mine at coordinates (" << mineLocation.second << ", "
               << maxNumberOfRows - 1 - mineLocation.first << ")\n";
-    knownMines.pop();
   }
-  */
-  for (const auto& mineLocation : knownMines) {
-      std::cout << "Mine at coordinates (" << mineLocation.second << ", "
-                << maxNumberOfRows - 1 - mineLocation.first << ")\n";
+  bool nextMoves = false;
+  while (!nextMoves) {
+    int changes = 0;
+    for (const auto &mineLocation : knownMines) {
+      int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+      int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
+        // fix the indexing because this jumps all over the palce
+      // make it go in a circle and not all around
+      for (int index = -1; index < 7; index++) {
+        int x = mineLocation.first + defIndexX[index];
+        int y = mineLocation.second + defIndexY[index];
+
+        if(x < 0 || x > maxNumberOfRows-1 || y < 0 || y > maxNumberOfColumns-1) {
+          continue;
+        }
+        bool check = boolGameBoard[x][y];
+
+        int x2 = mineLocation.first + defIndexX[index + 1];
+        int y2 = mineLocation.second + defIndexY[index + 1];
+        if(x2 < 0 || x2 > maxNumberOfRows-1 || y2 < 0 || y2 > maxNumberOfColumns-1) {
+          continue;
+        }
+
+        bool check2 = boolGameBoard[x2][y2];
+        if (check && !check2) {
+          cout << endl << "ENTERED" << endl;
+          changes++;
+          if (!check) {
+            // check2 loaction is next coord
+            round++;
+            printRoundHeader(round);
+
+            userRow = x, userCol = y;
+
+            gameOver =
+                playRoundBot(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                             gameBoard, maxNumOfMines, userRow, userCol);
+
+            revealTally = printBoolBoard(boolGameBoard, gameBoard,
+                                         maxNumberOfRows, maxNumberOfColumns);
+
+            if (revealTally == (maxDisplay - maxNumOfMines)) {
+              gameOver = true;
+              win = true;
+            }
+          } else {
+            // check location is next coord
+            round++;
+            printRoundHeader(round);
+
+            userRow = x2, userCol = y2;
+
+            gameOver =
+                playRoundBot(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                             gameBoard, maxNumOfMines, userRow, userCol);
+
+            revealTally = printBoolBoard(boolGameBoard, gameBoard,
+                                         maxNumberOfRows, maxNumberOfColumns);
+
+            if (revealTally == (maxDisplay - maxNumOfMines)) {
+              gameOver = true;
+              win = true;
+            }
+          }
+        }
+      }
+    }
+    if (changes == 0) {
+      nextMoves = true;
+    }
   }
-  
   // until games over
   // calculate squares to input
   // run through inputs until out
@@ -199,28 +258,4 @@ int main() {
   } else {
     printLose();
   }
-}
-
-
-pair<int,int> adjustIndex(int cornerLocation, pair<int,int> mineLocation){
-  
-  if (cornerLocation == 1) {
-    mineLocation.first --; 
-    mineLocation.second --;
-  }
-  else if (cornerLocation == 2) {
-    mineLocation.first --;
-    mineLocation.second ++; 
-  }
-  else if (cornerLocation == 3) {
-    mineLocation.first ++;
-    mineLocation.second --;
-  }
-  else if (cornerLocation == 4) {
-    mineLocation.first ++;
-    mineLocation.second ++;
-  }
-  
-  return mineLocation;
-  
 }

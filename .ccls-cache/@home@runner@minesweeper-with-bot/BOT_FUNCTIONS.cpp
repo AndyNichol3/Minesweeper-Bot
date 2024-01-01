@@ -6,6 +6,7 @@
 #include <iostream>
 #include <limits>
 #include <vector>
+#include <set>
 using namespace std;
 
 bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
@@ -92,6 +93,10 @@ vector<vector<int>> &gameBoard, int maxNumOfMines, int userRow, int userCol){
 
       cout << "Bot Plays: " << endl;
 
+      cout << "bot chose X: " << userCol << endl;
+
+      cout << "bot chose Y: " << maxNumberOfRows - 1 - userRow << endl;
+
      // userCol = getInputX(maxNumberOfColumns);
      // userRow = getInputY(maxNumberOfRows);
 
@@ -157,4 +162,28 @@ vector<vector<int>> &gameBoard, int maxNumOfMines, int userRow, int userCol){
 
       return gameOver; 
   
+}
+
+
+pair<int,int> adjustIndex(int cornerLocation, pair<int,int> mineLocation){
+
+  if (cornerLocation == 1) {
+    mineLocation.first --; 
+    mineLocation.second --;
+  }
+  else if (cornerLocation == 2) {
+    mineLocation.first --;
+    mineLocation.second ++; 
+  }
+  else if (cornerLocation == 3) {
+    mineLocation.first ++;
+    mineLocation.second --;
+  }
+  else if (cornerLocation == 4) {
+    mineLocation.first ++;
+    mineLocation.second ++;
+  }
+
+  return mineLocation;
+
 }

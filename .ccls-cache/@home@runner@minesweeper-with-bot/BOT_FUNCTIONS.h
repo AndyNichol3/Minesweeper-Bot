@@ -18,5 +18,6 @@ bool playRoundUser(int maxNumberOfColumns, int maxNumberOfRows,
 vector<vector<bool>> &boolGameBoard,
 vector<vector<int>> &gameBoard, int maxNumOfMines, int userRow, int userCol); 
 
+pair<int,int> adjustIndex(int cornerLocation, pair<int,int> mineLocation);
 
 #endif

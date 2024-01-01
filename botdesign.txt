@@ -8,4 +8,10 @@ identify all of the "corner 1's" to use
 given a known mine location, 
   if an adjacent unmarked location is touching a 1, than the unmarked location is not a mine
 
-  
+
+
+  given a mine location as an input
+
+  access the 8 sorrunding tiles. store the ones = 1 in a revealed tally
+
+if board[i-1][j-1] ==
