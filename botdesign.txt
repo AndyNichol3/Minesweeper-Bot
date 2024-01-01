@@ -5,3 +5,7 @@ randomly generate the first index and use that to do the initial game
 path through all of the initial circle and revealed squares
 identify all of the "corner 1's" to use
 
+given a known mine location, 
+  if an adjacent unmarked location is touching a 1, than the unmarked location is not a mine
+
+  

@@ -10,5 +10,13 @@ bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
 int returnCornerLocation(vector<vector<bool>> &boolGameBoard,
                          vector<vector<int>> &gameBoard, int i, int j,
                          int maxNumberOfRows, int maxNumberOfColumns);
+bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
+vector<vector<bool>> &boolGameBoard,
+vector<vector<int>> &gameBoard, int maxNumOfMines, int userRow, int userCol); 
+
+bool playRoundUser(int maxNumberOfColumns, int maxNumberOfRows,
+vector<vector<bool>> &boolGameBoard,
+vector<vector<int>> &gameBoard, int maxNumOfMines, int userRow, int userCol); 
+
 
 #endif

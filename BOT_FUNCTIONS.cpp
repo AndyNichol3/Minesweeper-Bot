@@ -82,3 +82,79 @@ int returnCornerLocation(vector<vector<bool>> &boolGameBoard,
 
   return 0;
 }
+
+bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
+vector<vector<bool>> &boolGameBoard,
+vector<vector<int>> &gameBoard, int maxNumOfMines, int userRow, int userCol){
+  bool gameOver = false; 
+  bool revealedTile = false;
+    while (!revealedTile) {
+
+      cout << "Bot Plays: " << endl;
+
+     // userCol = getInputX(maxNumberOfColumns);
+     // userRow = getInputY(maxNumberOfRows);
+
+
+      if (boolGameBoard[userRow][userCol] == true) {
+        cout << "You have already revealed this tile!\n" << endl;
+      } else {
+        revealedTile = true;
+        break;
+      }
+    }
+
+    if (gameBoard[userRow][userCol] == -1) {
+      gameOver = true;
+      cout << "you hit a mine!" << endl;
+      boolGameBoard[userRow][userCol] = true;
+
+    } else {
+      boolGameBoard[userRow][userCol] = true;
+      if (gameBoard[userRow][userCol] == 0) {
+        recursiveRevealExplosion(gameBoard, boolGameBoard, userRow, userCol,
+                                 maxNumberOfRows, maxNumberOfColumns);
+      }
+    }
+
+    return gameOver; 
+}
+
+bool playRoundUser(int maxNumberOfColumns, int maxNumberOfRows,
+vector<vector<bool>> &boolGameBoard,
+vector<vector<int>> &gameBoard, int maxNumOfMines, int userRow, int userCol){
+
+    bool gameOver = false; 
+    bool revealedTile = false;
+      while (!revealedTile) {
+
+        cout << "Enter Next Point (-1 to exit): " << endl;
+
+        userCol = getInputX(maxNumberOfColumns);
+        userRow = getInputY(maxNumberOfRows);
+
+
+        if (boolGameBoard[userRow][userCol] == true) {
+          cout << "You have already revealed this tile!\n" << endl;
+        } else {
+          revealedTile = true;
+          break;
+        }
+      }
+
+      if (gameBoard[userRow][userCol] == -1) {
+        gameOver = true;
+        cout << "you hit a mine!" << endl;
+        boolGameBoard[userRow][userCol] = true;
+
+      } else {
+        boolGameBoard[userRow][userCol] = true;
+        if (gameBoard[userRow][userCol] == 0) {
+          recursiveRevealExplosion(gameBoard, boolGameBoard, userRow, userCol,
+                                   maxNumberOfRows, maxNumberOfColumns);
+        }
+      }
+
+      return gameOver; 
+  
+}

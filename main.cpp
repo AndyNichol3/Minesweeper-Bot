@@ -4,6 +4,7 @@
 #include "BOT_FUNCTIONS.h"
 #include "PLAY_GAME.h"
 #include <iostream>
+#include <queue>
 #include <vector>
 
 using namespace std;
@@ -94,84 +95,54 @@ int main() {
   // int round = 1;
   int revealTally = 0;
   int maxDisplay = maxNumberOfRows * maxNumberOfColumns;
-  while (gameOver == false) {
+  cout << "Bots flagged Point: " << endl;
 
-    round++;
+  queue<pair<int, int>> knownMines;
+  //  knownMines.push({2, 3});
+  //  knownMines.pop();
 
-    printRoundHeader(round);
+  // calculate all of the mines
+  for (int i = 0; i < maxNumberOfRows; i++) {
+    for (int j = 0; j < maxNumberOfColumns; j++) {
+      if (gameBoard[i][j] != 0) {
+        if (boolGameBoard[i][j] == true) {
+          bool isCorner = checkCorner(i, j, maxNumberOfRows, maxNumberOfColumns,
+                                      boolGameBoard, gameBoard);
+          // cout << endl << "corner found" << endl;
+          if (isCorner == true && gameBoard[i][j] == 1) {
 
-    bool revealedTile = false;
-    int userRow = -2, userCol = -2;
-
-    while (!revealedTile) {
-
-      // all bot code should exist here; the entire point should be to calculate
-      // the inputs for row and columns
-      cout << "Bots flagged Point: " << endl;
-
-      // calculate all of the mines
-      for (int i = 0; i < maxNumberOfRows; i++) {
-        for (int j = 0; j < maxNumberOfColumns; j++) {
-          if (gameBoard[i][j] != 0) {
-            if (boolGameBoard[i][j] == true) {
-              bool isCorner =
-                  checkCorner(i, j, maxNumberOfRows, maxNumberOfColumns,
-                              boolGameBoard, gameBoard);
-              // cout << endl << "corner found" << endl;
-              if (isCorner == true && gameBoard[i][j] == 1) {
-               
-                int cornerLocation =
-                    returnCornerLocation(boolGameBoard, gameBoard, i, j,
-                                         maxNumberOfRows, maxNumberOfColumns);
-                //cout << "location = " << cornerLocation << endl;
-                if (cornerLocation != 0) {
-                  cout << "Corner: " << j << ", " << maxNumberOfRows - 1 - i
+            int cornerLocation =
+                returnCornerLocation(boolGameBoard, gameBoard, i, j,
+                                     maxNumberOfRows, maxNumberOfColumns);
+            // cout << "location = " << cornerLocation << endl;
+            if (cornerLocation != 0) {
+              cout << "Corner: " << j << ", " << maxNumberOfRows - 1 - i
                    << endl;
-                  boolFlagLocation[i][j] = true; 
-                }
-              }
+              boolFlagLocation[i][j] = true;
+              knownMines.push({i, j});
             }
           }
         }
       }
-
-
-      // store a map of saved moves
-
-      cout << "Enter Next Point (-1 to exit): " << endl;
-
-      userCol = getInputX(maxNumberOfColumns);
-      userRow = getInputY(maxNumberOfRows);
-
-      // while loop to mark them as flags
-
-      // find the safe moves
-      // while loop to reveal them
-
-      // check if the game is over
-      // if no, then repeat
-
-      // end bot code
-      if (boolGameBoard[userRow][userCol] == true) {
-        cout << "You have already revealed this tile!\n" << endl;
-      } else {
-        revealedTile = true;
-        break;
-      }
     }
+  }
+   int userRow = -2, userCol = -2;
 
-    if (gameBoard[userRow][userCol] == -1) {
-      gameOver = true;
-      cout << "you hit a mine!" << endl;
-      boolGameBoard[userRow][userCol] = true;
+  while (!knownMines.empty()) {
 
-    } else {
-      boolGameBoard[userRow][userCol] = true;
-      if (gameBoard[userRow][userCol] == 0) {
-        recursiveRevealExplosion(gameBoard, boolGameBoard, userRow, userCol,
-                                 maxNumberOfRows, maxNumberOfColumns);
-      }
-    }
+    knownMines.pop();
+  }
+
+  
+  while (gameOver == false) {
+
+    round++;
+    printRoundHeader(round);
+
+    userRow = -2, userCol = -2;
+
+    gameOver = playRoundUser(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                            gameBoard, maxNumOfMines, userRow, userCol);
 
     revealTally = printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
                                  maxNumberOfColumns);
@@ -180,6 +151,20 @@ int main() {
       gameOver = true;
       win = true;
     }
+  }
+    // all bot code should exist here; the entire point should be to calculate
+    // the inputs for row and columns
+
+    // store a map of saved moves
+    // while loop to mark them as flags
+
+    // find the safe moves
+    // while loop to reveal them
+
+    // check if the game is over
+    // if no, then repeat
+
+    // end bot code
 
     // }
 
@@ -192,4 +177,4 @@ int main() {
       printLose();
     }
   }
-}
+
