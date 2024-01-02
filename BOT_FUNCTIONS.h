@@ -41,4 +41,10 @@ void playBotMoves(set<pair<int, int>> knownMines, int maxNumberOfRows,
                   vector<vector<int>> &gameBoard,
                   vector<vector<bool>> &boolFlagLocation);
 
+void playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
+                         int maxNumberOfColumns, int round, int maxNumOfMines,
+                         vector<vector<bool>> &boolGameBoard,
+                         vector<vector<int>> &gameBoard,
+                         vector<vector<bool>> &boolFlagLocation);
+
 #endif

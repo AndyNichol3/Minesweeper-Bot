@@ -10,8 +10,6 @@
 
 using namespace std;
 
-
-
 int main() {
   // define variable
   int maxNumberOfRows = 0, maxNumberOfColumns = 0, maxNumOfMines = 0,
@@ -103,68 +101,22 @@ int main() {
   // if the tile is not revealed and is in bounds, reveal
 
   cout << endl << "TEST SET 2" << endl;
-  int continueBot = 1;
-  while (continueBot != 0) {
-    continueBot = 0;
-    for (int i = 0; i < maxNumberOfRows; ++i) {
-      for (int j = 0; j < maxNumberOfColumns; ++j) {
-        if (boolGameBoard[i][j] == false) {
-          continue;
-        }
-        if (gameBoard[i][j] == 0) {
-          continue;
-        }
+  playBotMovesMethod2(knownMines, maxNumberOfRows, maxNumberOfColumns, round,
+                      maxNumOfMines, boolGameBoard, gameBoard,
+                      boolFlagLocation);
 
-        int knownMineTally = 0;
-        int knownRevealedTally = 0;
-        int totalKnownTally = 0;
-        int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
-        int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
-        for (int index = 0; index < 8; index++) {
-          int X = i + defIndexX[index];
-          int Y = j + defIndexY[index];
+// new mine calculation function
 
-          if (boolGameBoard[X][Y] == true) {
-            knownRevealedTally++;
-          }
+  // given a revealed tile
+    // if the tile int = number of unrevealed tiles in proximity
+    // all the unrevealed tiles are mines
+        // check to see if mine is in mines
+        // if not, store it in mines
 
-          pair<int, int> currentLoc = {X, Y};
-          if (knownMines.find(currentLoc) != knownMines.end()) {
-            knownMineTally++;
-          }
-        }
 
-        // totalKnownTally = knownMineTally + knownRevealedTally;
 
-        if (knownMineTally == gameBoard[i][j]) {
-          for (int index2 = 0; index2 < 8; index2++) {
-            int X2 = i + defIndexX[index2];
-            int Y2 = j + defIndexY[index2];
-
-            if (X2 < 0 || X2 >= maxNumberOfRows || Y2 < 0 ||
-                Y2 >= maxNumberOfColumns) {
-              continue;
-            }
-            if (boolGameBoard[X2][Y2] || boolFlagLocation[X2][Y2]) {
-              continue;
-            }
-            pair<int, int> newLoc = {X2, Y2};
-            if (knownMines.find(newLoc) != knownMines.end()) {
-              continue;
-            }
-            continueBot++;
-            completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                             gameBoard, maxNumOfMines, X2, Y2, round);
-          }
-        }
-      }
-    }
-    if (continueBot == 0) {
-      break;
-    }
-  }
-
+  
   //
   // loop here
 
@@ -178,4 +130,3 @@ int main() {
     printLose();
   }
 }
-

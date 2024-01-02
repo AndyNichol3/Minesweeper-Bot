@@ -372,3 +372,71 @@ void playBotMoves(set<pair<int, int>> knownMines, int maxNumberOfRows,
     }
   }
 }
+
+void playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
+                         int maxNumberOfColumns, int round, int maxNumOfMines,
+                         vector<vector<bool>> &boolGameBoard,
+                         vector<vector<int>> &gameBoard,
+                         vector<vector<bool>> &boolFlagLocation) {
+  int continueBot = 1;
+  while (continueBot != 0) {
+    continueBot = 0;
+    for (int i = 0; i < maxNumberOfRows; ++i) {
+      for (int j = 0; j < maxNumberOfColumns; ++j) {
+        if (boolGameBoard[i][j] == false) {
+          continue;
+        }
+        if (gameBoard[i][j] == 0) {
+          continue;
+        }
+
+        int knownMineTally = 0;
+        int knownRevealedTally = 0;
+        int totalKnownTally = 0;
+        int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+        for (int index = 0; index < 8; index++) {
+          int X = i + defIndexX[index];
+          int Y = j + defIndexY[index];
+
+          if (boolGameBoard[X][Y] == true) {
+            knownRevealedTally++;
+          }
+
+          pair<int, int> currentLoc = {X, Y};
+          if (knownMines.find(currentLoc) != knownMines.end()) {
+            knownMineTally++;
+          }
+        }
+
+        // totalKnownTally = knownMineTally + knownRevealedTally;
+
+        if (knownMineTally == gameBoard[i][j]) {
+          for (int index2 = 0; index2 < 8; index2++) {
+            int X2 = i + defIndexX[index2];
+            int Y2 = j + defIndexY[index2];
+
+            if (X2 < 0 || X2 >= maxNumberOfRows || Y2 < 0 ||
+                Y2 >= maxNumberOfColumns) {
+              continue;
+            }
+            if (boolGameBoard[X2][Y2] || boolFlagLocation[X2][Y2]) {
+              continue;
+            }
+            pair<int, int> newLoc = {X2, Y2};
+            if (knownMines.find(newLoc) != knownMines.end()) {
+              continue;
+            }
+            continueBot++;
+            completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                             gameBoard, maxNumOfMines, X2, Y2, round);
+          }
+        }
+      }
+    }
+    if (continueBot == 0) {
+      break;
+    }
+  }
+}
