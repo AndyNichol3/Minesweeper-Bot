@@ -88,6 +88,8 @@ int main() {
   cout << endl << "TEST SET 1" << endl;
 
   for (const auto &mineLocation : knownMines) {
+    std::cout << "working with (" << mineLocation.second << ", "
+      << maxNumberOfRows - 1 - mineLocation.first << ")\n";
     bool botCanStillPlay = true;
     while (botCanStillPlay) {
       int itterations = 0;
@@ -107,9 +109,9 @@ int main() {
         int X = mineLocation.first + defIndexX[index];
         int Y = mineLocation.second + defIndexY[index];
         pair<int, int> currentLoc = {X, Y};
-        // if(!(knownMines.find(currentLoc) != knownMines.end())){
-        // continue;
-        // }
+        if((knownMines.find(currentLoc) != knownMines.end())){
+        continue;
+        }
 
         if (X < 0 || X >= maxNumberOfRows || Y < 0 || Y >= maxNumberOfColumns) {
           continue;
@@ -119,6 +121,7 @@ int main() {
           continue;
         }
         // if here, then youve found an unrevealed tile
+        cout << "\nINDEX " << index << endl;
         for (int index2 = 0; index2 < 8; index2++) {
           int X2 = X + defIndexX[index2];
           int Y2 = Y + defIndexY[index2];
@@ -126,6 +129,11 @@ int main() {
           if (X2 < 0 || X2 >= maxNumberOfRows || Y2 < 0 ||
               Y2 >= maxNumberOfColumns) {
             continue;
+          }
+          pair<int,int> check = {X2, Y2};
+          if((knownMines.find(check) != knownMines.end())){
+            //cout << "flag" << endl;
+            continue; 
           }
 
           if (!boolGameBoard[X2][Y2]) {
@@ -140,7 +148,7 @@ int main() {
           if (yCriteria || xCriteria) {
             if (!boolGameBoard[X][Y] && !boolFlagLocation[X][Y]) {
               itterations++;
-
+              cout << endl <<"INDEX 2 " << endl; 
               completeBotRound(maxNumberOfColumns, maxNumberOfRows,
                                boolGameBoard, gameBoard, maxNumOfMines, X, Y,
                                round);
