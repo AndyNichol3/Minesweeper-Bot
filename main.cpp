@@ -10,6 +10,8 @@
 
 using namespace std;
 
+
+
 int main() {
   // define variable
   int maxNumberOfRows = 0, maxNumberOfColumns = 0, maxNumOfMines = 0,
@@ -72,14 +74,12 @@ int main() {
   // int round = 1;
   int revealTally = 0;
   int maxDisplay = maxNumberOfRows * maxNumberOfColumns;
-  cout << "Bots flagged Point: " << endl;
+  int userRow = -2, userCol = -2;
 
+  cout << "Bots flagged Point: " << endl;
   set<pair<int, int>> knownMines =
       calculateInitialKnownMines(maxNumberOfColumns, maxNumberOfRows,
                                  boolGameBoard, gameBoard, boolFlagLocation);
-
-  // adjust i and j
-  int userRow = -2, userCol = -2;
 
   for (const auto &mineLocation : knownMines) {
     std::cout << "Mine at coordinates (" << mineLocation.second << ", "
@@ -88,81 +88,8 @@ int main() {
 
   cout << endl << "TEST SET 1" << endl;
 
-  for (const auto &mineLocation : knownMines) {
-    // std::cout << "working with (" << mineLocation.second << ", "
-    //<< maxNumberOfRows - 1 - mineLocation.first << ")\n";
-    bool botCanStillPlay = true;
-    while (botCanStillPlay) {
-      int itterations = 0;
-      // given the location of a mine
-      // if there exists an unrevealed tile within the 8 immediade sorrunding
-      // tiles that is adjacent to a revaled tile with the value of 1 play the
-      // unrevealed round and restart
-
-      // bool mineAdjHasUnrevealed = checkAdjForEmptySpace()
-      // if(!mineAdjHasUnrevealed){
-      // break;
-      // }
-      int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
-      int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
-
-      for (int index = 0; index < 8; index++) {
-        int X = mineLocation.first + defIndexX[index];
-        int Y = mineLocation.second + defIndexY[index];
-        pair<int, int> currentLoc = {X, Y};
-        if ((knownMines.find(currentLoc) != knownMines.end())) {
-          continue;
-        }
-
-        if (X < 0 || X >= maxNumberOfRows || Y < 0 || Y >= maxNumberOfColumns) {
-          continue;
-        }
-
-        if (boolGameBoard[X][Y]) {
-          continue;
-        }
-        // if here, then youve found an unrevealed tile
-        // cout << "\nINDEX " << index << endl;
-        for (int index2 = 0; index2 < 8; index2++) {
-          int X2 = X + defIndexX[index2];
-          int Y2 = Y + defIndexY[index2];
-
-          if (X2 < 0 || X2 >= maxNumberOfRows || Y2 < 0 ||
-              Y2 >= maxNumberOfColumns) {
-            continue;
-          }
-          pair<int, int> check = {X2, Y2};
-          if ((knownMines.find(check) != knownMines.end())) {
-            // cout << "flag" << endl;
-            continue;
-          }
-
-          if (!boolGameBoard[X2][Y2]) {
-            continue;
-          }
-          // if here then youve found a revealed tile
-          if (!boolGameBoard[X2][Y2] || gameBoard[X2][Y2] != 1) {
-            continue;
-          }
-          bool xCriteria = (abs(X - X2) == 0 && abs(Y - Y2) <= 1);
-          bool yCriteria = (abs(Y - Y2) == 0 && abs(X - X2) <= 1);
-          if (yCriteria || xCriteria) {
-            if (!boolGameBoard[X][Y] && !boolFlagLocation[X][Y]) {
-              itterations++;
-              // cout << endl <<"INDEX 2 " << endl;
-              completeBotRound(maxNumberOfColumns, maxNumberOfRows,
-                               boolGameBoard, gameBoard, maxNumOfMines, X, Y,
-                               round);
-            }
-          }
-        }
-      }
-
-      if (itterations == 0) {
-        botCanStillPlay = false;
-      }
-    }
-  }
+  playBotMoves(knownMines, maxNumberOfRows, maxNumberOfColumns, round,
+               maxNumOfMines, boolGameBoard, gameBoard, boolFlagLocation);
 
   // given a tile
   // if the tile is not revealed continue
@@ -241,8 +168,8 @@ int main() {
   //
   // loop here
 
-  win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                      gameBoard, maxNumOfMines, round);
+  win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard, gameBoard,
+                 maxNumOfMines, round);
 
   if (win == true) {
     printWin();
@@ -251,3 +178,4 @@ int main() {
     printLose();
   }
 }
+
