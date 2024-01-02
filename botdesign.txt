@@ -118,3 +118,57 @@ while (!nextMoves) {
       // anything adjacent shoudl be valid to click
         // cycle through 8 adjacent tiles
           // if the tile is not revealed and is in bounds, reveal
+
+
+
+
+            /*
+            cout << endl << "TEST SET 3" << endl;
+           // set<pair<int, int>>
+            knownMines =
+            calculateInitialKnownMines(maxNumberOfColumns, maxNumberOfRows,
+                                       boolGameBoard, gameBoard, boolFlagLocation);
+            for (const auto &mineLocation : knownMines) {
+              std::cout << "Mine at coordinates (" << mineLocation.second << ", "
+                        << maxNumberOfRows - 1 - mineLocation.first << ")\n";
+            }
+            */
+            // test 3
+            // given a tile
+            // if the tile is not revealed continue
+            // if the tile == 0 continue
+            // given the remaing tile,
+            // if tile int - known mines in its proximity = 0
+            // reveal all tiles in proximity
+            // if tile is known mine, skip
+            /*
+            for (int i = 0; i < maxNumberOfRows; ++i) {
+              for (int j = 0; j < maxNumberOfColumns; ++j) {
+                if (boolGameBoard[i][j] == false) {
+                  continue;
+                }
+                if (gameBoard[i][j] == 0) {
+                  continue;
+                }
+
+                int knownMineTally = 0;
+                int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+                int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+                for (int index = 0; index < 8; index++) {
+                  int X = i + defIndexX[index];
+                  int Y = j + defIndexY[index];
+
+                  pair<int, int> currentLoc = {X, Y};
+                  if (knownMines.find(currentLoc) != knownMines.end()) {
+                    knownMineTally++;
+                  }
+                }
+
+
+
+
+              }
+            }
+
+            */

@@ -17,24 +17,27 @@ bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
 
   // index the above and below squares
   for (int c = i - 1; c < i + 2; c += 2) {
+    
     // if its revealed, checkVert = true
     if (c < 0 || c > maxNumberOfRows - 1) {
       continue;
-    }
+    }else{
     if (boolGameBoard[c][j] == true && gameBoard[c][j] != 0) {
       checkVert = true;
       break;
     }
+    }
   }
-
+ 
   // index the left and right squares
   for (int r = j - 1; r < j + 2; r += 2) {
     if (r < 0 || r > maxNumberOfColumns - 1) {
       continue;
-    }
-    if (boolGameBoard[i][r] == true && gameBoard[i][r] != 0) {
+    }else {
+      if (boolGameBoard[i][r] == true && gameBoard[i][r] != 0) {
       checkHor = true;
       break;
+      }
     }
   }
 
@@ -58,28 +61,36 @@ int returnCornerLocation(vector<vector<bool>> &boolGameBoard,
   //  1 |  | 2
   //    |ij|
   //  3 |  | 4
-
+// rows, colums
+  if(i != maxNumberOfRows -1 && j != maxNumberOfColumns-1){
   if (boolGameBoard[i + 1][j] && boolGameBoard[i][j + 1]) {
     if (!boolGameBoard[i + 1][j + 1]) {
       return 4;
     }
+   }
   }
+
+  if(i != maxNumberOfRows -1 && j != 0){
   if (boolGameBoard[i + 1][j] && boolGameBoard[i][j - 1]) {
     if (!boolGameBoard[i + 1][j - 1]) {
       return 3;
     }
   }
-
+  }
+  if(i != 0 && j != maxNumberOfColumns-1){
   if (boolGameBoard[i - 1][j] && boolGameBoard[i][j + 1]) {
     if (!boolGameBoard[i - 1][j + 1]) {
       return 2;
     }
   }
+  }
+if(i != 0 && j != 0){
   if (boolGameBoard[i - 1][j] && boolGameBoard[i][j - 1]) {
     if (!boolGameBoard[i - 1][j - 1]) {
       return 1;
     }
   }
+}
 
   return 0;
 }
@@ -192,10 +203,14 @@ void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
   cout << "the bot will now start" << endl;
   srand(time(NULL));
   int userStartCol = rand() % (maxNumberOfColumns - 1);
+  userStartCol = 5;
   cout << "bot chose X: " << userStartCol << endl;
   int userStartRow = rand() % (maxNumberOfRows - 1);
+  userStartRow = 5; 
   cout << "bot chose Y: " << maxNumberOfRows - 1 - userStartRow << endl;
 
+
+  
   cout << endl;
 
   boolGameBoard[userStartRow][userStartCol] = true;
@@ -240,24 +255,29 @@ calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
   set<pair<int, int>> knownMines;
   for (int i = 0; i < maxNumberOfRows; i++) {
     for (int j = 0; j < maxNumberOfColumns; j++) {
-      if (gameBoard[i][j] != 0) {
-        if (boolGameBoard[i][j] == true) {
+      if (boolGameBoard[i][j] == true) {
+        //
+        if (gameBoard[i][j] != 0) {
+          //cout << endl << j << ", " << maxNumberOfRows - 1 - i << endl;
           bool isCorner = checkCorner(i, j, maxNumberOfRows, maxNumberOfColumns,
                                       boolGameBoard, gameBoard);
+          //cout << "entered 1" << endl;
           // cout << endl << "corner found" << endl;
           if (isCorner == true && gameBoard[i][j] == 1) {
-
+            //cout << "entered 2: input " << i << " "<< j << endl;
             int cornerLocation =
                 returnCornerLocation(boolGameBoard, gameBoard, i, j,
                                      maxNumberOfRows, maxNumberOfColumns);
-            // cout << "location = " << cornerLocation << endl;
+             //cout << "location = " << cornerLocation << endl;
             if (cornerLocation != 0) {
               // cout << "Corner: " << j << ", " << maxNumberOfRows - 1 - i <<
               // endl;
 
               boolFlagLocation[i][j] = true;
               pair<int, int> mineLocation = {i, j};
+               //cout << "entered 3" << endl;
               pair<int, int> temp = adjustIndex(cornerLocation, mineLocation);
+              // cout << "entered 4" << endl;
               if (knownMines.count(temp) == 0) {
                 knownMines.insert(temp);
               }
@@ -268,6 +288,6 @@ calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
       }
     }
   }
-
+  //cout << "comeplete" <<endl; 
   return knownMines;
 }
