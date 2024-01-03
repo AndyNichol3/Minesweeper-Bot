@@ -456,11 +456,10 @@ void playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
   }
 }
 
-set<pair<int,int>> botCheckForMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
-                      int maxNumberOfColumns, int round, int maxNumOfMines,
-                      vector<vector<bool>> &boolGameBoard,
-                      vector<vector<int>> &gameBoard,
-                      vector<vector<bool>> &boolFlagLocation) {
+set<pair<int, int>> botCheckForMines(
+    set<pair<int, int>> knownMines, int maxNumberOfRows, int maxNumberOfColumns,
+    int round, int maxNumOfMines, vector<vector<bool>> &boolGameBoard,
+    vector<vector<int>> &gameBoard, vector<vector<bool>> &boolFlagLocation) {
 
   for (int i = 0; i < maxNumberOfRows; ++i) {
     for (int j = 0; j < maxNumberOfColumns; ++j) {
@@ -504,3 +503,29 @@ set<pair<int,int>> botCheckForMines(set<pair<int, int>> knownMines, int maxNumbe
 
   return knownMines;
 }
+
+bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
+                         int maxNumberOfColumns, int round, int maxNumOfMines,
+                         vector<vector<bool>> &boolGameBoard,
+                         vector<vector<int>> &gameBoard,
+                         vector<vector<bool>> &boolFlagLocation){
+
+
+  for(int i = 0; i < maxNumberOfRows; ++i){
+    for(int j = 0; j < maxNumberOfColumns; ++j){
+      if(boolGameBoard[i][j] == true){
+        continue;
+      }
+      pair<int,int>test = {i,j};
+      if(knownMines.find(test) != knownMines.end()){
+        continue; 
+      }
+      // play i,j
+      
+      
+      
+    }
+  }
+
+  return true;
+                         }

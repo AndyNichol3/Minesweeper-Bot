@@ -75,62 +75,41 @@ int main() {
   int userRow = -2, userCol = -2;
 
   cout << "Bots flagged Point: " << endl;
-  set<pair<int, int>> knownMines;  
-  knownMines = botCheckForMines(knownMines, maxNumberOfRows, maxNumberOfColumns,
-  round, maxNumOfMines, boolGameBoard, gameBoard,
-  boolFlagLocation);
-     // calculateInitialKnownMines(maxNumberOfColumns, maxNumberOfRows,
-       //                          boolGameBoard, gameBoard, boolFlagLocation);
+  set<pair<int, int>> knownMines;
+  for (int i = 0; i <= 5; i++) {
+    knownMines = botCheckForMines(knownMines, maxNumberOfRows,
+                                  maxNumberOfColumns, round, maxNumOfMines,
+                                  boolGameBoard, gameBoard, boolFlagLocation);
+    // calculateInitialKnownMines(maxNumberOfColumns, maxNumberOfRows,
+    //                          boolGameBoard, gameBoard, boolFlagLocation);
+    int confirmedMineTally = 0;
+    for (const auto &mineLocation : knownMines) {
+      confirmedMineTally++;
+      std::cout << "Mine at coordinates (" << mineLocation.second << ", "
+                << maxNumberOfRows - 1 - mineLocation.first << ")\n";
+    }
+    if (confirmedMineTally == maxNumOfMines) {
+      cout << endl << "Trigger The Special Case" << endl;
+      win = foundAllMines(knownMines, maxNumberOfRows, maxNumberOfColumns,
+                          round, maxNumOfMines, boolGameBoard, gameBoard,
+                          boolFlagLocation);
+      break;
+    }
 
-  for (const auto &mineLocation : knownMines) {
-    std::cout << "Mine at coordinates (" << mineLocation.second << ", "
-              << maxNumberOfRows - 1 - mineLocation.first << ")\n";
+    cout << endl << "TEST SET 1" << endl;
+
+    playBotMoves(knownMines, maxNumberOfRows, maxNumberOfColumns, round,
+                 maxNumOfMines, boolGameBoard, gameBoard, boolFlagLocation);
+
+    cout << endl << "TEST SET 2" << endl;
+    playBotMovesMethod2(knownMines, maxNumberOfRows, maxNumberOfColumns, round,
+                        maxNumOfMines, boolGameBoard, gameBoard,
+                        boolFlagLocation);
   }
-
-  cout << endl << "TEST SET 1" << endl;
-
-  playBotMoves(knownMines, maxNumberOfRows, maxNumberOfColumns, round,
-               maxNumOfMines, boolGameBoard, gameBoard, boolFlagLocation);
-
-  // given a tile
-  // if the tile is not revealed continue
-  // if the tile == 0 continue
-  // give the tile
-  // check all 8 tiles around it,
-  // tally the number of know mines in those 8
-  // if tally == value of the tile
-  // anything adjacent shoudl be valid to click
-  // cycle through 8 adjacent tiles
-  // if the tile is not revealed and is in bounds, reveal
-
-  cout << endl << "TEST SET 2" << endl;
-  playBotMovesMethod2(knownMines, maxNumberOfRows, maxNumberOfColumns, round,
-                      maxNumOfMines, boolGameBoard, gameBoard,
-                      boolFlagLocation);
-
-  // new mine calculation function
-
-  // given a revealed tile
-  // if the tile int = number of unrevealed tiles in proximity
-  // all the unrevealed tiles are mines
-  // check to see if mine is in mines
-  // if not, store it in mines
-
-  knownMines = botCheckForMines(knownMines, maxNumberOfRows, maxNumberOfColumns,
-                                round, maxNumOfMines, boolGameBoard, gameBoard,
-                                boolFlagLocation);
-
-  cout << endl << "TEST SET 3" << endl;
-  for (const auto &mineLocation : knownMines) {
-    std::cout << "Mine at coordinates (" << mineLocation.second << ", "
-              << maxNumberOfRows - 1 - mineLocation.first << ")\n";
+  if (win == false) {
+    win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                   gameBoard, maxNumOfMines, round);
   }
-
-  //
-  // loop here
-
-  win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard, gameBoard,
-                 maxNumOfMines, round);
 
   if (win == true) {
     printWin();

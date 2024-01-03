@@ -51,4 +51,10 @@ set<pair<int, int>> botCheckForMines(
     int round, int maxNumOfMines, vector<vector<bool>> &boolGameBoard,
     vector<vector<int>> &gameBoard, vector<vector<bool>> &boolFlagLocation);
 
+bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
+                   int maxNumberOfColumns, int round, int maxNumOfMines,
+                   vector<vector<bool>> &boolGameBoard,
+                   vector<vector<int>> &gameBoard,
+                   vector<vector<bool>> &boolFlagLocation);
+
 #endif
