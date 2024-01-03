@@ -82,18 +82,24 @@ int main() {
                           boolFlagLocation);
       break;
     }
+    if(confirmedMineTally == 0){
+      cout << endl << "No Mines Found" << endl;
+      // eventally, add function to make a random guess
+      break;
+    }
 
-    cout << endl << "TEST SET 1" << endl;
+    cout << endl << "METHOD 1" << endl;
 
-    playBotMoves(knownMines, maxNumberOfRows, maxNumberOfColumns, round,
+   bool changesMadeMethod1 = playBotMoves(knownMines, maxNumberOfRows, maxNumberOfColumns, round,
                  maxNumOfMines, boolGameBoard, gameBoard, boolFlagLocation);
 
-    cout << endl << "TEST SET 2" << endl;
+    cout << endl << "METHOD 2" << endl;
     playBotMovesMethod2(knownMines, maxNumberOfRows, maxNumberOfColumns, round,
                         maxNumOfMines, boolGameBoard, gameBoard,
                         boolFlagLocation);
   }
 
+  
   
   if (win == false) {
     win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,

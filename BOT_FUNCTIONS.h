@@ -35,7 +35,7 @@ calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
                            vector<vector<int>> &gameBoard,
                            vector<vector<bool>> &boolFlagLocation);
 
-void playBotMoves(set<pair<int, int>> knownMines, int maxNumberOfRows,
+bool playBotMoves(set<pair<int, int>> knownMines, int maxNumberOfRows,
                   int maxNumberOfColumns, int round, int maxNumOfMines,
                   vector<vector<bool>> &boolGameBoard,
                   vector<vector<int>> &gameBoard,

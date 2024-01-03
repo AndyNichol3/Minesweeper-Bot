@@ -9,11 +9,12 @@
 #include <vector>
 using namespace std;
 
-void playBotMoves(set<pair<int, int>> knownMines, int maxNumberOfRows,
+bool playBotMoves(set<pair<int, int>> knownMines, int maxNumberOfRows,
                   int maxNumberOfColumns, int round, int maxNumOfMines,
                   vector<vector<bool>> &boolGameBoard,
                   vector<vector<int>> &gameBoard,
                   vector<vector<bool>> &boolFlagLocation) {
+  int movesMade = 0;
 
   for (const auto &mineLocation : knownMines) {
     // std::cout << "working with (" << mineLocation.second << ", "
@@ -76,6 +77,7 @@ void playBotMoves(set<pair<int, int>> knownMines, int maxNumberOfRows,
           if (yCriteria || xCriteria) {
             if (!boolGameBoard[X][Y] && !boolFlagLocation[X][Y]) {
               itterations++;
+              movesMade++;
               // cout << endl <<"INDEX 2 " << endl;
               completeBotRound(maxNumberOfColumns, maxNumberOfRows,
                                boolGameBoard, gameBoard, maxNumOfMines, X, Y,
@@ -90,6 +92,12 @@ void playBotMoves(set<pair<int, int>> knownMines, int maxNumberOfRows,
       }
     }
   }
+
+  if(movesMade == 0){
+    // no alterations were made
+    return false; 
+  }
+  return true; 
 }
 
 void playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
