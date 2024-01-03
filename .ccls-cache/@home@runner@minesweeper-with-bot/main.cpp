@@ -10,6 +10,11 @@
 
 using namespace std;
 
+void guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
+                  vector<vector<bool>> &boolGameBoard,
+                  vector<vector<int>> &gameBoard, int maxNumOfMines,
+                  int round);
+
 int main() {
   // define variable
   int maxNumberOfRows = 0, maxNumberOfColumns = 0, maxNumOfMines = 0,
@@ -65,6 +70,7 @@ int main() {
   cout << "Bots flagged Point: " << endl;
 
   bool continueGame = true;
+  int catchInfinateLoop = 0;
   while (continueGame) {
     int confirmedMineTally = 0;
 
@@ -84,9 +90,9 @@ int main() {
     }
     if (confirmedMineTally == 0) {
       cout << endl << "No Mines Found" << endl;
-      continueGame = false; 
+      //continueGame = false;
       // eventally, add function to make a random guess
-      break;
+      //break;
     }
 
     cout << endl << "METHOD 1" << endl;
@@ -102,9 +108,19 @@ int main() {
 
     if (changesMadeMethod1 == false && changesMadeMethod2 == false) {
       cout << endl << "No Further Moves" << endl;
-      continueGame = false;
-      break;
+      cout << "Initalize the first guess" << endl;
+      if(catchInfinateLoop >= 4){
+        cout << "Infinate Loop" << endl;
+        break;
+      }
+      // pair<int,int> guessMine = mathWeightedGuess();
+      guessCorners(maxNumberOfRows, maxNumberOfColumns, boolGameBoard, gameBoard, maxNumOfMines, round);
+      catchInfinateLoop++; 
+
+      //continueGame = false;
+      //break;
     }
+
   }
 
   if (win == false) {
@@ -119,3 +135,34 @@ int main() {
     printLose();
   }
 }
+
+void guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
+                  vector<vector<bool>> &boolGameBoard,
+                  vector<vector<int>> &gameBoard, int maxNumOfMines,
+                  int round) {
+  if (boolGameBoard[0][0] == false) {
+    completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                     gameBoard, maxNumOfMines, 0, 0, round);
+    return; 
+    
+  } else if (boolGameBoard[0][maxNumberOfColumns - 1] == false) {
+    completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+     gameBoard, maxNumOfMines, 0, maxNumberOfColumns - 1, round);
+    return;
+    
+  } else if (boolGameBoard[maxNumberOfRows - 1][0] == false) {
+    completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+     gameBoard, maxNumOfMines, maxNumberOfRows - 1, 0, round);
+    return;
+  
+  } else if (boolGameBoard[maxNumberOfRows - 1][maxNumberOfColumns - 1] == false) {
+    completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+     gameBoard, maxNumOfMines, maxNumberOfRows - 1, maxNumberOfColumns - 1, round);
+    return; 
+    
+  } else {
+    cout << "No corners found" << endl;
+    return; 
+  }
+}
+// pair<int,int> mathWeightedGuess(){}

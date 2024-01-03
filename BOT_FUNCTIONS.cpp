@@ -431,10 +431,10 @@ void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
   cout << "the bot will now start" << endl;
   srand(time(NULL));
   int userStartCol = rand() % (maxNumberOfColumns - 1);
-  userStartCol = 5;
+  userStartCol = maxNumberOfColumns / 2;
   cout << "bot chose X: " << userStartCol << endl;
   int userStartRow = rand() % (maxNumberOfRows - 1);
-  userStartRow = 5;
+  userStartRow = maxNumberOfRows / 2;
   cout << "bot chose Y: " << maxNumberOfRows - 1 - userStartRow << endl;
 
   cout << endl;
@@ -453,6 +453,9 @@ bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
                       vector<vector<bool>> &boolGameBoard,
                       vector<vector<int>> &gameBoard, int maxNumOfMines,
                       int userRow, int userCol, int round) {
+  // win 1
+  // lose 2
+  // continue 3
   int maxDisplay = maxNumberOfRows * maxNumberOfColumns;
   bool win = false;
   // round++;
@@ -461,6 +464,9 @@ bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
   bool gameOver =
       playRoundBot(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                    gameBoard, maxNumOfMines, userRow, userCol);
+  if(gameOver == true){
+    
+  }
 
   int revealTally = printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
                                    maxNumberOfColumns);
