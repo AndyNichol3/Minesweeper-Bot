@@ -41,65 +41,7 @@ void recursiveRevealExplosion(vector<vector<int>> &gameBoard,
     }
   }
 }
-/*
-bool playGame(int maxNumberOfColumns, int maxNumberOfRows,
-              vector<vector<bool>> &boolGameBoard,
-              vector<vector<int>> &gameBoard, int maxNumOfMines) {
 
-  // main game function after initilization
-
-  bool gameOver = false, win = false;
-  int round = 1, revealTally = 0;
-  int maxDisplay = maxNumberOfRows * maxNumberOfColumns;
-  while (gameOver == false) {
-
-    round++;
-
-    printRoundHeader(round);
-
-    bool revealedTile = false;
-    int userRow = -2, userCol = -2;
-
-    while (!revealedTile) {
-
-      cout << "Enter Next Point (-1 to exit): " << endl;
-      userCol = getInputX(maxNumberOfColumns);
-      userRow = getInputY(maxNumberOfRows);
-
-      if (boolGameBoard[userRow][userCol] == true) {
-        cout << "You have already revealed this tile!\n" << endl;
-      } else {
-        revealedTile = true;
-        break;
-      }
-    }
-
-    if (gameBoard[userRow][userCol] == -1) {
-      gameOver = true;
-      cout << "you hit a mine!" << endl;
-      boolGameBoard[userRow][userCol] = true;
-
-    } else {
-      boolGameBoard[userRow][userCol] = true;
-      if (gameBoard[userRow][userCol] == 0) {
-        recursiveRevealExplosion(gameBoard, boolGameBoard, userRow, userCol,
-                                 maxNumberOfRows, maxNumberOfColumns);
-      }
-    }
-
-    revealTally = printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
-                                 maxNumberOfColumns);
-
-    if (revealTally == (maxDisplay - maxNumOfMines)) {
-      gameOver = true;
-      win = true;
-    }
-  }
-
-  return win;
-}
-
-*/
 
 bool playGame(int maxNumberOfColumns, int maxNumberOfRows,
               vector<vector<bool>> &boolGameBoard,

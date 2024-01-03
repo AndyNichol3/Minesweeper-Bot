@@ -57,4 +57,6 @@ bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
                    vector<vector<int>> &gameBoard,
                    vector<vector<bool>> &boolFlagLocation);
 
+int printBotFlaggedMines(set<pair<int,int>> knownMines, int maxNumberOfRows);
+
 #endif

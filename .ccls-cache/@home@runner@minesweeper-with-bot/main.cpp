@@ -13,15 +13,10 @@ using namespace std;
 int main() {
   // define variable
   int maxNumberOfRows = 0, maxNumberOfColumns = 0, maxNumOfMines = 0,
-      displaySubtract = 0;
-  int round = 1;
+      displaySubtract = 0, round = 1;
 
-  // print the game header,
-  // also includes rule menu which keeps user until decides to start
   printGameWelcome();
 
-  // get the user difficulty
-  // 1 easy 2 meduim 3 hard
   int difficulty = getUserDifficulty();
 
   // define some constasnts based on the difficulty
@@ -62,34 +57,26 @@ int main() {
   initalizeBotGameBoard(boolGameBoard, gameBoard, maxNumberOfRows,
                         maxNumberOfColumns, maxNumOfMines);
 
-  // OG
-  // bool win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-  //         gameBoard, maxNumOfMines);
-
-  //{
-
   bool gameOver = false, win = false;
-  // int round = 1;
-  int revealTally = 0;
-  int maxDisplay = maxNumberOfRows * maxNumberOfColumns;
-  int userRow = -2, userCol = -2;
+  int revealTally = 0, maxDisplay = maxNumberOfRows * maxNumberOfColumns,
+      userRow = -2, userCol = -2;
+  set<pair<int, int>> knownMines;
 
   cout << "Bots flagged Point: " << endl;
-  set<pair<int, int>> knownMines;
+
+  
+
   for (int i = 0; i <= 15; i++) {
+    int confirmedMineTally = 0;
+
     knownMines = botCheckForMines(knownMines, maxNumberOfRows,
                                   maxNumberOfColumns, round, maxNumOfMines,
                                   boolGameBoard, gameBoard, boolFlagLocation);
-    // calculateInitialKnownMines(maxNumberOfColumns, maxNumberOfRows,
-    //                          boolGameBoard, gameBoard, boolFlagLocation);
-    int confirmedMineTally = 0;
-    for (const auto &mineLocation : knownMines) {
-      confirmedMineTally++;
-      std::cout << "Mine at coordinates (" << mineLocation.second << ", "
-                << maxNumberOfRows - 1 - mineLocation.first << ")\n";
-    }
+    
+    confirmedMineTally = printBotFlaggedMines(knownMines, maxNumberOfRows); 
+    
     if (confirmedMineTally == maxNumOfMines) {
-      cout << endl << "Trigger The Special Case" << endl;
+      cout << endl << "All Mines Found" << endl;
       win = foundAllMines(knownMines, maxNumberOfRows, maxNumberOfColumns,
                           round, maxNumOfMines, boolGameBoard, gameBoard,
                           boolFlagLocation);
@@ -106,6 +93,8 @@ int main() {
                         maxNumOfMines, boolGameBoard, gameBoard,
                         boolFlagLocation);
   }
+
+  
   if (win == false) {
     win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                    gameBoard, maxNumOfMines, round);
@@ -118,3 +107,4 @@ int main() {
     printLose();
   }
 }
+
