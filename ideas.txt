@@ -1,4 +1,4 @@
-design of the bot
+SCRAP CODE AND THOUGHTS
 
 randomly generate the first index and use that to do the initial game
 

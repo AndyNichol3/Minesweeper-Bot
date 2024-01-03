@@ -521,7 +521,8 @@ bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
         continue; 
       }
       // play i,j
-      
+      completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+       gameBoard, maxNumOfMines, i, j, round);
       
       
     }
