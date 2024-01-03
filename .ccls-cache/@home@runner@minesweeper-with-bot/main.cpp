@@ -76,7 +76,7 @@ int main() {
 
   cout << "Bots flagged Point: " << endl;
   set<pair<int, int>> knownMines;
-  for (int i = 0; i <= 5; i++) {
+  for (int i = 0; i <= 15; i++) {
     knownMines = botCheckForMines(knownMines, maxNumberOfRows,
                                   maxNumberOfColumns, round, maxNumOfMines,
                                   boolGameBoard, gameBoard, boolFlagLocation);
