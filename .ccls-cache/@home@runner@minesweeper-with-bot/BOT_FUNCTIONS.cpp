@@ -308,6 +308,23 @@ int returnCornerLocation(vector<vector<bool>> &boolGameBoard,
   return 0;
 }
 
+void triggeredAMine(int maxNumberOfRows, int maxNumberOfColumns,
+                    vector<vector<bool>> &boolGameBoard,
+                    vector<vector<int>> &gameBoard, int maxNumOfMines,
+                    int round) {
+
+  for (int i = 0; i < maxNumberOfRows; i++) {
+    for (int j = 0; j < maxNumberOfColumns; j++) {
+      if (gameBoard[i][j] == -1) {
+        boolGameBoard[i][j] = true;
+      }
+    }
+  }
+  printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns); 
+  printLose();
+  exit(0); 
+}
+
 bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
                   vector<vector<bool>> &boolGameBoard,
                   vector<vector<int>> &gameBoard, int maxNumOfMines,
@@ -337,13 +354,7 @@ bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
     gameOver = true;
     cout << "you hit a mine!" << endl;
     boolGameBoard[userRow][userCol] = true;
-    for (int i = 0; i < maxNumberOfRows; i++) {
-      for (int j = 0; j < maxNumberOfColumns; j++) {
-        if (gameBoard[i][j] == -1) {
-          boolGameBoard[i][j] = true;
-        }
-      }
-    }
+    triggeredAMine(maxNumberOfRows, maxNumberOfColumns, boolGameBoard, gameBoard, maxNumOfMines, round); 
 
   } else {
     boolGameBoard[userRow][userCol] = true;
@@ -559,3 +570,5 @@ int printBotFlaggedMines(set<pair<int, int>> knownMines, int maxNumberOfRows) {
 
   return confirmedMineTally;
 }
+
+
