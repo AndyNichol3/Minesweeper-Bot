@@ -172,7 +172,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
     }
   }
   newGuess = {maxNumberOfRows - 1, maxNumberOfColumns - 1};
-  if (knownMines.find(newGuess) != knownMines.end()) {
+  if (knownMines.find(newGuess) == knownMines.end()) {
     if (boolGameBoard[maxNumberOfRows - 1][maxNumberOfColumns - 1] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, maxNumberOfRows - 1,

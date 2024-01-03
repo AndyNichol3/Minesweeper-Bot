@@ -90,7 +90,7 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
             
           }
           // if the check is not in the set, continue
-          if(aroundMine.find(check) != aroundMine.end()){
+          if(aroundMine.find(check) == aroundMine.end()){
             continue;
           }
 
