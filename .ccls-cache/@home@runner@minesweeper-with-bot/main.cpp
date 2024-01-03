@@ -10,9 +10,10 @@
 
 using namespace std;
 
-void guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
+int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
                   vector<vector<bool>> &boolGameBoard,
-                  vector<vector<int>> &gameBoard, int maxNumOfMines, int round);
+                  vector<vector<int>> &gameBoard, int maxNumOfMines, int round,
+                  set<pair<int, int>> knownMines);
 
 int main() {
   // define variable
@@ -113,8 +114,11 @@ int main() {
         break;
       }
       // pair<int,int> guessMine = mathWeightedGuess();
-      guessCorners(maxNumberOfRows, maxNumberOfColumns, boolGameBoard,
-                   gameBoard, maxNumOfMines, round);
+      int error = guessCorners(maxNumberOfRows, maxNumberOfColumns, boolGameBoard,
+                   gameBoard, maxNumOfMines, round, knownMines);
+      if (error == 1) {
+        break; 
+      }
       catchInfinateLoop++;
 
       // continueGame = false;
@@ -135,36 +139,48 @@ int main() {
   }
 }
 
-void guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
+int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
                   vector<vector<bool>> &boolGameBoard,
-                  vector<vector<int>> &gameBoard, int maxNumOfMines,
-                  int round) {
-  if (boolGameBoard[0][0] == false) {
-    completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                     gameBoard, maxNumOfMines, 0, 0, round);
-    return;
-
-  } else if (boolGameBoard[0][maxNumberOfColumns - 1] == false) {
-    completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                     gameBoard, maxNumOfMines, 0, maxNumberOfColumns - 1,
-                     round);
-    return;
-
-  } else if (boolGameBoard[maxNumberOfRows - 1][0] == false) {
-    completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                     gameBoard, maxNumOfMines, maxNumberOfRows - 1, 0, round);
-    return;
-
-  } else if (boolGameBoard[maxNumberOfRows - 1][maxNumberOfColumns - 1] ==
-             false) {
-    completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                     gameBoard, maxNumOfMines, maxNumberOfRows - 1,
-                     maxNumberOfColumns - 1, round);
-    return;
-
-  } else {
-    cout << "No corners found" << endl;
-    return;
+                  vector<vector<int>> &gameBoard, int maxNumOfMines, int round,
+                  set<pair<int, int>> knownMines) {
+  pair<int, int> newGuess;
+  newGuess = {0, 0};
+  // aroundMine.find(check) != aroundMine.end()
+  if (knownMines.find(newGuess) != knownMines.end()) {
+    if (boolGameBoard[0][0] == false) {
+      completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                       gameBoard, maxNumOfMines, 0, 0, round);
+      return 0;
+    }
   }
+  newGuess = {0, maxNumberOfColumns - 1};
+  if (knownMines.find(newGuess) != knownMines.end()) {
+
+    if (boolGameBoard[0][maxNumberOfColumns - 1] == false) {
+      completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                       gameBoard, maxNumOfMines, 0, maxNumberOfColumns - 1,
+                       round);
+      return 0;
+    }
+  }
+  newGuess = {maxNumberOfRows - 1, 0};
+  if (knownMines.find(newGuess) != knownMines.end()) {
+    if (boolGameBoard[maxNumberOfRows - 1][0] == false) {
+      completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                       gameBoard, maxNumOfMines, maxNumberOfRows - 1, 0, round);
+      return 0;
+    }
+  }
+  newGuess = {maxNumberOfRows - 1, maxNumberOfColumns - 1};
+  if (knownMines.find(newGuess) != knownMines.end()) {
+    if (boolGameBoard[maxNumberOfRows - 1][maxNumberOfColumns - 1] == false) {
+      completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                       gameBoard, maxNumOfMines, maxNumberOfRows - 1,
+                       maxNumberOfColumns - 1, round);
+      return 0;
+    }
+  }
+  cout << "No corners found" << endl;
+  return 1;
 }
 // pair<int,int> mathWeightedGuess(){}
