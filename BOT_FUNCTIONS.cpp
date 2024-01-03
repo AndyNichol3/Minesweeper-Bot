@@ -9,11 +9,11 @@
 #include <vector>
 using namespace std;
 
-bool playBotMoves(set<pair<int, int>> knownMines, int maxNumberOfRows,
-                  int maxNumberOfColumns, int round, int maxNumOfMines,
-                  vector<vector<bool>> &boolGameBoard,
-                  vector<vector<int>> &gameBoard,
-                  vector<vector<bool>> &boolFlagLocation) {
+bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
+                         int maxNumberOfColumns, int round, int maxNumOfMines,
+                         vector<vector<bool>> &boolGameBoard,
+                         vector<vector<int>> &gameBoard,
+                         vector<vector<bool>> &boolFlagLocation) {
   int movesMade = 0;
 
   for (const auto &mineLocation : knownMines) {
@@ -93,19 +93,20 @@ bool playBotMoves(set<pair<int, int>> knownMines, int maxNumberOfRows,
     }
   }
 
-  if(movesMade == 0){
+  if (movesMade == 0) {
     // no alterations were made
-    return false; 
+    return false;
   }
-  return true; 
+  return true;
 }
 
-void playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
+bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
                          int maxNumberOfColumns, int round, int maxNumOfMines,
                          vector<vector<bool>> &boolGameBoard,
                          vector<vector<int>> &gameBoard,
                          vector<vector<bool>> &boolFlagLocation) {
   int continueBot = 1;
+  int squaresPlayed = 0;
   while (continueBot != 0) {
     continueBot = 0;
     for (int i = 0; i < maxNumberOfRows; ++i) {
@@ -156,6 +157,7 @@ void playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
               continue;
             }
             continueBot++;
+            squaresPlayed++;
             completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                              gameBoard, maxNumOfMines, X2, Y2, round);
           }
@@ -166,6 +168,10 @@ void playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
       break;
     }
   }
+  if (squaresPlayed == 0) {
+    return false;
+  }
+  return true;
 }
 
 set<pair<int, int>> botCheckForMines(
