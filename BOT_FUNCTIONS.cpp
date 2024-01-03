@@ -124,6 +124,13 @@ bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
     gameOver = true;
     cout << "you hit a mine!" << endl;
     boolGameBoard[userRow][userCol] = true;
+    for (int i = 0; i < maxNumberOfRows; i++) {
+      for (int j = 0; j < maxNumberOfColumns; j++) {
+        if (gameBoard[i][j] == -1) {
+          boolGameBoard[i][j] = true;
+        }
+      }
+    }
 
   } else {
     boolGameBoard[userRow][userCol] = true;
@@ -162,6 +169,14 @@ bool playRoundUser(int maxNumberOfColumns, int maxNumberOfRows,
     gameOver = true;
     cout << "you hit a mine!" << endl;
     boolGameBoard[userRow][userCol] = true;
+    boolGameBoard[userRow][userCol] = true;
+    for (int i = 0; i < maxNumberOfRows; i++) {
+      for (int j = 0; j < maxNumberOfColumns; j++) {
+        if (gameBoard[i][j] == -1) {
+          boolGameBoard[i][j] = true;
+        }
+      }
+    }
 
   } else {
     boolGameBoard[userRow][userCol] = true;
@@ -439,4 +454,53 @@ void playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
       break;
     }
   }
+}
+
+set<pair<int,int>> botCheckForMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
+                      int maxNumberOfColumns, int round, int maxNumOfMines,
+                      vector<vector<bool>> &boolGameBoard,
+                      vector<vector<int>> &gameBoard,
+                      vector<vector<bool>> &boolFlagLocation) {
+
+  for (int i = 0; i < maxNumberOfRows; ++i) {
+    for (int j = 0; j < maxNumberOfColumns; ++j) {
+      if (boolGameBoard[i][j] == false) {
+        continue;
+      }
+
+      int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+      int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
+      int unrevTiles = 0;
+      // int knownTally = 0;
+      set<pair<int, int>> potentialMines;
+
+      for (int index = 0; index < 8; index++) {
+        int X = i + defIndexX[index];
+        int Y = j + defIndexY[index];
+
+        if (X < 0 || Y < 0 || X >= maxNumberOfRows || Y >= maxNumberOfColumns) {
+          // knownTally++;
+          continue;
+        }
+
+        if (boolGameBoard[X][Y] == false) {
+          unrevTiles++;
+          potentialMines.insert({X, Y});
+        }
+      }
+
+      if (unrevTiles != gameBoard[i][j]) {
+        continue;
+      }
+
+      for (const auto &mine : potentialMines) {
+        if (knownMines.find(mine) != knownMines.end()) {
+          continue;
+        }
+        knownMines.insert(mine);
+      }
+    }
+  }
+
+  return knownMines;
 }

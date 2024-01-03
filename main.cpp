@@ -75,9 +75,12 @@ int main() {
   int userRow = -2, userCol = -2;
 
   cout << "Bots flagged Point: " << endl;
-  set<pair<int, int>> knownMines =
-      calculateInitialKnownMines(maxNumberOfColumns, maxNumberOfRows,
-                                 boolGameBoard, gameBoard, boolFlagLocation);
+  set<pair<int, int>> knownMines;  
+  knownMines = botCheckForMines(knownMines, maxNumberOfRows, maxNumberOfColumns,
+  round, maxNumOfMines, boolGameBoard, gameBoard,
+  boolFlagLocation);
+     // calculateInitialKnownMines(maxNumberOfColumns, maxNumberOfRows,
+       //                          boolGameBoard, gameBoard, boolFlagLocation);
 
   for (const auto &mineLocation : knownMines) {
     std::cout << "Mine at coordinates (" << mineLocation.second << ", "
@@ -105,18 +108,24 @@ int main() {
                       maxNumOfMines, boolGameBoard, gameBoard,
                       boolFlagLocation);
 
-
-// new mine calculation function
+  // new mine calculation function
 
   // given a revealed tile
-    // if the tile int = number of unrevealed tiles in proximity
-    // all the unrevealed tiles are mines
-        // check to see if mine is in mines
-        // if not, store it in mines
+  // if the tile int = number of unrevealed tiles in proximity
+  // all the unrevealed tiles are mines
+  // check to see if mine is in mines
+  // if not, store it in mines
 
+  knownMines = botCheckForMines(knownMines, maxNumberOfRows, maxNumberOfColumns,
+                                round, maxNumOfMines, boolGameBoard, gameBoard,
+                                boolFlagLocation);
 
+  cout << endl << "TEST SET 3" << endl;
+  for (const auto &mineLocation : knownMines) {
+    std::cout << "Mine at coordinates (" << mineLocation.second << ", "
+              << maxNumberOfRows - 1 - mineLocation.first << ")\n";
+  }
 
-  
   //
   // loop here
 
