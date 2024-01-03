@@ -146,7 +146,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
   pair<int, int> newGuess;
   newGuess = {0, 0};
   // aroundMine.find(check) != aroundMine.end()
-  if (knownMines.find(newGuess) != knownMines.end()) {
+  if (knownMines.find(newGuess) == knownMines.end()) {
     if (boolGameBoard[0][0] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, 0, 0, round);
@@ -154,7 +154,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
     }
   }
   newGuess = {0, maxNumberOfColumns - 1};
-  if (knownMines.find(newGuess) != knownMines.end()) {
+  if (knownMines.find(newGuess) == knownMines.end()) {
 
     if (boolGameBoard[0][maxNumberOfColumns - 1] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
@@ -164,7 +164,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
     }
   }
   newGuess = {maxNumberOfRows - 1, 0};
-  if (knownMines.find(newGuess) != knownMines.end()) {
+  if (knownMines.find(newGuess) == knownMines.end()) {
     if (boolGameBoard[maxNumberOfRows - 1][0] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, maxNumberOfRows - 1, 0, round);
