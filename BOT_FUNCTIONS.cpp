@@ -69,9 +69,35 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
             continue;
           }
           // if here then youve found a revealed tile
+          // create a set of the tiles aroud the mine
+          
+          // if the check is not in the set, continue
           if (!boolGameBoard[X2][Y2] || gameBoard[X2][Y2] != 1) {
             continue;
           }
+
+          set<pair<int,int>> aroundMine;
+          for (int ind = 0; ind < 8; ind++) {
+          int checkX = mineLocation.first + defIndexX[ind];
+          int checkY = mineLocation.second + defIndexY[ind];
+
+            if (checkX < 0 || checkX >= maxNumberOfRows || checkY < 0 || checkY >= maxNumberOfColumns) {
+              continue;
+            }
+
+            pair<int, int> checkAround = {checkX, checkY};
+            aroundMine.insert(checkAround); 
+            
+          }
+          // if the check is not in the set, continue
+          if(aroundMine.find(check) != aroundMine.end()){
+            continue;
+          }
+
+          
+
+          
+          
           bool xCriteria = (abs(X - X2) == 0 && abs(Y - Y2) <= 1);
           bool yCriteria = (abs(Y - Y2) == 0 && abs(X - X2) <= 1);
           if (yCriteria || xCriteria) {
@@ -328,7 +354,7 @@ void triggeredAMine(int maxNumberOfRows, int maxNumberOfColumns,
 bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
                   vector<vector<bool>> &boolGameBoard,
                   vector<vector<int>> &gameBoard, int maxNumOfMines,
-                  int userRow, int userCol) {
+                  int userRow, int userCol, int round) {
   bool gameOver = false;
   bool revealedTile = false;
   while (!revealedTile) {
@@ -474,7 +500,7 @@ bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
 
   bool gameOver =
       playRoundBot(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                   gameBoard, maxNumOfMines, userRow, userCol);
+                   gameBoard, maxNumOfMines, userRow, userCol, round);
   if(gameOver == true){
     
   }

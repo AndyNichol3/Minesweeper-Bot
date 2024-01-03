@@ -14,7 +14,7 @@ int returnCornerLocation(vector<vector<bool>> &boolGameBoard,
 bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
                   vector<vector<bool>> &boolGameBoard,
                   vector<vector<int>> &gameBoard, int maxNumOfMines,
-                  int userRow, int userCol);
+                  int userRow, int userCol, int round);
 
 bool playRoundUser(int maxNumberOfColumns, int maxNumberOfRows,
                    vector<vector<bool>> &boolGameBoard,
