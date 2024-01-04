@@ -2,11 +2,10 @@
 
 // g++ main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
 #include "BOT_FUNCTIONS.h"
-#include "PLAY_GAME.h"
 #include "BOT_MOVES.h"
+#include "PLAY_GAME.h"
 
 #include <iostream>
-#include <queue>
 #include <set>
 #include <vector>
 
@@ -123,8 +122,10 @@ int main() {
       // continueGame = false;
       // break;
     }
-    // potentially line of logic here, if the bot has no more moves, which ever tile has the highest total of mines around it, it will assume that tile is a mine. run a potential program.
-    // may only work with very few tiles left to be revealed. 
+    // potentially line of logic here, if the bot has no more moves, which ever
+    // tile has the highest total of mines around it, it will assume that tile
+    // is a mine. run a potential program. may only work with very few tiles
+    // left to be revealed.
 
     // new line of logic, its less likely that a given x or y value will
     // generate in a line so if you need to guess,
