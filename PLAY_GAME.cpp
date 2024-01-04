@@ -30,9 +30,7 @@ void recursiveRevealExplosion(vector<vector<int>> &gameBoard,
     int updateRow = X + defIndexX[i];
     int updateCol = Y + defIndexY[i];
 
-    if (updateRow >= 0 && updateRow < maxNumberOfRows && updateCol >= 0 &&
-        updateCol < maxNumberOfColumns &&
-        !boolGameBoard[updateRow][updateCol]) {
+    if (updateRow >= 0 && updateRow < maxNumberOfRows && updateCol >= 0 && updateCol < maxNumberOfColumns && !boolGameBoard[updateRow][updateCol]) {
       boolGameBoard[updateRow][updateCol] = true;
       // if the tile is 0, do the reveal
       if (gameBoard[updateRow][updateCol] == 0) {

@@ -596,11 +596,59 @@ int printBotFlaggedMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
 
   for (const auto &mineLocation : knownMines) {
     confirmedMineTally++;
-    //cout << "Mine at coordinates (" << mineLocation.second << ", "
-            //  << maxNumberOfRows - 1 - mineLocation.first << ")\n";
+    // cout << "Mine at coordinates (" << mineLocation.second << ", "
+    //   << maxNumberOfRows - 1 - mineLocation.first << ")\n";
   }
   cout << "There are " << confirmedMineTally << " mines flagged" << endl;
-  cout << "There are " << maxNumOfMines - confirmedMineTally << " mines left" << endl; 
+  cout << "There are " << maxNumOfMines - confirmedMineTally << " mines left"
+       << endl;
 
   return confirmedMineTally;
+}
+
+int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
+                 vector<vector<bool>> &boolGameBoard,
+                 vector<vector<int>> &gameBoard, int maxNumOfMines, int round,
+                 set<pair<int, int>> knownMines,
+                 vector<vector<bool>> &boolFlagLocation) {
+  pair<int, int> newGuess;
+  newGuess = {0, 0};
+  // aroundMine.find(check) != aroundMine.end()
+  if (knownMines.find(newGuess) == knownMines.end()) {
+    if (boolGameBoard[0][0] == false) {
+      completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                       gameBoard, maxNumOfMines, 0, 0, round, boolFlagLocation);
+      return 0;
+    }
+  }
+  newGuess = {0, maxNumberOfColumns - 1};
+  if (knownMines.find(newGuess) == knownMines.end()) {
+
+    if (boolGameBoard[0][maxNumberOfColumns - 1] == false) {
+      completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                       gameBoard, maxNumOfMines, 0, maxNumberOfColumns - 1,
+                       round, boolFlagLocation);
+      return 0;
+    }
+  }
+  newGuess = {maxNumberOfRows - 1, 0};
+  if (knownMines.find(newGuess) == knownMines.end()) {
+    if (boolGameBoard[maxNumberOfRows - 1][0] == false) {
+      completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                       gameBoard, maxNumOfMines, maxNumberOfRows - 1, 0, round,
+                       boolFlagLocation);
+      return 0;
+    }
+  }
+  newGuess = {maxNumberOfRows - 1, maxNumberOfColumns - 1};
+  if (knownMines.find(newGuess) == knownMines.end()) {
+    if (boolGameBoard[maxNumberOfRows - 1][maxNumberOfColumns - 1] == false) {
+      completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                       gameBoard, maxNumOfMines, maxNumberOfRows - 1,
+                       maxNumberOfColumns - 1, round, boolFlagLocation);
+      return 0;
+    }
+  }
+  cout << "No corners found" << endl;
+  return 1;
 }
