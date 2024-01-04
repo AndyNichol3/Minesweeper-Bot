@@ -78,7 +78,7 @@ int main() {
                                   maxNumberOfColumns, round, maxNumOfMines,
                                   boolGameBoard, gameBoard, boolFlagLocation);
 
-    confirmedMineTally = printBotFlaggedMines(knownMines, maxNumberOfRows);
+    confirmedMineTally = printBotFlaggedMines(knownMines, maxNumberOfRows, maxNumOfMines);
 
     if (confirmedMineTally == maxNumOfMines) {
       cout << endl << "All Mines Found" << endl;

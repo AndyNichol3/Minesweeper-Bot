@@ -552,6 +552,7 @@ calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
               pair<int, int> temp = adjustIndex(cornerLocation, mineLocation);
               // cout << "entered 4" << endl;
               if (knownMines.count(temp) == 0) {
+                boolFlagLocation[temp.first][temp.second] = true;
                 knownMines.insert(temp);
               }
               // knownMines.push({i, j});
@@ -589,14 +590,17 @@ bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
   return true;
 }
 
-int printBotFlaggedMines(set<pair<int, int>> knownMines, int maxNumberOfRows) {
+int printBotFlaggedMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
+                         int maxNumOfMines) {
   int confirmedMineTally = 0;
 
   for (const auto &mineLocation : knownMines) {
     confirmedMineTally++;
-    std::cout << "Mine at coordinates (" << mineLocation.second << ", "
-              << maxNumberOfRows - 1 - mineLocation.first << ")\n";
+    //cout << "Mine at coordinates (" << mineLocation.second << ", "
+            //  << maxNumberOfRows - 1 - mineLocation.first << ")\n";
   }
+  cout << "There are " << confirmedMineTally << " mines flagged" << endl;
+  cout << "There are " << maxNumOfMines - confirmedMineTally << " mines left" << endl; 
 
   return confirmedMineTally;
 }
