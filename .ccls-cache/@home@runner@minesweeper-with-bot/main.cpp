@@ -10,8 +10,6 @@
 
 using namespace std;
 
-
-
 int main() {
   // define variable
   int maxNumberOfRows = 0, maxNumberOfColumns = 0, maxNumOfMines = 0,
@@ -75,7 +73,8 @@ int main() {
                                   maxNumberOfColumns, round, maxNumOfMines,
                                   boolGameBoard, gameBoard, boolFlagLocation);
 
-    confirmedMineTally = printBotFlaggedMines(knownMines, maxNumberOfRows, maxNumOfMines);
+    confirmedMineTally =
+        printBotFlaggedMines(knownMines, maxNumberOfRows, maxNumOfMines);
 
     if (confirmedMineTally == maxNumOfMines) {
       cout << endl << "All Mines Found" << endl;
@@ -111,10 +110,11 @@ int main() {
         break;
       }
       // pair<int,int> guessMine = mathWeightedGuess();
-      int error = guessCorners(maxNumberOfRows, maxNumberOfColumns, boolGameBoard,
-                   gameBoard, maxNumOfMines, round, knownMines, boolFlagLocation);
-      if (error == 1) {
-        break; 
+      int returnedError = guessCorners(maxNumberOfRows, maxNumberOfColumns,
+                                       boolGameBoard, gameBoard, maxNumOfMines,
+                                       round, knownMines, boolFlagLocation);
+      if (returnedError == 1) {
+        break;
       }
       catchInfinateLoop++;
 
@@ -122,7 +122,8 @@ int main() {
       // break;
     }
 
-    // new line of logic, its less likely that a given x or y value will generate in a line so if you need to guess,
+    // new line of logic, its less likely that a given x or y value will
+    // generate in a line so if you need to guess,
   }
 
   if (win == false) {
@@ -137,6 +138,5 @@ int main() {
     printLose();
   }
 }
-
 
 // pair<int,int> mathWeightedGuess(){}
