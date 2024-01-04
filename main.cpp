@@ -13,7 +13,7 @@ using namespace std;
 int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
                   vector<vector<bool>> &boolGameBoard,
                   vector<vector<int>> &gameBoard, int maxNumOfMines, int round,
-                  set<pair<int, int>> knownMines);
+                  set<pair<int, int>> knownMines, vector<vector<bool>> &boolFlagLocation);
 
 int main() {
   // define variable
@@ -60,7 +60,7 @@ int main() {
 
   // initalizeGameBoard
   initalizeBotGameBoard(boolGameBoard, gameBoard, maxNumberOfRows,
-                        maxNumberOfColumns, maxNumOfMines);
+                        maxNumberOfColumns, maxNumOfMines, boolFlagLocation);
 
   bool gameOver = false, win = false;
   int revealTally = 0, maxDisplay = maxNumberOfRows * maxNumberOfColumns,
@@ -115,7 +115,7 @@ int main() {
       }
       // pair<int,int> guessMine = mathWeightedGuess();
       int error = guessCorners(maxNumberOfRows, maxNumberOfColumns, boolGameBoard,
-                   gameBoard, maxNumOfMines, round, knownMines);
+                   gameBoard, maxNumOfMines, round, knownMines, boolFlagLocation);
       if (error == 1) {
         break; 
       }
@@ -128,7 +128,7 @@ int main() {
 
   if (win == false) {
     win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                   gameBoard, maxNumOfMines, round);
+                   gameBoard, maxNumOfMines, round, boolFlagLocation);
   }
 
   if (win == true) {
@@ -142,14 +142,14 @@ int main() {
 int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
                   vector<vector<bool>> &boolGameBoard,
                   vector<vector<int>> &gameBoard, int maxNumOfMines, int round,
-                  set<pair<int, int>> knownMines) {
+                  set<pair<int, int>> knownMines, vector<vector<bool>> &boolFlagLocation) {
   pair<int, int> newGuess;
   newGuess = {0, 0};
   // aroundMine.find(check) != aroundMine.end()
   if (knownMines.find(newGuess) == knownMines.end()) {
     if (boolGameBoard[0][0] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                       gameBoard, maxNumOfMines, 0, 0, round);
+                       gameBoard, maxNumOfMines, 0, 0, round, boolFlagLocation);
       return 0;
     }
   }
@@ -159,7 +159,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
     if (boolGameBoard[0][maxNumberOfColumns - 1] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, 0, maxNumberOfColumns - 1,
-                       round);
+                       round, boolFlagLocation);
       return 0;
     }
   }
@@ -167,7 +167,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
   if (knownMines.find(newGuess) == knownMines.end()) {
     if (boolGameBoard[maxNumberOfRows - 1][0] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                       gameBoard, maxNumOfMines, maxNumberOfRows - 1, 0, round);
+                       gameBoard, maxNumOfMines, maxNumberOfRows - 1, 0, round, boolFlagLocation);
       return 0;
     }
   }
@@ -176,7 +176,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
     if (boolGameBoard[maxNumberOfRows - 1][maxNumberOfColumns - 1] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, maxNumberOfRows - 1,
-                       maxNumberOfColumns - 1, round);
+                       maxNumberOfColumns - 1, round, boolFlagLocation);
       return 0;
     }
   }

@@ -7,7 +7,7 @@
 bool playGame(int maxNumberOfColumns, int maxNumberOfRows,
               std::vector<std::vector<bool>> &boolGameBoard,
               std::vector<std::vector<int>> &gameBoard, int maxNumOfMines,
-              int round);
+              int round, std::vector<std::vector<bool>> &boolFlagLocation);
 
 void recursiveRevealExplosion(std::vector<std::vector<int>> &gameBoard,
                               std::vector<std::vector<bool>> &boolGameBoard,
@@ -18,7 +18,7 @@ void recursiveRevealExplosion(std::vector<std::vector<int>> &gameBoard,
 void initalizeGameBoard(std::vector<std::vector<bool>> &boolGameBoard,
                         std::vector<std::vector<int>> &gameBoard,
                         int maxNumberOfRows, int maxNumberOfColumns,
-                        int maxNumOfMines);
+                        int maxNumOfMines, std::vector<std::vector<bool>> &boolFlagLocation);
 void fillWithMines(std::vector<std::vector<int>> &gameBoard, int userStartRow,
                    int userStartCol, int maxNumOfMines, int maxNumberOfRows,
                    int maxNumberOfColumns);
@@ -40,6 +40,7 @@ void printWin();
 void printLose();
 int printBoolBoard(const std::vector<std::vector<bool>> &boolGameBoard,
                    const std::vector<std::vector<int>> &gameBoard,
-                   int maxNumberOfRows, int maxNumberOfColumns);
+                   int maxNumberOfRows, int maxNumberOfColumns,
+                   std::vector<std::vector<bool>> &boolFlagLocation);
 
 #endif
