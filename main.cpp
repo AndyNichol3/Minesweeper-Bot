@@ -1,8 +1,10 @@
 // minesweeper
 
-// g++ main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp
+// g++ main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
 #include "BOT_FUNCTIONS.h"
 #include "PLAY_GAME.h"
+#include "BOT_MOVES.h"
+
 #include <iostream>
 #include <queue>
 #include <set>
