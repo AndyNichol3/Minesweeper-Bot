@@ -9,38 +9,47 @@
 #include <set>
 #include <vector>
 
+#include <tuple> 
+
 using namespace std;
 
-int main() {
-  // define variable
-  int maxNumberOfRows = 0, maxNumberOfColumns = 0, maxNumOfMines = 0,
-      displaySubtract = 0, round = 1;
-
+tuple<int,int,int> gameStart (){
   printGameWelcome();
+
+  tuple<int,int,int> returnTuple; 
 
   int difficulty = getUserDifficulty();
 
   // define some constasnts based on the difficulty
   switch (difficulty) {
+    // <maxRows, maxColums, MaXNumOfMines>
   case 1: {
-    maxNumberOfRows = 9;
-    maxNumberOfColumns = 9;
-    maxNumOfMines = 10;
+    returnTuple = make_tuple(9,9,10);
     break;
   }
   case 2: {
-    maxNumberOfRows = 16;
-    maxNumberOfColumns = 16;
-    maxNumOfMines = 40;
+    returnTuple = make_tuple(16,16,40);
     break;
   }
   case 3: {
-    maxNumberOfRows = 16;
-    maxNumberOfColumns = 30;
-    maxNumOfMines = 99;
+    returnTuple = make_tuple(16,30,99);
     break;
   }
   }
+
+  return returnTuple;
+} 
+
+int main() {
+  // define variable
+  int displaySubtract = 0, round = 1;
+
+  // <maxRows, maxColums, MaXNumOfMines>
+  tuple<int,int,int> gameStartTuple = gameStart();
+  int maxNumberOfRows = get<0>(gameStartTuple);
+  int maxNumberOfColumns = get<1>(gameStartTuple);
+  int maxNumOfMines = get<2>(gameStartTuple);
+  
 
   // create the definition for some display variables
   displaySubtract = maxNumberOfRows - 1;
