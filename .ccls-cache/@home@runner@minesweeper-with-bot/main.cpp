@@ -70,17 +70,15 @@ int main() {
       // break;
     }
 
-    cout << endl << "METHOD 1" << endl;
     bool changesMadeMethod1 = playBotMovesMethod1(
         knownMines, maxNumberOfRows, maxNumberOfColumns, round, maxNumOfMines,
         boolGameBoard, gameBoard, boolFlagLocation);
 
-    cout << endl << "METHOD 2" << endl;
     bool changesMadeMethod2 = playBotMovesMethod2(
         knownMines, maxNumberOfRows, maxNumberOfColumns, round, maxNumOfMines,
         boolGameBoard, gameBoard, boolFlagLocation);
 
-    if (changesMadeMethod1 == false && changesMadeMethod2 == false) {
+    if (!changesMadeMethod1 && !changesMadeMethod2) {
       cout << endl << "No Further Moves" << endl;
       cout << "Initalize the first guess" << endl;
       if (catchInfinateLoop >= 4) {

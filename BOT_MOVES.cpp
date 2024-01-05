@@ -1,6 +1,6 @@
+#include "BOT_MOVES.h"
 #include "BOT_FUNCTIONS.h"
 #include "PLAY_GAME.h"
-#include "BOT_MOVES.h"
 
 #include <cmath>
 #include <cstdlib>
@@ -43,7 +43,7 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
         pair<int, int> currentLoc = {X, Y};
         if ((knownMines.find(currentLoc) != knownMines.end())) {
           continue;
-        }  
+        }
         // X < 0 || X >= maxNumberOfRows || Y < 0 || Y >= maxNumberOfColumns
         if (checkOutOfBounds(X, Y, maxNumberOfRows, maxNumberOfColumns)) {
           continue;
@@ -57,34 +57,36 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
         for (int index2 = 0; index2 < 8; index2++) {
           int X2 = X + defIndexX[index2];
           int Y2 = Y + defIndexY[index2];
-          //X2 < 0 || X2 >= maxNumberOfRows || Y2 < 0 ||Y2 >= maxNumberOfColumns
+          // X2 < 0 || X2 >= maxNumberOfRows || Y2 < 0 ||Y2 >=
+          // maxNumberOfColumns
           if (checkOutOfBounds(X2, Y2, maxNumberOfRows, maxNumberOfColumns)) {
             continue;
           }
+          if (boolGameBoard[X2][Y2] == false) {
+            continue;
+          }
+          if (gameBoard[X2][Y2] != 1) {
+            continue;
+          }
+
           pair<int, int> check = {X2, Y2};
           if ((knownMines.find(check) != knownMines.end())) {
             // cout << "flag" << endl;
             continue;
           }
 
-          if (boolGameBoard[X2][Y2] == false) {
-            continue;
-          }
           // if here then youve found a revealed tile
           // create a set of the tiles aroud the mine
 
           // if the check is not in the set, continue
-          //!boolGameBoard[X2][Y2] || 
-          if (gameBoard[X2][Y2] != 1) {
-            continue;
-          }
 
           set<pair<int, int>> aroundMine;
           for (int ind = 0; ind < 8; ind++) {
             int checkX = mineLocation.first + defIndexX[ind];
             int checkY = mineLocation.second + defIndexY[ind];
 
-            if (checkOutOfBounds(checkX, checkY, maxNumberOfRows, maxNumberOfColumns)) {
+            if (checkOutOfBounds(checkX, checkY, maxNumberOfRows,
+                                 maxNumberOfColumns)) {
               continue;
             }
 
@@ -96,9 +98,9 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
             continue;
           }
 
-          bool xCriteria = (abs(X - X2) == 0 && abs(Y - Y2) <= 1);
-          bool yCriteria = (abs(Y - Y2) == 0 && abs(X - X2) <= 1);
-          if (yCriteria || xCriteria) {
+          bool caseOne = (abs(X - X2) == 0 && abs(Y - Y2) <= 1);
+          bool caseTwo = (abs(Y - Y2) == 0 && abs(X - X2) <= 1);
+          if (caseTwo || caseOne) {
             if (!boolGameBoard[X][Y] && !boolFlagLocation[X][Y]) {
               itterations++;
               movesMade++;
@@ -247,3 +249,122 @@ set<pair<int, int>> botCheckForMines(
   return knownMines;
 }
 
+bool playBotMovesMethod1andahalf(set<pair<int, int>> knownMines,
+                                 int maxNumberOfRows, int maxNumberOfColumns,
+                                 int round, int maxNumOfMines,
+                                 vector<vector<bool>> &boolGameBoard,
+                                 vector<vector<int>> &gameBoard,
+                                 vector<vector<bool>> &boolFlagLocation) {
+  int movesMade = 0;
+
+  for (const auto &mineLocation : knownMines) {
+    // std::cout << "working with (" << mineLocation.second << ", "
+    //<< maxNumberOfRows - 1 - mineLocation.first << ")\n";
+    bool botCanStillPlay = true;
+    while (botCanStillPlay) {
+      int itterations = 0;
+      // given the location of a mine
+      // if there exists an unrevealed tile within the 8 immediade sorrunding
+      // tiles that is adjacent to a revaled tile with the value of 1 play the
+      // unrevealed round and restart
+
+      // bool mineAdjHasUnrevealed = checkAdjForEmptySpace()
+      // if(!mineAdjHasUnrevealed){
+      // break;
+      // }
+      int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+      int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
+      
+      for (int indexX = -1; indexX <= 1; indexX++) {
+        for (int indexY = -1; indexY <= 1; indexY++) {
+          int X = mineLocation.first + indexX;
+          int Y = mineLocation.second + indexY;
+          
+          pair<int, int> currentLoc = {X, Y};
+          if ((knownMines.find(currentLoc) != knownMines.end())) {
+            continue;
+          }
+          // X < 0 || X >= maxNumberOfRows || Y < 0 || Y >= maxNumberOfColumns
+          if (checkOutOfBounds(X, Y, maxNumberOfRows, maxNumberOfColumns)) {
+            continue;
+          }
+
+          if (boolGameBoard[X][Y]) {
+            continue;
+          }
+          // if here, then youve found an unrevealed tile
+          // cout << "\nINDEX " << index << endl;
+          for (int index2 = 0; index2 < 8; index2++) {
+            int X2 = X + defIndexX[index2];
+            int Y2 = Y + defIndexY[index2];
+            // X2 < 0 || X2 >= maxNumberOfRows || Y2 < 0 ||Y2 >=
+            // maxNumberOfColumns
+            if (checkOutOfBounds(X2, Y2, maxNumberOfRows, maxNumberOfColumns)) {
+              continue;
+            }
+            if (boolGameBoard[X2][Y2] == false) {
+              continue;
+            }
+            if (gameBoard[X2][Y2] != 1) {
+              continue;
+            }
+
+            pair<int, int> check = {X2, Y2};
+            if ((knownMines.find(check) != knownMines.end())) {
+              // cout << "flag" << endl;
+              continue;
+            }
+
+            // if here then youve found a revealed tile
+            // create a set of the tiles aroud the mine
+
+            // if the check is not in the set, continue
+
+            set<pair<int, int>> aroundMine;
+            for (int ind = 0; ind < 8; ind++) {
+              int checkX = mineLocation.first + defIndexX[ind];
+              int checkY = mineLocation.second + defIndexY[ind];
+
+              if (checkOutOfBounds(checkX, checkY, maxNumberOfRows,
+                                   maxNumberOfColumns)) {
+                continue;
+              }
+
+              pair<int, int> checkAround = {checkX, checkY};
+              aroundMine.insert(checkAround);
+            }
+            // if the check is not in the set, continue
+            if (aroundMine.find(check) == aroundMine.end()) {
+              continue;
+            }
+
+            bool caseOne = (abs(X - X2) == 0 && abs(Y - Y2) <= 1);
+            bool caseTwo = (abs(Y - Y2) == 0 && abs(X - X2) <= 1);
+            if (caseTwo || caseOne) {
+              if (!boolGameBoard[X][Y] && !boolFlagLocation[X][Y]) {
+                itterations++;
+                movesMade++;
+                // cout << endl <<"INDEX 2 " << endl;
+                completeBotRound(maxNumberOfColumns, maxNumberOfRows,
+                                 boolGameBoard, gameBoard, maxNumOfMines, X, Y,
+                                 round, boolFlagLocation);
+              }
+            }
+          }
+        }
+      }
+
+      //for (int index = 0; index < 8; index++) {}
+
+      if (itterations == 0) {
+        botCanStillPlay = false;
+      }
+    }
+  }
+
+  if (movesMade == 0) {
+    // no alterations were made
+    return false;
+  }
+  return true;
+}
