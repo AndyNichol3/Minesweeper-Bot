@@ -1,6 +1,6 @@
 #include "BOT_FUNCTIONS.h"
-#include "PLAY_GAME.h"
 #include "BOT_MOVES.h"
+#include "PLAY_GAME.h"
 
 #include <cmath>
 #include <cstdlib>
@@ -8,10 +8,9 @@
 #include <iostream>
 #include <limits>
 #include <set>
+#include <tuple>
 #include <vector>
 using namespace std;
-
-
 
 bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
                  vector<vector<bool>> &boolGameBoard,
@@ -419,4 +418,39 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
   }
   cout << "No corners found" << endl;
   return 1;
+}
+
+tuple<int, int, int> gameStart() {
+  printGameWelcome();
+
+  tuple<int, int, int> returnTuple;
+
+  int difficulty = getUserDifficulty();
+
+  // define some constasnts based on the difficulty
+  switch (difficulty) {
+    // <maxRows, maxColums, MaXNumOfMines>
+  case 1: {
+    returnTuple = make_tuple(9, 9, 10);
+    break;
+  }
+  case 2: {
+    returnTuple = make_tuple(16, 16, 40);
+    break;
+  }
+  case 3: {
+    returnTuple = make_tuple(16, 30, 99);
+    break;
+  }
+  }
+
+  return returnTuple;
+}
+
+bool checkOutOfBounds(int row, int col, int maxNumberOfRows, int maxNumberOfColumns) {
+  if (row < 0 || row >= maxNumberOfRows || col < 0 ||
+    col >= maxNumberOfColumns) {
+      return true;
+    }
+  return false; 
 }

@@ -43,9 +43,9 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
         pair<int, int> currentLoc = {X, Y};
         if ((knownMines.find(currentLoc) != knownMines.end())) {
           continue;
-        }
-
-        if (X < 0 || X >= maxNumberOfRows || Y < 0 || Y >= maxNumberOfColumns) {
+        }  
+        // X < 0 || X >= maxNumberOfRows || Y < 0 || Y >= maxNumberOfColumns
+        if (checkOutOfBounds(X, Y, maxNumberOfRows, maxNumberOfColumns)) {
           continue;
         }
 
@@ -57,9 +57,8 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
         for (int index2 = 0; index2 < 8; index2++) {
           int X2 = X + defIndexX[index2];
           int Y2 = Y + defIndexY[index2];
-
-          if (X2 < 0 || X2 >= maxNumberOfRows || Y2 < 0 ||
-              Y2 >= maxNumberOfColumns) {
+          //X2 < 0 || X2 >= maxNumberOfRows || Y2 < 0 ||Y2 >= maxNumberOfColumns
+          if (checkOutOfBounds(X2, Y2, maxNumberOfRows, maxNumberOfColumns)) {
             continue;
           }
           pair<int, int> check = {X2, Y2};
@@ -68,14 +67,15 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
             continue;
           }
 
-          if (!boolGameBoard[X2][Y2]) {
+          if (boolGameBoard[X2][Y2] == false) {
             continue;
           }
           // if here then youve found a revealed tile
           // create a set of the tiles aroud the mine
 
           // if the check is not in the set, continue
-          if (!boolGameBoard[X2][Y2] || gameBoard[X2][Y2] != 1) {
+          //!boolGameBoard[X2][Y2] || 
+          if (gameBoard[X2][Y2] != 1) {
             continue;
           }
 
@@ -84,8 +84,7 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
             int checkX = mineLocation.first + defIndexX[ind];
             int checkY = mineLocation.second + defIndexY[ind];
 
-            if (checkX < 0 || checkX >= maxNumberOfRows || checkY < 0 ||
-                checkY >= maxNumberOfColumns) {
+            if (checkOutOfBounds(checkX, checkY, maxNumberOfRows, maxNumberOfColumns)) {
               continue;
             }
 
@@ -170,8 +169,7 @@ bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
             int X2 = i + defIndexX[index2];
             int Y2 = j + defIndexY[index2];
 
-            if (X2 < 0 || X2 >= maxNumberOfRows || Y2 < 0 ||
-                Y2 >= maxNumberOfColumns) {
+            if (checkOutOfBounds(X2, Y2, maxNumberOfRows, maxNumberOfColumns)) {
               continue;
             }
             if (boolGameBoard[X2][Y2] || boolFlagLocation[X2][Y2]) {
@@ -221,7 +219,7 @@ set<pair<int, int>> botCheckForMines(
         int X = i + defIndexX[index];
         int Y = j + defIndexY[index];
 
-        if (X < 0 || Y < 0 || X >= maxNumberOfRows || Y >= maxNumberOfColumns) {
+        if (checkOutOfBounds(X, Y, maxNumberOfRows, maxNumberOfColumns)) {
           // knownTally++;
           continue;
         }

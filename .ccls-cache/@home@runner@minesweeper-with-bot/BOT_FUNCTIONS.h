@@ -2,7 +2,9 @@
 #define BOT_FUNCTIONS_H
 
 #include <set>
+#include <tuple>
 #include <vector>
+
 using namespace std;
 
 bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
@@ -55,5 +57,8 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
                  vector<vector<int>> &gameBoard, int maxNumOfMines, int round,
                  set<pair<int, int>> knownMines,
                  vector<vector<bool>> &boolFlagLocation);
+tuple<int, int, int> gameStart();
+
+bool checkOutOfBounds(int row, int col, int maxNumberOfRows, int maxNumberOfColumns);
 
 #endif

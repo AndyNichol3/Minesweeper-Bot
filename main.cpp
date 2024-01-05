@@ -12,33 +12,6 @@
 
 using namespace std;
 
-tuple<int, int, int> gameStart() {
-  printGameWelcome();
-
-  tuple<int, int, int> returnTuple;
-
-  int difficulty = getUserDifficulty();
-
-  // define some constasnts based on the difficulty
-  switch (difficulty) {
-    // <maxRows, maxColums, MaXNumOfMines>
-  case 1: {
-    returnTuple = make_tuple(9, 9, 10);
-    break;
-  }
-  case 2: {
-    returnTuple = make_tuple(16, 16, 40);
-    break;
-  }
-  case 3: {
-    returnTuple = make_tuple(16, 30, 99);
-    break;
-  }
-  }
-
-  return returnTuple;
-}
-
 int main() {
   // define variable
   int round = 1;
@@ -68,7 +41,7 @@ int main() {
       userRow = -2, userCol = -2;
   set<pair<int, int>> knownMines;
 
-  cout << "Bots flagged Point: " << endl;
+  //cout << "Bots flagged Point: " << endl;
 
   bool continueGame = true;
   int catchInfinateLoop = 0;
@@ -98,7 +71,6 @@ int main() {
     }
 
     cout << endl << "METHOD 1" << endl;
-
     bool changesMadeMethod1 = playBotMovesMethod1(
         knownMines, maxNumberOfRows, maxNumberOfColumns, round, maxNumOfMines,
         boolGameBoard, gameBoard, boolFlagLocation);
@@ -148,5 +120,3 @@ int main() {
     printLose();
   }
 }
-
-// pair<int,int> mathWeightedGuess(){}
