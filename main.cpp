@@ -7,16 +7,15 @@
 
 #include <iostream>
 #include <set>
+#include <tuple>
 #include <vector>
-
-#include <tuple> 
 
 using namespace std;
 
-tuple<int,int,int> gameStart (){
+tuple<int, int, int> gameStart() {
   printGameWelcome();
 
-  tuple<int,int,int> returnTuple; 
+  tuple<int, int, int> returnTuple;
 
   int difficulty = getUserDifficulty();
 
@@ -24,35 +23,32 @@ tuple<int,int,int> gameStart (){
   switch (difficulty) {
     // <maxRows, maxColums, MaXNumOfMines>
   case 1: {
-    returnTuple = make_tuple(9,9,10);
+    returnTuple = make_tuple(9, 9, 10);
     break;
   }
   case 2: {
-    returnTuple = make_tuple(16,16,40);
+    returnTuple = make_tuple(16, 16, 40);
     break;
   }
   case 3: {
-    returnTuple = make_tuple(16,30,99);
+    returnTuple = make_tuple(16, 30, 99);
     break;
   }
   }
 
   return returnTuple;
-} 
+}
 
 int main() {
   // define variable
-  int displaySubtract = 0, round = 1;
+  int round = 1;
 
   // <maxRows, maxColums, MaXNumOfMines>
-  tuple<int,int,int> gameStartTuple = gameStart();
-  int maxNumberOfRows = get<0>(gameStartTuple);
-  int maxNumberOfColumns = get<1>(gameStartTuple);
-  int maxNumOfMines = get<2>(gameStartTuple);
-  
+  tuple<int, int, int> gameStartTuple = gameStart();
 
-  // create the definition for some display variables
-  displaySubtract = maxNumberOfRows - 1;
+  int maxNumberOfRows = get<0>(gameStartTuple),
+      maxNumberOfColumns = get<1>(gameStartTuple),
+      maxNumOfMines = get<2>(gameStartTuple);
 
   // creates the game baords
   // one to hold the ints and one to hold the bools
