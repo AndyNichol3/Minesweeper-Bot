@@ -41,7 +41,7 @@ int main() {
       userRow = -2, userCol = -2;
   set<pair<int, int>> knownMines;
 
-  //cout << "Bots flagged Point: " << endl;
+  // cout << "Bots flagged Point: " << endl;
 
   bool continueGame = true;
   int catchInfinateLoop = 0;
@@ -70,11 +70,10 @@ int main() {
       // break;
     }
 
-    bool changesMadeMethod1 = playBotMovesMethod1(
+    bool changesMadeMethod2 = playBotMovesMethod2(
         knownMines, maxNumberOfRows, maxNumberOfColumns, round, maxNumOfMines,
         boolGameBoard, gameBoard, boolFlagLocation);
-
-    bool changesMadeMethod2 = playBotMovesMethod2(
+    bool changesMadeMethod1 = playBotMovesMethod1(
         knownMines, maxNumberOfRows, maxNumberOfColumns, round, maxNumOfMines,
         boolGameBoard, gameBoard, boolFlagLocation);
 
@@ -97,6 +96,20 @@ int main() {
       // continueGame = false;
       // break;
     }
+
+
+  // prompt user to ask if it wants to make one guess or let the bot guess (warning: chance of failure)
+    // potential line of logic based on the number of mines needed to fufil a square
+    // create a temp game board, given a revealed tile, if gameBoard - number of sorruinging mines == 0; continue
+    // is not, add the absolute value of difference to all of the sorrunding unrevealed tiles. 
+    // store the highest index and pair
+    // this index is most likely a mine, store known mines, restart calcualting loop
+
+
+
+
+
+    
     // potentially line of logic here, if the bot has no more moves, which ever
     // tile has the highest total of mines around it, it will assume that tile
     // is a mine. run a potential program. may only work with very few tiles

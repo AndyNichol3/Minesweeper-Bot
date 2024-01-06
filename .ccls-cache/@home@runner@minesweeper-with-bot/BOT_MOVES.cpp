@@ -285,7 +285,9 @@ bool playBotMovesMethod1andahalf(set<pair<int, int>> knownMines,
             continue;
           }
           // X < 0 || X >= maxNumberOfRows || Y < 0 || Y >= maxNumberOfColumns
-          
+          if (checkOutOfBounds(X, Y, maxNumberOfRows, maxNumberOfColumns)) {
+            continue;
+          }
 
           if (boolGameBoard[X][Y]) {
             continue;
