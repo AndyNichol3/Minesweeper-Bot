@@ -40,7 +40,7 @@ int main() {
 
   // initalizeGameBoard
   initalizeBotGameBoard(boolGameBoard, gameBoard, maxNumberOfRows,
-                        maxNumberOfColumns, maxNumOfMines, boolFlagLocation);
+                        maxNumberOfColumns, maxNumOfMines, boolFlagLocation, round);
 
   bool gameOver = false, win = false;
   int revealTally = 0, maxDisplay = maxNumberOfRows * maxNumberOfColumns,

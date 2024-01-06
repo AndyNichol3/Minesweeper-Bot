@@ -146,7 +146,7 @@ void initalizeGameBoard(vector<vector<bool>> &boolGameBoard,
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns,
                  boolFlagLocation);
 
-  printRoundHeader(1);
+  //printRoundHeader(1);
 
   cout << "Enter Starting Point (-1 to exit): " << endl;
   int userStartCol = getInputX(maxNumberOfColumns);
@@ -330,7 +330,7 @@ void printGameRules() {
   cout << "Play: Select cells to reveal; avoid mines." << endl;
   cout << "Winning: Uncover all safe cells to win." << endl << endl;
 }
-void printRoundHeader(int round) {
+void printRoundHeader(int &round) {
 
   cout << WHITE << "_____________________________________\n" << endl;
   cout << RED << "                ROUND " << round << endl;

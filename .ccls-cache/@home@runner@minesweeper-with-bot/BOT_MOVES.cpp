@@ -109,6 +109,7 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
               completeBotRound(maxNumberOfColumns, maxNumberOfRows,
                                boolGameBoard, gameBoard, maxNumOfMines, X, Y,
                                round, boolFlagLocation);
+              round ++;
             }
           }
         }
@@ -187,6 +188,7 @@ bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
             completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                              gameBoard, maxNumOfMines, X2, Y2, round,
                              boolFlagLocation);
+            round ++;
           }
         }
       }
@@ -456,6 +458,7 @@ bool playBotMovesMethod1andahalf(set<pair<int, int>> knownMines,
                 completeBotRound(maxNumberOfColumns, maxNumberOfRows,
                                  boolGameBoard, gameBoard, maxNumOfMines, X, Y,
                                  round, boolFlagLocation);
+                round ++; 
               }
             }
           }

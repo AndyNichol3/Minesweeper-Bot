@@ -228,19 +228,20 @@ pair<int, int> adjustIndex(int cornerLocation, pair<int, int> mineLocation) {
 void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
                            vector<vector<int>> &gameBoard, int maxNumberOfRows,
                            int maxNumberOfColumns, int maxNumOfMines,
-                           vector<vector<bool>> &boolFlagLocation) {
+                           vector<vector<bool>> &boolFlagLocation, int &round) {
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns,
                  boolFlagLocation);
-  printRoundHeader(1);
+  printRoundHeader(round);
+  round ++; 
 
   // cout << "Enter Starting Point (-1 to exit): " << endl;
   cout << "the bot will now start" << endl;
   srand(time(NULL));
-  int userStartCol = rand() % (maxNumberOfColumns - 1);
-  userStartCol = maxNumberOfColumns / 2;
+  //int userStartCol = rand() % (maxNumberOfColumns - 1);
+  int userStartCol = maxNumberOfColumns / 2;
   cout << "bot chose X: " << userStartCol << endl;
-  int userStartRow = rand() % (maxNumberOfRows - 1);
-  userStartRow = maxNumberOfRows / 2;
+  //int userStartRow = rand() % (maxNumberOfRows - 1);
+  int userStartRow = maxNumberOfRows / 2;
   cout << "bot chose Y: " << maxNumberOfRows - 1 - userStartRow << endl;
 
   cout << endl;
@@ -350,6 +351,7 @@ bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
       // play i,j
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, i, j, round, boolFlagLocation);
+      round ++; 
     }
   }
 
@@ -386,6 +388,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, 0, maxNumberOfColumns - 1,
                        round, boolFlagLocation);
+      round ++; 
       return 0;
     }
   }
@@ -395,6 +398,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, maxNumberOfRows - 1, 0, round,
                        boolFlagLocation);
+      round ++; 
       return 0;
     }
   }
@@ -404,6 +408,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, maxNumberOfRows - 1,
                        maxNumberOfColumns - 1, round, boolFlagLocation);
+      round ++; 
       return 0;
     }
   }

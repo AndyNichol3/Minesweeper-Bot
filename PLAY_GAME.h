@@ -33,7 +33,7 @@ int getInputY(int maxNumberOfRows);
 int getUserDifficulty();
 
 // print and header functions
-void printRoundHeader(int round);
+void printRoundHeader(int &round);
 void printGameRules();
 void printGameWelcome();
 void printWin();
