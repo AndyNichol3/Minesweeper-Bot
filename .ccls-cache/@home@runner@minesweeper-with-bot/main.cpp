@@ -1,5 +1,9 @@
 // minesweeper
 
+// bug fix list
+// fix the round tally
+// fix the print bool board to be based on knownMines and not bool flag location
+
 // g++ main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
 #include "BOT_FUNCTIONS.h"
 #include "BOT_MOVES.h"
@@ -112,11 +116,12 @@ int main() {
         cout << "Entered Flag" << endl;
         break;
       }
-      cout << "Best Guess: " << bestGuess.second << " " <<  maxNumberOfRows - 1 - bestGuess.first << endl; 
+      cout << "Best Guess: " << bestGuess.second << " "
+           << maxNumberOfRows - 1 - bestGuess.first << endl;
       knownMines.insert(bestGuess);
       confirmedMineTally =
           printBotFlaggedMines(knownMines, maxNumberOfRows, maxNumOfMines);
-      
+
       totalGuessTally++;
 
       continue;
