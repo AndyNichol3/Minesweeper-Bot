@@ -447,10 +447,11 @@ tuple<int, int, int> gameStart() {
   return returnTuple;
 }
 
-bool checkOutOfBounds(int row, int col, int maxNumberOfRows, int maxNumberOfColumns) {
+bool checkOutOfBounds(int row, int col, int maxNumberOfRows,
+                      int maxNumberOfColumns) {
   if (row < 0 || row >= maxNumberOfRows || col < 0 ||
-    col >= maxNumberOfColumns) {
-      return true;
-    }
-  return false; 
+      col >= maxNumberOfColumns) {
+    return true;
+  }
+  return false;
 }

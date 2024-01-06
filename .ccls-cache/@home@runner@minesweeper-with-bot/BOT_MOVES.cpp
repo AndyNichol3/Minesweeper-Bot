@@ -249,6 +249,112 @@ set<pair<int, int>> botCheckForMines(
   return knownMines;
 }
 
+pair<int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
+                                 int maxNumberOfRows, int maxNumberOfColumns,
+                                 int round, int maxNumOfMines,
+                                 vector<vector<bool>> &boolGameBoard,
+                                 vector<vector<int>> &gameBoard) {
+  // potential line of logic based on the number of mines needed to fufil a
+  // square create a temp game board, given a revealed tile, if gameBoard -
+  // number of sorruinging mines == 0; continue is not, add the absolute value
+  // of difference to all of the sorrunding unrevealed tiles. store the highest
+  // index and pair this index is most likely a mine, store known mines, restart
+  // calcualting loop
+
+  // weight, x, y
+  tuple<int, int, int> storageTuple = {-1, -1, -1};
+
+  for (int i = 0; i < maxNumberOfRows; ++i) {
+    for (int j = 0; j < maxNumberOfColumns; ++j) {
+
+      if (boolGameBoard[i][j] == true) {
+        continue;
+      }
+
+      pair<int, int> tempPair = {i, j};
+      if (knownMines.find(tempPair) != knownMines.end()) {
+        continue;
+      }
+      // given an unrevealed tile,
+      // for all of the tiles around it,
+      int sumOfDifferences = 0;
+      for (int k = -1; k < 2; ++k) {
+        for (int l = -1; l < 2; ++l) {
+          if (k == 0 && l == 0) {
+            continue;
+          }
+          int X = i + k;
+          int Y = j + l;
+
+          if (checkOutOfBounds(X, Y, maxNumberOfRows, maxNumberOfColumns)) {
+            continue;
+          }
+          if (boolGameBoard[X][Y] == false) {
+            continue;
+          }
+          pair<int, int> newGuess = {X, Y};
+          // Continue the loop if newGuess is in knownMines
+          if (knownMines.find(newGuess) != knownMines.end()) {
+            continue;
+          }
+          // calculate the difference between tile int and the known mines
+          // around it add the difference to the sum total for the unrevealed
+          // tile
+          int sorrundingMineCount = 0;
+          for (int m = -1; m < 2; ++m) {
+            for (int n = -1; n < 2; ++n) {
+              if (m == 0 && n == 0) {
+                continue;
+              }
+              int X2 = i + m;
+              int Y2 = j + n;
+
+              if (checkOutOfBounds(X2, Y2, maxNumberOfRows,
+                                   maxNumberOfColumns)) {
+                continue;
+              }
+              if (boolGameBoard[X2][Y2] == true) {
+                continue;
+              }
+              pair<int, int> newGuess2 = {X2, Y2};
+              if (knownMines.find(newGuess2) != knownMines.end()) {
+                sorrundingMineCount++;
+              }
+            }
+          }
+
+          int difference = abs(sorrundingMineCount - gameBoard[i][j]);
+          sumOfDifferences += difference;
+          // if the sum total is higher the current highest
+          // store the sum and pair of the unrevealed tile
+          // loop
+
+          // if known mine
+          // cont
+          // if out of bound
+          // cont
+          // if unrevealed
+          // skip
+          // if revealed
+          // calculate the difference between tile int and the known mines
+          // around it add the difference to the sum total for the unrevealed
+          // tile
+
+          // if the sum total is higher the current highest
+          // store the sum and pair of the unrevealed tile
+          // loop
+        }
+      }
+
+      if (sumOfDifferences > get<0>(storageTuple)) {
+        storageTuple = {sumOfDifferences, i, j};
+      }
+    }
+  }
+
+  return {get<1>(storageTuple), get<2>(storageTuple)};
+}
+
 bool playBotMovesMethod1andahalf(set<pair<int, int>> knownMines,
                                  int maxNumberOfRows, int maxNumberOfColumns,
                                  int round, int maxNumOfMines,
@@ -274,12 +380,12 @@ bool playBotMovesMethod1andahalf(set<pair<int, int>> knownMines,
       // }
       int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
       int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
-      
+
       for (int indexX = -1; indexX <= 1; indexX++) {
         for (int indexY = -1; indexY <= 1; indexY++) {
           int X = mineLocation.first + indexX;
           int Y = mineLocation.second + indexY;
-          
+
           pair<int, int> currentLoc = {X, Y};
           if ((knownMines.find(currentLoc) != knownMines.end())) {
             continue;
@@ -354,7 +460,7 @@ bool playBotMovesMethod1andahalf(set<pair<int, int>> knownMines,
         }
       }
 
-      //for (int index = 0; index < 8; index++) {}
+      // for (int index = 0; index < 8; index++) {}
 
       if (itterations == 0) {
         botCanStillPlay = false;

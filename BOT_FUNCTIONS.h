@@ -59,6 +59,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
                  vector<vector<bool>> &boolFlagLocation);
 tuple<int, int, int> gameStart();
 
-bool checkOutOfBounds(int row, int col, int maxNumberOfRows, int maxNumberOfColumns);
+bool checkOutOfBounds(int row, int col, int maxNumberOfRows,
+                      int maxNumberOfColumns);
 
 #endif
