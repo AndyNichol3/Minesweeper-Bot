@@ -7,7 +7,7 @@
 bool playGame(int maxNumberOfColumns, int maxNumberOfRows,
               std::vector<std::vector<bool>> &boolGameBoard,
               std::vector<std::vector<int>> &gameBoard, int maxNumOfMines,
-              int round, std::vector<std::vector<bool>> &boolFlagLocation);
+              int &round, std::vector<std::vector<bool>> &boolFlagLocation);
 
 void recursiveRevealExplosion(std::vector<std::vector<int>> &gameBoard,
                               std::vector<std::vector<bool>> &boolGameBoard,

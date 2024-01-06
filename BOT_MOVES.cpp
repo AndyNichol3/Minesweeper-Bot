@@ -8,12 +8,13 @@
 #include <iostream>
 #include <limits>
 #include <set>
+#include <tuple>
 #include <vector>
 
 using namespace std;
 
 bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
-                         int maxNumberOfColumns, int round, int maxNumOfMines,
+                         int maxNumberOfColumns, int &round, int maxNumOfMines,
                          vector<vector<bool>> &boolGameBoard,
                          vector<vector<int>> &gameBoard,
                          vector<vector<bool>> &boolFlagLocation) {
@@ -127,7 +128,7 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
 }
 
 bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
-                         int maxNumberOfColumns, int round, int maxNumOfMines,
+                         int maxNumberOfColumns, int &round, int maxNumOfMines,
                          vector<vector<bool>> &boolGameBoard,
                          vector<vector<int>> &gameBoard,
                          vector<vector<bool>> &boolFlagLocation) {
@@ -202,7 +203,7 @@ bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
 
 set<pair<int, int>> botCheckForMines(
     set<pair<int, int>> knownMines, int maxNumberOfRows, int maxNumberOfColumns,
-    int round, int maxNumOfMines, vector<vector<bool>> &boolGameBoard,
+    int &round, int maxNumOfMines, vector<vector<bool>> &boolGameBoard,
     vector<vector<int>> &gameBoard, vector<vector<bool>> &boolFlagLocation) {
 
   for (int i = 0; i < maxNumberOfRows; ++i) {
@@ -249,11 +250,12 @@ set<pair<int, int>> botCheckForMines(
   return knownMines;
 }
 
-pair<int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
-                                 int maxNumberOfRows, int maxNumberOfColumns,
-                                 int round, int maxNumOfMines,
-                                 vector<vector<bool>> &boolGameBoard,
-                                 vector<vector<int>> &gameBoard) {
+tuple<int, int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
+                                       int maxNumberOfRows,
+                                       int maxNumberOfColumns, int &round,
+                                       int maxNumOfMines,
+                                       vector<vector<bool>> &boolGameBoard,
+                                       vector<vector<int>> &gameBoard) {
   // potential line of logic based on the number of mines needed to fufil a
   // square create a temp game board, given a revealed tile, if gameBoard -
   // number of sorruinging mines == 0; continue is not, add the absolute value
@@ -352,12 +354,12 @@ pair<int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
     }
   }
 
-  return {get<1>(storageTuple), get<2>(storageTuple)};
+  return {storageTuple};
 }
 
 bool playBotMovesMethod1andahalf(set<pair<int, int>> knownMines,
                                  int maxNumberOfRows, int maxNumberOfColumns,
-                                 int round, int maxNumOfMines,
+                                 int &round, int maxNumOfMines,
                                  vector<vector<bool>> &boolGameBoard,
                                  vector<vector<int>> &gameBoard,
                                  vector<vector<bool>> &boolFlagLocation) {

@@ -109,16 +109,17 @@ int main() {
       // try to add another
       // prompt user to ask if it wants to make one guess or let the bot guess
       // (warning: chance of failure)
-      pair<int, int> bestGuess =
+      tuple <int, int, int> bestGuess =
           mathWeightedGuess(knownMines, maxNumberOfRows, maxNumberOfColumns,
                             round, maxNumOfMines, boolGameBoard, gameBoard);
-      if (bestGuess.first == -1) {
+      if (get<1>(bestGuess) == -1) {
         cout << "Entered Flag" << endl;
         break;
       }
-      cout << "Best Guess: " << bestGuess.second << " "
-           << maxNumberOfRows - 1 - bestGuess.first << endl;
-      knownMines.insert(bestGuess);
+      cout << "Best Guess: " << get<2>(bestGuess) << " "
+           << maxNumberOfRows - 1 - get<1>(bestGuess) <<" with weight "<< get<0>(bestGuess) <<endl;
+      
+      knownMines.insert({get<1>(bestGuess), get<2>(bestGuess)});
       confirmedMineTally =
           printBotFlaggedMines(knownMines, maxNumberOfRows, maxNumOfMines);
 

@@ -43,7 +43,7 @@ void recursiveRevealExplosion(vector<vector<int>> &gameBoard,
 
 bool playGame(int maxNumberOfColumns, int maxNumberOfRows,
               vector<vector<bool>> &boolGameBoard,
-              vector<vector<int>> &gameBoard, int maxNumOfMines, int round,
+              vector<vector<int>> &gameBoard, int maxNumOfMines, int &round,
               vector<vector<bool>> &boolFlagLocation) {
   bool gameOver = false, win = false;
   int maxDisplay = maxNumberOfRows * maxNumberOfColumns;

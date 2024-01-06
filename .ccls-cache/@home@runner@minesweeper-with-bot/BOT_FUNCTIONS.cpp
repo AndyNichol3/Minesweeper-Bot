@@ -101,7 +101,7 @@ int returnCornerLocation(vector<vector<bool>> &boolGameBoard,
 void triggeredAMine(int maxNumberOfRows, int maxNumberOfColumns,
                     vector<vector<bool>> &boolGameBoard,
                     vector<vector<int>> &gameBoard, int maxNumOfMines,
-                    int round, vector<vector<bool>> &boolFlagLocation) {
+                    int &round, vector<vector<bool>> &boolFlagLocation) {
 
   for (int i = 0; i < maxNumberOfRows; i++) {
     for (int j = 0; j < maxNumberOfColumns; j++) {
@@ -119,7 +119,7 @@ void triggeredAMine(int maxNumberOfRows, int maxNumberOfColumns,
 bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
                   vector<vector<bool>> &boolGameBoard,
                   vector<vector<int>> &gameBoard, int maxNumOfMines,
-                  int userRow, int userCol, int round,
+                  int userRow, int userCol, int &round,
                   vector<vector<bool>> &boolFlagLocation) {
   bool gameOver = false;
   bool revealedTile = false;
@@ -259,7 +259,7 @@ void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
 bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
                       vector<vector<bool>> &boolGameBoard,
                       vector<vector<int>> &gameBoard, int maxNumOfMines,
-                      int userRow, int userCol, int round,
+                      int userRow, int userCol, int &round,
                       vector<vector<bool>> &boolFlagLocation) {
   // win 1
   // lose 2
@@ -333,7 +333,7 @@ calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
 }
 
 bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
-                   int maxNumberOfColumns, int round, int maxNumOfMines,
+                   int maxNumberOfColumns, int &round, int maxNumOfMines,
                    vector<vector<bool>> &boolGameBoard,
                    vector<vector<int>> &gameBoard,
                    vector<vector<bool>> &boolFlagLocation) {
@@ -374,7 +374,7 @@ int printBotFlaggedMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
 
 int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
                  vector<vector<bool>> &boolGameBoard,
-                 vector<vector<int>> &gameBoard, int maxNumOfMines, int round,
+                 vector<vector<int>> &gameBoard, int maxNumOfMines, int &round,
                  set<pair<int, int>> knownMines,
                  vector<vector<bool>> &boolFlagLocation) {
   pair<int, int> newGuess;
