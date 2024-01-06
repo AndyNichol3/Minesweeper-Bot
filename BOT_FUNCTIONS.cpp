@@ -409,6 +409,8 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
   }
   newGuess = {0, 0};
   // aroundMine.find(check) != aroundMine.end()
+
+  /*
   if (knownMines.find(newGuess) == knownMines.end()) {
     if (boolGameBoard[0][0] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
@@ -416,6 +418,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
       return 0;
     }
   }
+  */
   cout << "No corners found" << endl;
   return 1;
 }
