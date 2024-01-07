@@ -62,4 +62,10 @@ tuple<int, int, int> gameStart();
 bool checkOutOfBounds(int row, int col, int maxNumberOfRows,
                       int maxNumberOfColumns);
 
+int returnSorrundingMineCount(int X, int Y, int maxNumberOfRows,
+                              int maxNumberOfColumns,
+                              vector<vector<bool>> &boolGameBoard,
+                              vector<vector<int>> &gameBoard,
+                              set<pair<int, int>> knownMines);
+
 #endif

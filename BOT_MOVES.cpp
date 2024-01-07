@@ -314,36 +314,13 @@ tuple<int, int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
           // around it add the difference to the sum total for the unrevealed
           // tile
          // if (gameBoard[i][j] == true) {
-            int sorrundingMineCount = 0;
+            //int sorrundingMineCount = 0;
+
+        int sorrundingMineCount = returnSorrundingMineCount(X, Y, maxNumberOfRows, maxNumberOfColumns, boolGameBoard, gameBoard, knownMines);
+
+          // int returnSorrundingMineCount(int X,int Y,int maxNumberOfRows, int maxNumberOfColumns, vector<vector<bool>> &boolGameBoard, vector<vector<int>> &gameBoard, set<pair<int, int>> knownMines)
           
-            for (int m = -1; m < 2; ++m) {
-              for (int n = -1; n < 2; ++n) {
-                if (m == 0 && n == 0) {
-                  continue;
-                }
-                
-                int X2 = i + m;
-                int Y2 = j + n;
-
-                // cout << "        working with sub int" << Y2 << " " << maxNumberOfRows - 1 - X2 << endl; 
-
-                if (checkOutOfBounds(X2, Y2, maxNumberOfRows,
-                                     maxNumberOfColumns)) {
-                 // cout << "out of bounds" << endl;
-                  continue;
-                }
-                if (boolGameBoard[X2][Y2] == true) {
-                  
-                  continue;
-                }
-                pair<int, int> newGuess2 = {X2, Y2};
-                
-                if (knownMines.find(newGuess2) != knownMines.end()) {
-                 // cout << "        added " << Y2 << " " << maxNumberOfRows - 1 - X2 << endl;              
-                  sorrundingMineCount++;
-                }
-              }
-            }
+          
 
             cout << sorrundingMineCount << " mines counted for tile " << Y<< maxNumberOfRows - 1 - X<<endl;
 
