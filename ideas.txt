@@ -321,3 +321,22 @@ pulled from PLAYGAME.cpp
             }
 
             */
+
+            // if the sum total is higher the current highest
+            // store the sum and pair of the unrevealed tile
+            // loop
+
+            // if known mine
+            // cont
+            // if out of bound
+            // cont
+            // if unrevealed
+            // skip
+            // if revealed
+            // calculate the difference between tile int and the known mines
+            // around it add the difference to the sum total for the unrevealed
+            // tile
+
+            // if the sum total is higher the current highest
+            // store the sum and pair of the unrevealed tile
+            // loop

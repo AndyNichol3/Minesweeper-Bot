@@ -1,7 +1,6 @@
 // minesweeper
 
 // bug fix list
-// fix the round tally
 // fix the print bool board to be based on knownMines and not bool flag location
 
 // g++ main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp

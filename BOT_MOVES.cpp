@@ -109,7 +109,7 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
               completeBotRound(maxNumberOfColumns, maxNumberOfRows,
                                boolGameBoard, gameBoard, maxNumOfMines, X, Y,
                                round, boolFlagLocation);
-              round ++;
+              round++;
             }
           }
         }
@@ -188,7 +188,7 @@ bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
             completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                              gameBoard, maxNumOfMines, X2, Y2, round,
                              boolFlagLocation);
-            round ++;
+            round++;
           }
         }
       }
@@ -266,7 +266,7 @@ tuple<int, int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
   // calcualting loop
 
   // weight, x, y
-  tuple<int, int, int> storageTuple = {-1, -1, -1};
+  tuple<int, int, int> storageTuple = {0, -1, -1};
 
   for (int i = 0; i < maxNumberOfRows; ++i) {
     for (int j = 0; j < maxNumberOfColumns; ++j) {
@@ -281,7 +281,15 @@ tuple<int, int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
       }
       // given an unrevealed tile,
       // for all of the tiles around it,
+
+      // cout << "working with: " << get<2>(bestGuess) << " "
+      //<< maxNumberOfRows - 1 - get<1>(bestGuess) <<" with weight "<<
+      //get<0>(bestGuess) <<endl;
+      
+      //cout<< endl << "working with " << j << " " << maxNumberOfRows - 1 - i << endl; 
+
       int sumOfDifferences = 0;
+
       for (int k = -1; k < 2; ++k) {
         for (int l = -1; l < 2; ++l) {
           if (k == 0 && l == 0) {
@@ -296,61 +304,59 @@ tuple<int, int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
           if (boolGameBoard[X][Y] == false) {
             continue;
           }
+          
           pair<int, int> newGuess = {X, Y};
-          // Continue the loop if newGuess is in knownMines
           if (knownMines.find(newGuess) != knownMines.end()) {
             continue;
           }
+          // cout << "   working with sub int" << Y << " " << maxNumberOfRows - 1 - X << endl; 
           // calculate the difference between tile int and the known mines
           // around it add the difference to the sum total for the unrevealed
           // tile
-          int sorrundingMineCount = 0;
-          for (int m = -1; m < 2; ++m) {
-            for (int n = -1; n < 2; ++n) {
-              if (m == 0 && n == 0) {
-                continue;
-              }
-              int X2 = i + m;
-              int Y2 = j + n;
+         // if (gameBoard[i][j] == true) {
+            int sorrundingMineCount = 0;
+          
+            for (int m = -1; m < 2; ++m) {
+              for (int n = -1; n < 2; ++n) {
+                if (m == 0 && n == 0) {
+                  continue;
+                }
+                
+                int X2 = i + m;
+                int Y2 = j + n;
 
-              if (checkOutOfBounds(X2, Y2, maxNumberOfRows,
-                                   maxNumberOfColumns)) {
-                continue;
-              }
-              if (boolGameBoard[X2][Y2] == true) {
-                continue;
-              }
-              pair<int, int> newGuess2 = {X2, Y2};
-              if (knownMines.find(newGuess2) != knownMines.end()) {
-                sorrundingMineCount++;
+                // cout << "        working with sub int" << Y2 << " " << maxNumberOfRows - 1 - X2 << endl; 
+
+                if (checkOutOfBounds(X2, Y2, maxNumberOfRows,
+                                     maxNumberOfColumns)) {
+                 // cout << "out of bounds" << endl;
+                  continue;
+                }
+                if (boolGameBoard[X2][Y2] == true) {
+                  
+                  continue;
+                }
+                pair<int, int> newGuess2 = {X2, Y2};
+                
+                if (knownMines.find(newGuess2) != knownMines.end()) {
+                 // cout << "        added " << Y2 << " " << maxNumberOfRows - 1 - X2 << endl;              
+                  sorrundingMineCount++;
+                }
               }
             }
-          }
 
-          int difference = abs(sorrundingMineCount - gameBoard[i][j]);
-          sumOfDifferences += difference;
-          // if the sum total is higher the current highest
-          // store the sum and pair of the unrevealed tile
-          // loop
+            cout << sorrundingMineCount << " mines counted for tile " << Y<< maxNumberOfRows - 1 - X<<endl;
 
-          // if known mine
-          // cont
-          // if out of bound
-          // cont
-          // if unrevealed
-          // skip
-          // if revealed
-          // calculate the difference between tile int and the known mines
-          // around it add the difference to the sum total for the unrevealed
-          // tile
-
-          // if the sum total is higher the current highest
-          // store the sum and pair of the unrevealed tile
-          // loop
+            int difference = abs(sorrundingMineCount - gameBoard[X][Y]);
+            sumOfDifferences += difference;
+            sorrundingMineCount = 0;
+          //}
         }
-      }
+     }
 
       if (sumOfDifferences > get<0>(storageTuple)) {
+        cout << "new best guess: " << j << " " << maxNumberOfRows - 1 - i << " weight " << sumOfDifferences << endl;
+        cout << " replaces " << get<2>(storageTuple) << " " <<  maxNumberOfRows - 1 - get<1>(storageTuple) << " weight " << get<0>(storageTuple) << endl;
         storageTuple = {sumOfDifferences, i, j};
       }
     }
@@ -458,7 +464,7 @@ bool playBotMovesMethod1andahalf(set<pair<int, int>> knownMines,
                 completeBotRound(maxNumberOfColumns, maxNumberOfRows,
                                  boolGameBoard, gameBoard, maxNumOfMines, X, Y,
                                  round, boolFlagLocation);
-                round ++; 
+                round++;
               }
             }
           }
