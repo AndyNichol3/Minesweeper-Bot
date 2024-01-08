@@ -29,7 +29,7 @@ For the classic Minesweeper experience without the AI bot, explore the [MineSwee
 
 This is what a completed game should look like: 
 
-<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/completedBotGame.png" alt="completed game" width="400" height="400">
+<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/Images/completedBotGame.png" alt="completed game" width="400" height="400">
 
 ## Working Problems
 
@@ -37,11 +37,11 @@ Under some cases, the code will hault if there are no more 100% certian moves.
 This is where the mathWeightedGuess function comes in and is what I am currently developing. 
 This would kick in after the board looks like this: 
 
-<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/botNeedToMakeAGuess.png" alt="completed game" width="400" height="400">
+<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/Images/botNeedToMakeAGuess.png" alt="bot needs to make a guess" width="400" height="400">
 
 There is also a problem where the bot has no idea what do to when it doesnt find a mine from the inital reveal which doesnt happen often but looks like this. 
 
-<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/noMinesFound.png" alt="completed game" width="400" height="400">
+<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/Images/noMinesFound.png" alt="no mines found" width="400" height="400">
 
 Eventually, I will make a function to try to guess until it finds a 0 maybe? Not sure of the approach I will take here yet so if you have a suggestion reach out!
 
@@ -54,7 +54,7 @@ A few things ive observed while developing this:
 This is an example of where there is a 50/50 chance of getting the right guess: 
 The upper left cornere are the last 2 spaces remaining and one of them is a mine. 
 
-<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/50percentchance.png" alt="completed game" width="400" height="400">
+<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/Images/50percentchance.png" alt="50/50 chance" width="400" height="400">
 
 2. Larger boards are harder for the bot to deal with right now.
 
