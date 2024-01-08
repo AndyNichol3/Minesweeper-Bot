@@ -37,7 +37,7 @@ Under some cases, the code will hault if there are no more 100% certian moves.
 This is where the mathWeightedGuess function comes in and is what I am currently developing. 
 This would kick in after the board looks like this: 
 
-<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/completedBotGame.png" alt="completed game" width="400" height="400">
+<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/botNeedToMakeAGuess.png" alt="completed game" width="400" height="400">
 
 
 ## Lets Get In Touch
