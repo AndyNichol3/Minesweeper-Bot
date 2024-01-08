@@ -7,7 +7,7 @@ This project is a C++ terminal-based Minesweeper clone with an AI bot that striv
 ## Features
 
 - **AI Bot Integration**: The game boasts an AI bot that autonomously discovers moves.
-- **Still in Development**: This project is a labor of love, evolving continually.
+- **Still in Development**: This project is still under construction, evolving continually.
 - **User Interaction**: If the bot halts or faces challenges, users can take over and make moves manually.
 
 ## Getting Started
