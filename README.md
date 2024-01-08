@@ -25,13 +25,19 @@ Please note: The AI may not always make optimal moves due to ongoing improvement
 
 For the classic Minesweeper experience without the AI bot, explore the [MineSweeperCpp](https://github.com/AndyNichol3/MineSweeperCpp).
 
+## The Game
+
+This is what a completed game should look like: 
+
+<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/completedBotGame.png" alt="completed game" width="400" height="400">
+
+
+
+
 ## Lets Get In Touch
 
 If you would like to reachout to suggest ideas, bug fixes, or connect, reach out to me here: 
 [LinkedIn](https://www.linkedin.com/in/connectandrewnicholson) or [Email](mailto:andrewtodnicholson@gmail.com)
-
-this is what a completed game should look like: 
-<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/completedBotGame.png" alt="completed game" width="400" height="400">
 
 
 
