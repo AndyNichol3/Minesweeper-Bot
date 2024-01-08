@@ -4,6 +4,7 @@
 // fix the print bool board to be based on knownMines and not bool flag location
 
 // g++ main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
+// set<pair<int, int>> knownMines
 #include "BOT_FUNCTIONS.h"
 #include "BOT_MOVES.h"
 #include "PLAY_GAME.h"
@@ -38,14 +39,16 @@ int main() {
       maxNumberOfRows, vector<bool>(maxNumberOfColumns, false));
 
   // initalizeGameBoard
+  set<pair<int, int>> knownMines;
+  
   initalizeBotGameBoard(boolGameBoard, gameBoard, maxNumberOfRows,
                         maxNumberOfColumns, maxNumOfMines, boolFlagLocation,
-                        round);
+                        round, knownMines);
 
   bool gameOver = false, win = false;
   int revealTally = 0, maxDisplay = maxNumberOfRows * maxNumberOfColumns,
       userRow = -2, userCol = -2;
-  set<pair<int, int>> knownMines;
+
 
   // cout << "Bots flagged Point: " << endl;
 
@@ -136,7 +139,7 @@ int main() {
 
   if (win == false) {
     win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                   gameBoard, maxNumOfMines, round, boolFlagLocation);
+                   gameBoard, maxNumOfMines, round, boolFlagLocation, knownMines);
   }
 
   if (win == true) {
