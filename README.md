@@ -43,6 +43,8 @@ There is also a problem where the bot has no idea what do to when it doesnt find
 
 <img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/noMinesFound.png" alt="completed game" width="400" height="400">
 
+Eventually, I will make a function to try to guess until it finds a 0 maybe? Not sure of the approach I will take here yet so if you have a suggestion reach out!
+
 ## Observations
 
 A few things ive observed while developing this:
