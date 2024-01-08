@@ -39,6 +39,12 @@ This would kick in after the board looks like this:
 
 <img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/botNeedToMakeAGuess.png" alt="completed game" width="400" height="400">
 
+## Observations
+
+A few things ive observed while developing this:
+
+1. You cant win 100% of the time. this game does have some element of chance to it so you can only make your best guess sometimes.
+2. Larger boards are harder for the bot to deal with right now.
 
 ## Lets Get In Touch
 
