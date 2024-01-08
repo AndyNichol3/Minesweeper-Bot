@@ -50,6 +50,11 @@ Eventually, I will make a function to try to guess until it finds a 0 maybe? Not
 A few things ive observed while developing this:
 
 1. You cant win 100% of the time. this game does have some element of chance to it so you can only make your best guess sometimes.
+
+This is an example of where there is a 50/50 chance of getting the right guess: 
+
+<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/50percentchance.png" alt="completed game" width="400" height="400">
+
 2. Larger boards are harder for the bot to deal with right now.
 
 ## Lets Get In Touch
