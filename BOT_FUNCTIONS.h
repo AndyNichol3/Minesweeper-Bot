@@ -17,7 +17,8 @@ bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
                   vector<vector<bool>> &boolGameBoard,
                   vector<vector<int>> &gameBoard, int maxNumOfMines,
                   int userRow, int userCol, int &round,
-                  vector<vector<bool>> &boolFlagLocation, set<pair<int, int>> knownMines);
+                  vector<vector<bool>> &boolFlagLocation,
+                  set<pair<int, int>> knownMines);
 
 bool playRoundUser(int maxNumberOfColumns, int maxNumberOfRows,
                    vector<vector<bool>> &boolGameBoard,
@@ -28,12 +29,14 @@ pair<int, int> adjustIndex(int cornerLocation, pair<int, int> mineLocation);
 void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
                            vector<vector<int>> &gameBoard, int maxNumberOfRows,
                            int maxNumberOfColumns, int maxNumOfMines,
-                           vector<vector<bool>> &boolFlagLocation, int &round, set<pair<int, int>> knownMines);
+                           vector<vector<bool>> &boolFlagLocation, int &round,
+                           set<pair<int, int>> knownMines);
 bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
                       vector<vector<bool>> &boolGameBoard,
                       vector<vector<int>> &gameBoard, int maxNumOfMines,
                       int userRow, int userCol, int &round,
-                      vector<vector<bool>> &boolFlagLocation, set<pair<int, int>> knownMines);
+                      vector<vector<bool>> &boolFlagLocation,
+                      set<pair<int, int>> knownMines);
 set<pair<int, int>>
 calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
                            vector<vector<bool>> &boolGameBoard,
@@ -51,7 +54,8 @@ int printBotFlaggedMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
 void triggeredAMine(int maxNumberOfRows, int maxNumberOfColumns,
                     vector<vector<bool>> &boolGameBoard,
                     vector<vector<int>> &gameBoard, int maxNumOfMines,
-                    int &round, vector<vector<bool>> &boolFlagLocation, set<pair<int, int>> knownMines);
+                    int &round, vector<vector<bool>> &boolFlagLocation,
+                    set<pair<int, int>> knownMines);
 int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
                  vector<vector<bool>> &boolGameBoard,
                  vector<vector<int>> &gameBoard, int maxNumOfMines, int &round,

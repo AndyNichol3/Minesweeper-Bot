@@ -40,7 +40,7 @@ int main() {
 
   // initalizeGameBoard
   set<pair<int, int>> knownMines;
-  
+
   initalizeBotGameBoard(boolGameBoard, gameBoard, maxNumberOfRows,
                         maxNumberOfColumns, maxNumOfMines, boolFlagLocation,
                         round, knownMines);
@@ -48,7 +48,6 @@ int main() {
   bool gameOver = false, win = false;
   int revealTally = 0, maxDisplay = maxNumberOfRows * maxNumberOfColumns,
       userRow = -2, userCol = -2;
-
 
   // cout << "Bots flagged Point: " << endl;
 
@@ -138,8 +137,9 @@ int main() {
   }
 
   if (win == false) {
-    win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                   gameBoard, maxNumOfMines, round, boolFlagLocation, knownMines);
+    win =
+        playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard, gameBoard,
+                 maxNumOfMines, round, boolFlagLocation, knownMines);
   }
 
   if (win == true) {

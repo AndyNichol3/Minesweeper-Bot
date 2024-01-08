@@ -101,7 +101,8 @@ int returnCornerLocation(vector<vector<bool>> &boolGameBoard,
 void triggeredAMine(int maxNumberOfRows, int maxNumberOfColumns,
                     vector<vector<bool>> &boolGameBoard,
                     vector<vector<int>> &gameBoard, int maxNumOfMines,
-                    int &round, vector<vector<bool>> &boolFlagLocation, set<pair<int,int>> knownMines) {
+                    int &round, vector<vector<bool>> &boolFlagLocation,
+                    set<pair<int, int>> knownMines) {
 
   for (int i = 0; i < maxNumberOfRows; i++) {
     for (int j = 0; j < maxNumberOfColumns; j++) {
@@ -120,7 +121,8 @@ bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
                   vector<vector<bool>> &boolGameBoard,
                   vector<vector<int>> &gameBoard, int maxNumOfMines,
                   int userRow, int userCol, int &round,
-                  vector<vector<bool>> &boolFlagLocation, set<pair<int, int>> knownMines) {
+                  vector<vector<bool>> &boolFlagLocation,
+                  set<pair<int, int>> knownMines) {
   bool gameOver = false;
   bool revealedTile = false;
   while (!revealedTile) {
@@ -147,7 +149,8 @@ bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
     cout << "you hit a mine!" << endl;
     boolGameBoard[userRow][userCol] = true;
     triggeredAMine(maxNumberOfRows, maxNumberOfColumns, boolGameBoard,
-                   gameBoard, maxNumOfMines, round, boolFlagLocation, knownMines);
+                   gameBoard, maxNumOfMines, round, boolFlagLocation,
+                   knownMines);
 
   } else {
     boolGameBoard[userRow][userCol] = true;
@@ -228,7 +231,8 @@ pair<int, int> adjustIndex(int cornerLocation, pair<int, int> mineLocation) {
 void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
                            vector<vector<int>> &gameBoard, int maxNumberOfRows,
                            int maxNumberOfColumns, int maxNumOfMines,
-                           vector<vector<bool>> &boolFlagLocation, int &round, set<pair<int,int>> knownMines) {
+                           vector<vector<bool>> &boolFlagLocation, int &round,
+                           set<pair<int, int>> knownMines) {
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns,
                  boolFlagLocation, knownMines);
   printRoundHeader(round);
@@ -260,7 +264,9 @@ void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
 bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
                       vector<vector<bool>> &boolGameBoard,
                       vector<vector<int>> &gameBoard, int maxNumOfMines,
-                      int userRow, int userCol, int &round, vector<vector<bool>> &boolFlagLocation, set<pair<int,int>> knownMines) {
+                      int userRow, int userCol, int &round,
+                      vector<vector<bool>> &boolFlagLocation,
+                      set<pair<int, int>> knownMines) {
   // win 1
   // lose 2
   // continue 3
@@ -275,8 +281,9 @@ bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
   if (gameOver == true) {
   }
 
-  int revealTally = printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
-                                   maxNumberOfColumns, boolFlagLocation, knownMines);
+  int revealTally =
+      printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
+                     maxNumberOfColumns, boolFlagLocation, knownMines);
 
   if (revealTally == (maxDisplay - maxNumOfMines)) {
     gameOver = true;
@@ -349,7 +356,8 @@ bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
       }
       // play i,j
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                       gameBoard, maxNumOfMines, i, j, round, boolFlagLocation, knownMines);
+                       gameBoard, maxNumOfMines, i, j, round, boolFlagLocation,
+                       knownMines);
       round++;
     }
   }
@@ -406,7 +414,8 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
     if (boolGameBoard[maxNumberOfRows - 1][maxNumberOfColumns - 1] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, maxNumberOfRows - 1,
-                       maxNumberOfColumns - 1, round, boolFlagLocation, knownMines);
+                       maxNumberOfColumns - 1, round, boolFlagLocation,
+                       knownMines);
       round++;
       return 0;
     }

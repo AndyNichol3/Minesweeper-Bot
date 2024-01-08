@@ -145,7 +145,8 @@ void fillWithInts(vector<vector<int>> &gameBoard, int maxNumberOfRows,
 void initalizeGameBoard(vector<vector<bool>> &boolGameBoard,
                         vector<vector<int>> &gameBoard, int maxNumberOfRows,
                         int maxNumberOfColumns, int maxNumOfMines,
-                        vector<vector<bool>> &boolFlagLocation, set<pair<int, int>> knownMines) {
+                        vector<vector<bool>> &boolFlagLocation,
+                        set<pair<int, int>> knownMines) {
   // main initialization function that calls lots of other functions
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns,
                  boolFlagLocation, knownMines);
