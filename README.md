@@ -30,5 +30,10 @@ For the classic Minesweeper experience without the AI bot, explore the [MineSwee
 If you would like to reachout to suggest ideas, bug fixes, or connect, reach out to me here: 
 [LinkedIn](https://www.linkedin.com/in/connectandrewnicholson) or [Email](mailto:andrewtodnicholson@gmail.com)
 
+this is what a completed game should look like: 
+
+[completed game](https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/completedBotGame.png)
+
+
 
 
