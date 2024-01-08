@@ -31,8 +31,9 @@ If you would like to reachout to suggest ideas, bug fixes, or connect, reach out
 [LinkedIn](https://www.linkedin.com/in/connectandrewnicholson) or [Email](mailto:andrewtodnicholson@gmail.com)
 
 this is what a completed game should look like: 
+<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/completedBotGame.png" alt="completed game">
 
-[completed game](https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/completedBotGame.png)
+
 
 
 
