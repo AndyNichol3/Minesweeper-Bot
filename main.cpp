@@ -39,7 +39,8 @@ int main() {
 
   // initalizeGameBoard
   initalizeBotGameBoard(boolGameBoard, gameBoard, maxNumberOfRows,
-                        maxNumberOfColumns, maxNumOfMines, boolFlagLocation, round);
+                        maxNumberOfColumns, maxNumOfMines, boolFlagLocation,
+                        round);
 
   bool gameOver = false, win = false;
   int revealTally = 0, maxDisplay = maxNumberOfRows * maxNumberOfColumns,
@@ -51,6 +52,8 @@ int main() {
   bool continueGame = true;
   // int catchInfinateLoop = 0;
   int totalGuessTally = 0;
+
+  bool cornersLeftToGuess = true;
   while (continueGame) {
     int confirmedMineTally = 0;
 
@@ -84,57 +87,52 @@ int main() {
         knownMines, maxNumberOfRows, maxNumberOfColumns, round, maxNumOfMines,
         boolGameBoard, gameBoard, boolFlagLocation);
 
-    if (!changesMadeMethod1 && !changesMadeMethod2) {
-      cout << endl << "No Further Moves" << endl;
-      cout << "Initalize the first guess" << endl;
-      // if(catach inf loop >= 4)
+    if (changesMadeMethod1 || changesMadeMethod2) {
+      continue;
+    }
 
+    cout << endl << "No Further Confident Moves" << endl;
+    cout << "Bot will guess" << endl;
+    this_thread::sleep_for(chrono::milliseconds(2000));
+
+    if (cornersLeftToGuess) {
+      cout << endl << "Guessing The Corners" << endl;
       int returnedError = guessCorners(maxNumberOfRows, maxNumberOfColumns,
                                        boolGameBoard, gameBoard, maxNumOfMines,
                                        round, knownMines, boolFlagLocation);
+      // 1 is the error value that indicated no corners left
       if (returnedError != 1) {
-        continue;
+        cornersLeftToGuess = false;
       }
-
-      if (totalGuessTally == 2) {
-        break;
-      }
-
-      cout << endl << "doing the first real guess" << endl;
-      // sleep function so if this decides to infinate loop it doesnt overflow
-      // my terminal
-      this_thread::sleep_for(chrono::milliseconds(3000));
-
-      // try to add another
-      // prompt user to ask if it wants to make one guess or let the bot guess
-      // (warning: chance of failure)
-      tuple <int, int, int> bestGuess =
-          mathWeightedGuess(knownMines, maxNumberOfRows, maxNumberOfColumns,
-                            round, maxNumOfMines, boolGameBoard, gameBoard);
-      if (get<1>(bestGuess) == -1) {
-        cout << "Entered Flag" << endl;
-        break;
-      }
-      cout << "Best Guess: " << get<2>(bestGuess) << " "
-           << maxNumberOfRows - 1 - get<1>(bestGuess) <<" with weight "<< get<0>(bestGuess) <<endl;
-      
-      knownMines.insert({get<1>(bestGuess), get<2>(bestGuess)});
-      confirmedMineTally =
-          printBotFlaggedMines(knownMines, maxNumberOfRows, maxNumOfMines);
-
-      totalGuessTally++;
-
       continue;
     }
+
+    cout << endl << "Doing A Math Weighted Guess" << endl;
+    // sleep function so if this decides to infinate loop it doesnt overflow
+    // my terminal
+    this_thread::sleep_for(chrono::milliseconds(2000));
+
+    // try to add another
+    // prompt user to ask if it wants to make one guess or let the bot guess
+    // (warning: chance of failure)
+    tuple<int, int, int> bestGuess;
+    bestGuess =
+        mathWeightedGuess(knownMines, maxNumberOfRows, maxNumberOfColumns,
+                          round, maxNumOfMines, boolGameBoard, gameBoard);
+    if (get<1>(bestGuess) == -1) {
+      cout << "No Guess Can Be Made" << endl;
+      break;
+    }
+    cout << "Best Guess: " << get<2>(bestGuess) << " "
+         << maxNumberOfRows - 1 - get<1>(bestGuess) << " with weight "
+         << get<0>(bestGuess) << endl;
+
+    knownMines.insert({get<1>(bestGuess), get<2>(bestGuess)});
+    confirmedMineTally =
+        printBotFlaggedMines(knownMines, maxNumberOfRows, maxNumOfMines);
+
+    continue;
   }
-
-  // potentially line of logic here, if the bot has no more moves, which ever
-  // tile has the highest total of mines around it, it will assume that tile
-  // is a mine. run a potential program. may only work with very few tiles
-  // left to be revealed.
-
-  // new line of logic, its less likely that a given x or y value will
-  // generate in a line so if you need to guess,
 
   if (win == false) {
     win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
@@ -148,3 +146,11 @@ int main() {
     printLose();
   }
 }
+
+// potentially line of logic here, if the bot has no more moves, which ever
+// tile has the highest total of mines around it, it will assume that tile
+// is a mine. run a potential program. may only work with very few tiles
+// left to be revealed.
+
+// new line of logic, its less likely that a given x or y value will
+// generate in a line so if you need to guess,

@@ -252,6 +252,7 @@ set<pair<int, int>> botCheckForMines(
   return knownMines;
 }
 
+
 tuple<int, int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
                                        int maxNumberOfRows,
                                        int maxNumberOfColumns, int &round,
@@ -276,6 +277,7 @@ tuple<int, int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
       }
 
       pair<int, int> tempPair = {i, j};
+      // if temp pair is found in, continue
       if (knownMines.find(tempPair) != knownMines.end()) {
         continue;
       }
@@ -288,24 +290,30 @@ tuple<int, int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
       
       //cout<< endl << "working with " << j << " " << maxNumberOfRows - 1 - i << endl; 
 
+      // working with pair i, j
+
       int sumOfDifferences = 0;
 
       for (int k = -1; k < 2; ++k) {
         for (int l = -1; l < 2; ++l) {
+          // skip current tile
           if (k == 0 && l == 0) {
             continue;
           }
+          
           int X = i + k;
           int Y = j + l;
-
+          // if currrent tile out of bounds skip
           if (checkOutOfBounds(X, Y, maxNumberOfRows, maxNumberOfColumns)) {
             continue;
           }
+          // if the tile is unrevealed, skip
           if (boolGameBoard[X][Y] == false) {
             continue;
           }
           
           pair<int, int> newGuess = {X, Y};
+          // if new guess is found in, continue
           if (knownMines.find(newGuess) != knownMines.end()) {
             continue;
           }
@@ -322,7 +330,7 @@ tuple<int, int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
           
           
 
-            cout << sorrundingMineCount << " mines counted for tile " << Y<< maxNumberOfRows - 1 - X<<endl;
+            //cout << sorrundingMineCount << " mines counted for tile " << Y<< maxNumberOfRows - 1 - X<<endl;
 
             int difference = abs(sorrundingMineCount - gameBoard[X][Y]);
             sumOfDifferences += difference;

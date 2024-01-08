@@ -412,7 +412,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
       return 0;
     }
   }
-  newGuess = {0, 0};
+  //newGuess = {0, 0};
   // aroundMine.find(check) != aroundMine.end()
 
   /*
@@ -464,7 +464,9 @@ bool checkOutOfBounds(int row, int col, int maxNumberOfRows,
   return false;
 }
  int returnSorrundingMineCount(int X,int Y,int maxNumberOfRows, int maxNumberOfColumns, vector<vector<bool>> &boolGameBoard, vector<vector<int>> &gameBoard, set<pair<int, int>> knownMines){
+   
    int sorrundingMineCount = 0;
+   
    for (int m = -1; m < 2; ++m) {
      for (int n = -1; n < 2; ++n) {
        if (m == 0 && n == 0) {
