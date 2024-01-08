@@ -52,6 +52,7 @@ A few things ive observed while developing this:
 1. You cant win 100% of the time. this game does have some element of chance to it so you can only make your best guess sometimes.
 
 This is an example of where there is a 50/50 chance of getting the right guess: 
+The upper left cornere are the last 2 spaces remaining and one of them is a mine. 
 
 <img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/50percentchance.png" alt="completed game" width="400" height="400">
 
