@@ -39,6 +39,10 @@ This would kick in after the board looks like this:
 
 <img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/botNeedToMakeAGuess.png" alt="completed game" width="400" height="400">
 
+There is also a problem where the bot has no idea what do to when it doesnt find a mine from the inital reveal which doesnt happen often but looks like this. 
+
+<img src="https://github.com/AndyNichol3/Minesweeper-Bot/blob/main/noMinesFound.png" alt="completed game" width="400" height="400">
+
 ## Observations
 
 A few things ive observed while developing this:
