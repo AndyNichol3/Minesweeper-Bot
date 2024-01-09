@@ -145,6 +145,12 @@ bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
         if (gameBoard[i][j] == 0) {
           continue;
         }
+        pair<int, int> check = {i, j};
+        if ((knownMines.find(check) != knownMines.end())) {
+          // cout << "flag" << endl;
+          continue;
+        }
+        
 
         int knownMineTally = 0;
         int knownRevealedTally = 0;

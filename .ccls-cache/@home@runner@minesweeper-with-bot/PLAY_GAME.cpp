@@ -145,7 +145,8 @@ void fillWithInts(vector<vector<int>> &gameBoard, int maxNumberOfRows,
 void initalizeGameBoard(vector<vector<bool>> &boolGameBoard,
                         vector<vector<int>> &gameBoard, int maxNumberOfRows,
                         int maxNumberOfColumns, int maxNumOfMines,
-                        vector<vector<bool>> &boolFlagLocation, set<pair<int, int>> knownMines) {
+                        vector<vector<bool>> &boolFlagLocation,
+                        set<pair<int, int>> knownMines) {
   // main initialization function that calls lots of other functions
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns,
                  boolFlagLocation, knownMines);
@@ -242,15 +243,22 @@ int printBoolBoard(const vector<vector<bool>> &boolGameBoard,
                    int maxNumberOfColumns,
                    vector<vector<bool>> &boolFlagLocation,
                    set<pair<int, int>> knownMines) {
+  
   int revealTally = 0;
-
   // code to print border for displayed game board
   cout << endl << RED << "   +";
   for (int i = 0; i < maxNumberOfColumns; i++) {
     cout << "---";
   }
   cout << "-+" << endl;
+  
+  vector<vector<bool>> boolKnownMines(maxNumberOfRows,
+   vector<bool>(maxNumberOfColumns, false));
+  for (const auto &mineLocation : knownMines) {
+    boolKnownMines[mineLocation.first][mineLocation.second] = true;
+  }
 
+  
   for (int i = 0; i < maxNumberOfRows; ++i) {
     cout << RED << setw(2) << maxNumberOfRows - 1 - i << " |";
     for (int j = 0; j < maxNumberOfColumns; ++j) {
@@ -273,7 +281,8 @@ int printBoolBoard(const vector<vector<bool>> &boolGameBoard,
           cout << RED << setw(3) << gameBoard[i][j];
           break;
         }
-      } else if (boolFlagLocation[i][j]) {
+      } 
+      else if (boolKnownMines[i][j]) {
         cout << setw(1) << "" << FLAG << "";
       } else {
         cout << WHITE << setw(3) << "-";
@@ -298,6 +307,7 @@ int printBoolBoard(const vector<vector<bool>> &boolGameBoard,
 
   return revealTally;
 }
+
 void printGameWelcome() {
   cout << RED << "\n\n-------------------------------------" << endl;
   cout << WHITE << "       Welcome to Minesweeper!       " << endl;

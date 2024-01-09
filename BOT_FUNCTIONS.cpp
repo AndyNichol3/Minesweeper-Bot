@@ -111,6 +111,7 @@ void triggeredAMine(int maxNumberOfRows, int maxNumberOfColumns,
       }
     }
   }
+  knownMines.clear();
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns,
                  boolFlagLocation, knownMines);
   printLose();

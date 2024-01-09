@@ -1,0 +1,6 @@
+win
+
+loss:
+  final guess final mine was touching mine
+  played a known Mine?
+  
