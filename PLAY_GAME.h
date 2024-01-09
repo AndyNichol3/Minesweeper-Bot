@@ -45,5 +45,6 @@ int printBoolBoard(const std::vector<std::vector<bool>> &boolGameBoard,
                    const std::vector<std::vector<int>> &gameBoard,
                    int maxNumberOfRows, int maxNumberOfColumns,
                    set<pair<int, int>> knownMines);
+void endOfGameHeader(bool win); 
 
 #endif

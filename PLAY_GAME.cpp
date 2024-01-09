@@ -359,3 +359,12 @@ void printLose() {
   cout << RED << "               YOU LOSE!" << endl;
   cout << WHITE << "_____________________________________\n" << RESET << endl;
 }
+
+void endOfGameHeader(bool win){
+  if (win == true) {
+    printWin();
+
+  } else {
+    printLose();
+  }
+}

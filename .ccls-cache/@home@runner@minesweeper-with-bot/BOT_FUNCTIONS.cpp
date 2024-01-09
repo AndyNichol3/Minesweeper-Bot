@@ -364,7 +364,7 @@ bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
       round++;
     }
   }
-
+  printWin(); 
   return true;
 }
 
@@ -511,3 +511,4 @@ int returnSorrundingMineCount(int X, int Y, int maxNumberOfRows,
 
   return sorrundingMineCount;
 }
+
