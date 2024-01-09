@@ -10,6 +10,7 @@
 #include <set>
 #include <tuple>
 #include <vector>
+#include <fstream>
 using namespace std;
 
 bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
@@ -111,6 +112,17 @@ void triggeredAMine(int maxNumberOfRows, int maxNumberOfColumns,
       }
     }
   }
+
+  // try to open or create a knownMines.txt file
+  ofstream knownMinesFile ("knownMines.txt" , ofstream::trunc);
+  // write to the file all of the known mines
+  for (auto it = knownMines.begin(); it != knownMines.end(); it++) {
+    knownMinesFile << it->first << " " << it->second << endl;
+  }
+  knownMinesFile.close();
+  
+  
+  
   knownMines.clear();
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns,
                  boolFlagLocation, knownMines);

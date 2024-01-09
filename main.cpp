@@ -95,7 +95,7 @@ int main() {
 
     cout << endl << "No Further Confident Moves" << endl;
     cout << "Bot will guess" << endl;
-    this_thread::sleep_for(chrono::milliseconds(2000));
+    //this_thread::sleep_for(chrono::milliseconds(2000));
 
     if (cornersLeftToGuess) {
       cout << endl << "Guessing The Corners" << endl;
@@ -112,7 +112,7 @@ int main() {
     cout << endl << "Doing A Math Weighted Guess" << endl;
     // sleep function so if this decides to infinate loop it doesnt overflow
     // my terminal
-    this_thread::sleep_for(chrono::milliseconds(2000));
+    //this_thread::sleep_for(chrono::milliseconds(2000));
 
     // try to add another
     // prompt user to ask if it wants to make one guess or let the bot guess
