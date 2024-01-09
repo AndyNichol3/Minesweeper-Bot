@@ -1,22 +1,5 @@
-#include "PLAY_GAME.h"
-#include "BOT_FUNCTIONS.h"
-#include <cmath>
-#include <cstdlib>
-#include <iomanip>
-#include <iostream>
-#include <limits>
-#include <vector>
 
-using namespace std;
-
-// custom color codes
-#define RESET "\033[0m"
-#define RED "\033[0;31m"
-#define GREEN "\e[0;36m"
-#define BLUE "\033[34m"
-#define WHITE "\033[37m"
-#define FLAG "\U0001f4cd"
-
+#include "stdafx.h"
 // game play functions
 void recursiveRevealExplosion(vector<vector<int>> &gameBoard,
                               vector<vector<bool>> &boolGameBoard, int X, int Y,
@@ -360,7 +343,7 @@ void printLose() {
   cout << WHITE << "_____________________________________\n" << RESET << endl;
 }
 
-void endOfGameHeader(bool win){
+void endOfGameHeader(bool win) {
   if (win == true) {
     printWin();
 

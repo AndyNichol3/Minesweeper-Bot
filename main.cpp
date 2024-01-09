@@ -1,18 +1,9 @@
 // bug fix list
 
 // g++ main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
-#include "BOT_FUNCTIONS.h"
-#include "BOT_MOVES.h"
-#include "PLAY_GAME.h"
+//g++ -include stdafx.h main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
 
-//#include <chrono>
-///#include <iostream>
-//#include <set>
-//#include <thread>
-//#include <tuple>
-//#include <vector>
-
-using namespace std;
+#include "stdafx.h"
 
 int main() {
   // define variable

@@ -1,11 +1,7 @@
 #ifndef BOT_FUNCTIONS_H
 #define BOT_FUNCTIONS_H
 
-#include <set>
-#include <tuple>
-#include <vector>
-
-using namespace std;
+#include "stdafx.h"
 
 bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
                  vector<vector<bool>> &boolGameBoard,

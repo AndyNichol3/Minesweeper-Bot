@@ -1,10 +1,7 @@
 #ifndef BOT_MOVES_H
 #define BOT_MOVES_H
 
-#include <set>
-#include <tuple>
-#include <vector>
-using namespace std;
+#include "stdafx.h"
 
 bool playFullBot(int maxNumberOfRows, int maxNumberOfColumns, int maxNumOfMines,
                  int &round, set<pair<int, int>> knownMines,

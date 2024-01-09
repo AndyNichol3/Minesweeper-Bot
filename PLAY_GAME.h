@@ -1,10 +1,7 @@
 #ifndef PLAY_GAME_H
 #define PLAY_GAME_H
 
-#include <set>
-#include <vector>
-
-using namespace std;
+#include "stdafx.h"
 
 // play game functions
 bool playGame(int maxNumberOfColumns, int maxNumberOfRows,

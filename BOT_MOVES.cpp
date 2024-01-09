@@ -1,17 +1,4 @@
-#include "BOT_MOVES.h"
-#include "BOT_FUNCTIONS.h"
-#include "PLAY_GAME.h"
-
-#include <cmath>
-#include <cstdlib>
-#include <iomanip>
-#include <iostream>
-#include <limits>
-#include <set>
-#include <tuple>
-#include <vector>
-
-using namespace std;
+#include "stdafx.h"
 
 bool playFullBot(int maxNumberOfRows, int maxNumberOfColumns, int maxNumOfMines,
                  int &round, set<pair<int, int>> knownMines,

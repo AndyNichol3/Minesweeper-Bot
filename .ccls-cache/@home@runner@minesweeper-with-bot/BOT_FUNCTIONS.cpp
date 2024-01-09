@@ -1,17 +1,4 @@
-#include "BOT_FUNCTIONS.h"
-#include "BOT_MOVES.h"
-#include "PLAY_GAME.h"
-
-#include <cmath>
-#include <cstdlib>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <limits>
-#include <set>
-#include <tuple>
-#include <vector>
-using namespace std;
+#include "stdafx.h"
 
 bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
                  vector<vector<bool>> &boolGameBoard,
