@@ -42,7 +42,7 @@ bool playFullBot(int maxNumberOfRows, int maxNumberOfColumns, int maxNumOfMines,
       continueGame = false;
       break;
     }
-    if (confirmedMineTally ==) {
+    if (confirmedMineTally == 0) {
       cout << endl << "No Mines Found" << endl;
     }
 

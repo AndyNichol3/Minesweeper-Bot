@@ -1,20 +1,16 @@
-// minesweeper
-
 // bug fix list
-// uhh
 
 // g++ main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
-// set<pair<int, int>> knownMines
 #include "BOT_FUNCTIONS.h"
 #include "BOT_MOVES.h"
 #include "PLAY_GAME.h"
 
-#include <chrono>
-#include <iostream>
-#include <set>
-#include <thread>
-#include <tuple>
-#include <vector>
+//#include <chrono>
+///#include <iostream>
+//#include <set>
+//#include <thread>
+//#include <tuple>
+//#include <vector>
 
 using namespace std;
 
