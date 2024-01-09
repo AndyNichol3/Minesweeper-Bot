@@ -1,7 +1,7 @@
 // minesweeper
 
 // bug fix list
-// fix the print bool board to be based on knownMines and not bool flag location
+// uhh
 
 // g++ main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
 // set<pair<int, int>> knownMines
@@ -35,15 +35,12 @@ int main() {
                                 vector<int>(maxNumberOfColumns, 0));
   vector<vector<bool>> boolGameBoard(maxNumberOfRows,
                                      vector<bool>(maxNumberOfColumns, false));
-  vector<vector<bool>> boolFlagLocation(
-      maxNumberOfRows, vector<bool>(maxNumberOfColumns, false));
 
   // initalizeGameBoard
   set<pair<int, int>> knownMines;
 
   initalizeBotGameBoard(boolGameBoard, gameBoard, maxNumberOfRows,
-                        maxNumberOfColumns, maxNumOfMines, boolFlagLocation,
-                        round, knownMines);
+                        maxNumberOfColumns, maxNumOfMines, round, knownMines);
 
   bool gameOver = false, win = false;
   int revealTally = 0, maxDisplay = maxNumberOfRows * maxNumberOfColumns,
@@ -59,9 +56,9 @@ int main() {
   while (continueGame) {
     int confirmedMineTally = 0;
 
-    knownMines = botCheckForMines(knownMines, maxNumberOfRows,
-                                  maxNumberOfColumns, round, maxNumOfMines,
-                                  boolGameBoard, gameBoard, boolFlagLocation);
+    knownMines =
+        botCheckForMines(knownMines, maxNumberOfRows, maxNumberOfColumns, round,
+                         maxNumOfMines, boolGameBoard, gameBoard);
 
     confirmedMineTally =
         printBotFlaggedMines(knownMines, maxNumberOfRows, maxNumOfMines);
@@ -69,8 +66,7 @@ int main() {
     if (confirmedMineTally == maxNumOfMines) {
       cout << endl << "All Mines Found" << endl;
       win = foundAllMines(knownMines, maxNumberOfRows, maxNumberOfColumns,
-                          round, maxNumOfMines, boolGameBoard, gameBoard,
-                          boolFlagLocation);
+                          round, maxNumOfMines, boolGameBoard, gameBoard);
       continueGame = false;
       break;
     }
@@ -81,13 +77,13 @@ int main() {
       // break;
     }
 
-    bool changesMadeMethod2 = playBotMovesMethod2(
-        knownMines, maxNumberOfRows, maxNumberOfColumns, round, maxNumOfMines,
-        boolGameBoard, gameBoard, boolFlagLocation);
+    bool changesMadeMethod2 =
+        playBotMovesMethod2(knownMines, maxNumberOfRows, maxNumberOfColumns,
+                            round, maxNumOfMines, boolGameBoard, gameBoard);
 
-    bool changesMadeMethod1 = playBotMovesMethod1(
-        knownMines, maxNumberOfRows, maxNumberOfColumns, round, maxNumOfMines,
-        boolGameBoard, gameBoard, boolFlagLocation);
+    bool changesMadeMethod1 =
+        playBotMovesMethod1(knownMines, maxNumberOfRows, maxNumberOfColumns,
+                            round, maxNumOfMines, boolGameBoard, gameBoard);
 
     if (changesMadeMethod1 || changesMadeMethod2) {
       continue;
@@ -95,15 +91,15 @@ int main() {
 
     cout << endl << "No Further Confident Moves" << endl;
     cout << "Bot will guess" << endl;
-    //this_thread::sleep_for(chrono::milliseconds(2000));
+    this_thread::sleep_for(chrono::milliseconds(2000));
 
     if (cornersLeftToGuess) {
       cout << endl << "Guessing The Corners" << endl;
-      int returnedError = guessCorners(maxNumberOfRows, maxNumberOfColumns,
-                                       boolGameBoard, gameBoard, maxNumOfMines,
-                                       round, knownMines, boolFlagLocation);
+      int returnedError =
+          guessCorners(maxNumberOfRows, maxNumberOfColumns, boolGameBoard,
+                       gameBoard, maxNumOfMines, round, knownMines);
       // 1 is the error value that indicated no corners left
-      if (returnedError != 1) {
+      if (returnedError == 1) {
         cornersLeftToGuess = false;
       }
       continue;
@@ -112,7 +108,7 @@ int main() {
     cout << endl << "Doing A Math Weighted Guess" << endl;
     // sleep function so if this decides to infinate loop it doesnt overflow
     // my terminal
-    //this_thread::sleep_for(chrono::milliseconds(2000));
+    this_thread::sleep_for(chrono::milliseconds(2000));
 
     // try to add another
     // prompt user to ask if it wants to make one guess or let the bot guess
@@ -137,9 +133,8 @@ int main() {
   }
 
   if (win == false) {
-    win =
-        playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard, gameBoard,
-                 maxNumOfMines, round, boolFlagLocation, knownMines);
+    win = playGame(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
+                   gameBoard, maxNumOfMines, round, knownMines);
   }
 
   if (win == true) {

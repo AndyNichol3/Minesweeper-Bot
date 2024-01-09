@@ -10,8 +10,7 @@ using namespace std;
 bool playGame(int maxNumberOfColumns, int maxNumberOfRows,
               std::vector<std::vector<bool>> &boolGameBoard,
               std::vector<std::vector<int>> &gameBoard, int maxNumOfMines,
-              int &round, std::vector<std::vector<bool>> &boolFlagLocation,
-              set<pair<int, int>> knownMines);
+              int &round, set<pair<int, int>> knownMines);
 
 void recursiveRevealExplosion(std::vector<std::vector<int>> &gameBoard,
                               std::vector<std::vector<bool>> &boolGameBoard,
@@ -22,9 +21,7 @@ void recursiveRevealExplosion(std::vector<std::vector<int>> &gameBoard,
 void initalizeGameBoard(std::vector<std::vector<bool>> &boolGameBoard,
                         std::vector<std::vector<int>> &gameBoard,
                         int maxNumberOfRows, int maxNumberOfColumns,
-                        int maxNumOfMines,
-                        std::vector<std::vector<bool>> &boolFlagLocation,
-                        set<pair<int, int>> knownMines);
+                        int maxNumOfMines, set<pair<int, int>> knownMines);
 void fillWithMines(std::vector<std::vector<int>> &gameBoard, int userStartRow,
                    int userStartCol, int maxNumOfMines, int maxNumberOfRows,
                    int maxNumberOfColumns);
@@ -47,7 +44,6 @@ void printLose();
 int printBoolBoard(const std::vector<std::vector<bool>> &boolGameBoard,
                    const std::vector<std::vector<int>> &gameBoard,
                    int maxNumberOfRows, int maxNumberOfColumns,
-                   std::vector<std::vector<bool>> &boolFlagLocation,
                    set<pair<int, int>> knownMines);
 
 #endif

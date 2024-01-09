@@ -16,8 +16,7 @@ using namespace std;
 bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
                          int maxNumberOfColumns, int &round, int maxNumOfMines,
                          vector<vector<bool>> &boolGameBoard,
-                         vector<vector<int>> &gameBoard,
-                         vector<vector<bool>> &boolFlagLocation) {
+                         vector<vector<int>> &gameBoard) {
   int movesMade = 0;
 
   for (const auto &mineLocation : knownMines) {
@@ -102,13 +101,14 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
           bool caseOne = (abs(X - X2) == 0 && abs(Y - Y2) <= 1);
           bool caseTwo = (abs(Y - Y2) == 0 && abs(X - X2) <= 1);
           if (caseTwo || caseOne) {
-            if (!boolGameBoard[X][Y] && !boolFlagLocation[X][Y]) {
+            //! boolGameBoard[X][Y] && !boolFlagLocation[X][Y]
+            if (!boolGameBoard[X][Y]) {
               itterations++;
               movesMade++;
               // cout << endl <<"INDEX 2 " << endl;
               completeBotRound(maxNumberOfColumns, maxNumberOfRows,
                                boolGameBoard, gameBoard, maxNumOfMines, X, Y,
-                               round, boolFlagLocation, knownMines);
+                               round, knownMines);
               round++;
             }
           }
@@ -131,8 +131,7 @@ bool playBotMovesMethod1(set<pair<int, int>> knownMines, int maxNumberOfRows,
 bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
                          int maxNumberOfColumns, int &round, int maxNumOfMines,
                          vector<vector<bool>> &boolGameBoard,
-                         vector<vector<int>> &gameBoard,
-                         vector<vector<bool>> &boolFlagLocation) {
+                         vector<vector<int>> &gameBoard) {
   int continueBot = 1;
   int squaresPlayed = 0;
   while (continueBot != 0) {
@@ -150,7 +149,6 @@ bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
           // cout << "flag" << endl;
           continue;
         }
-        
 
         int knownMineTally = 0;
         int knownRevealedTally = 0;
@@ -182,7 +180,9 @@ bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
             if (checkOutOfBounds(X2, Y2, maxNumberOfRows, maxNumberOfColumns)) {
               continue;
             }
-            if (boolGameBoard[X2][Y2] || boolFlagLocation[X2][Y2]) {
+
+            // || boolFlagLocation[X2][Y2]
+            if (boolGameBoard[X2][Y2]) {
               continue;
             }
             pair<int, int> newLoc = {X2, Y2};
@@ -193,7 +193,7 @@ bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
             squaresPlayed++;
             completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                              gameBoard, maxNumOfMines, X2, Y2, round,
-                             boolFlagLocation, knownMines);
+                             knownMines);
             round++;
           }
         }
@@ -209,10 +209,12 @@ bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
   return true;
 }
 
-set<pair<int, int>> botCheckForMines(
-    set<pair<int, int>> knownMines, int maxNumberOfRows, int maxNumberOfColumns,
-    int &round, int maxNumOfMines, vector<vector<bool>> &boolGameBoard,
-    vector<vector<int>> &gameBoard, vector<vector<bool>> &boolFlagLocation) {
+set<pair<int, int>> botCheckForMines(set<pair<int, int>> knownMines,
+                                     int maxNumberOfRows,
+                                     int maxNumberOfColumns, int &round,
+                                     int maxNumOfMines,
+                                     vector<vector<bool>> &boolGameBoard,
+                                     vector<vector<int>> &gameBoard) {
 
   for (int i = 0; i < maxNumberOfRows; ++i) {
     for (int j = 0; j < maxNumberOfColumns; ++j) {
@@ -249,7 +251,7 @@ set<pair<int, int>> botCheckForMines(
         if (knownMines.find(mine) != knownMines.end()) {
           continue;
         }
-        boolFlagLocation[mine.first][mine.second] = true;
+        // boolFlagLocation[mine.first][mine.second] = true;
         knownMines.insert(mine);
       }
     }
@@ -257,7 +259,113 @@ set<pair<int, int>> botCheckForMines(
 
   return knownMines;
 }
+/*
 
+tuple<int, int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
+                                       int maxNumberOfRows,
+                                       int maxNumberOfColumns, int &round,
+                                       int maxNumOfMines,
+                                       vector<vector<bool>> &boolGameBoard,
+                                       vector<vector<int>> &gameBoard) {
+  // potential line of logic based on the number of mines needed to fufil a
+  // square create a temp game board, given a revealed tile, if gameBoard -
+  // number of sorruinging mines == 0; continue is not, add the absolute value
+  // of difference to all of the sorrunding unrevealed tiles. store the highest
+  // index and pair this index is most likely a mine, store known mines, restart
+  // calcualting loop
+
+  // weight, x, y
+  tuple<int, int, int> storageTuple = {0, -1, -1};
+  int sumOfDifferences = 0;
+
+  for (int i = 0; i < maxNumberOfRows; ++i) {
+    for (int j = 0; j < maxNumberOfColumns; ++j) {
+
+      if (boolGameBoard[i][j] == true) {
+        continue;
+      }
+
+      pair<int, int> tempPair = {i, j};
+      // if temp pair is found in, continue
+      if (knownMines.find(tempPair) != knownMines.end()) {
+        continue;
+      }
+      // given an unrevealed tile,
+      // for all of the tiles around it,
+
+      // cout << "working with: " << get<2>(bestGuess) << " "
+      //<< maxNumberOfRows - 1 - get<1>(bestGuess) <<" with weight "<<
+      // get<0>(bestGuess) <<endl;
+
+      // cout<< endl << "working with " << j << " " << maxNumberOfRows - 1 - i
+      // << endl;
+
+      // working with pair i, j
+
+      sumOfDifferences = 0;
+
+      for (int k = -1; k < 2; ++k) {
+        for (int l = -1; l < 2; ++l) {
+          // skip current tile
+          if (k == 0 && l == 0) {
+            continue;
+          }
+
+          int X = i + k;
+          int Y = j + l;
+          // if currrent tile out of bounds skip
+          if (checkOutOfBounds(X, Y, maxNumberOfRows, maxNumberOfColumns)) {
+            continue;
+          }
+          // if the tile is unrevealed, skip
+          if (boolGameBoard[X][Y] == false) {
+            continue;
+          }
+
+          pair<int, int> newGuess = {X, Y};
+          // if new guess is found in, continue
+          if (knownMines.find(newGuess) != knownMines.end()) {
+            continue;
+          }
+          // cout << "   working with sub int" << Y << " " << maxNumberOfRows -
+          // 1 - X << endl; calculate the difference between tile int and the
+          // known mines around it add the difference to the sum total for the
+          // unrevealed tile
+          // if (gameBoard[i][j] == true) {
+          // int sorrundingMineCount = 0;
+
+          int sorrundingMineCount = returnSorrundingMineCount(
+              X, Y, maxNumberOfRows, maxNumberOfColumns, boolGameBoard,
+              gameBoard, knownMines);
+
+          // int returnSorrundingMineCount(int X,int Y,int maxNumberOfRows, int
+          // maxNumberOfColumns, vector<vector<bool>> &boolGameBoard,
+          // vector<vector<int>> &gameBoard, set<pair<int, int>> knownMines)
+
+          // cout << sorrundingMineCount << " mines counted for tile " << Y<<
+          // maxNumberOfRows - 1 - X<<endl;
+
+          int difference = abs(sorrundingMineCount - gameBoard[X][Y]);
+          sumOfDifferences += difference;
+          sorrundingMineCount = 0;
+        }
+      }
+    }
+
+    if (sumOfDifferences > get<0>(storageTuple)) {
+      cout << "new best guess: " << j << " " << maxNumberOfRows - 1 - i
+           << " weight " << sumOfDifferences << endl;
+      cout << " replaces " << get<2>(storageTuple) << " "
+           << maxNumberOfRows - 1 - get<1>(storageTuple) << " weight "
+           << get<0>(storageTuple) << endl;
+      storageTuple = {sumOfDifferences, i, j};
+    }
+  }
+
+  return storageTuple;
+}
+
+*/
 tuple<int, int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
                                        int maxNumberOfRows,
                                        int maxNumberOfColumns, int &round,
@@ -366,8 +474,7 @@ bool playBotMovesMethod1andahalf(set<pair<int, int>> knownMines,
                                  int maxNumberOfRows, int maxNumberOfColumns,
                                  int &round, int maxNumOfMines,
                                  vector<vector<bool>> &boolGameBoard,
-                                 vector<vector<int>> &gameBoard,
-                                 vector<vector<bool>> &boolFlagLocation) {
+                                 vector<vector<int>> &gameBoard) {
   int movesMade = 0;
 
   for (const auto &mineLocation : knownMines) {
@@ -454,19 +561,20 @@ bool playBotMovesMethod1andahalf(set<pair<int, int>> knownMines,
             bool caseOne = (abs(X - X2) == 0 && abs(Y - Y2) <= 1);
             bool caseTwo = (abs(Y - Y2) == 0 && abs(X - X2) <= 1);
             if (caseTwo || caseOne) {
-              if (!boolGameBoard[X][Y] && !boolFlagLocation[X][Y]) {
+              // && !boolFlagLocation[X][Y]
+              if (!boolGameBoard[X][Y]) {
                 itterations++;
                 movesMade++;
                 // cout << endl <<"INDEX 2 " << endl;
                 completeBotRound(maxNumberOfColumns, maxNumberOfRows,
                                  boolGameBoard, gameBoard, maxNumOfMines, X, Y,
-                                 round, boolFlagLocation, knownMines);
+                                 round, knownMines);
                 round++;
               }
             }
           }
         }
-      }
+      } //
 
       // for (int index = 0; index < 8; index++) {}
 

@@ -4,13 +4,13 @@
 
 #include <cmath>
 #include <cstdlib>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <limits>
 #include <set>
 #include <tuple>
 #include <vector>
-#include <fstream>
 using namespace std;
 
 bool checkCorner(int i, int j, int maxNumberOfRows, int maxNumberOfColumns,
@@ -102,8 +102,7 @@ int returnCornerLocation(vector<vector<bool>> &boolGameBoard,
 void triggeredAMine(int maxNumberOfRows, int maxNumberOfColumns,
                     vector<vector<bool>> &boolGameBoard,
                     vector<vector<int>> &gameBoard, int maxNumOfMines,
-                    int &round, vector<vector<bool>> &boolFlagLocation,
-                    set<pair<int, int>> knownMines) {
+                    int &round, set<pair<int, int>> knownMines) {
 
   for (int i = 0; i < maxNumberOfRows; i++) {
     for (int j = 0; j < maxNumberOfColumns; j++) {
@@ -114,18 +113,16 @@ void triggeredAMine(int maxNumberOfRows, int maxNumberOfColumns,
   }
 
   // try to open or create a knownMines.txt file
-  ofstream knownMinesFile ("knownMines.txt" , ofstream::trunc);
+  ofstream knownMinesFile("knownMines.txt", ofstream::trunc);
   // write to the file all of the known mines
   for (auto it = knownMines.begin(); it != knownMines.end(); it++) {
     knownMinesFile << it->first << " " << it->second << endl;
   }
   knownMinesFile.close();
-  
-  
-  
+
   knownMines.clear();
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns,
-                 boolFlagLocation, knownMines);
+                 knownMines);
   printLose();
   exit(0);
 }
@@ -134,7 +131,7 @@ bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
                   vector<vector<bool>> &boolGameBoard,
                   vector<vector<int>> &gameBoard, int maxNumOfMines,
                   int userRow, int userCol, int &round,
-                  vector<vector<bool>> &boolFlagLocation,
+
                   set<pair<int, int>> knownMines) {
   bool gameOver = false;
   bool revealedTile = false;
@@ -162,8 +159,7 @@ bool playRoundBot(int maxNumberOfColumns, int maxNumberOfRows,
     cout << "you hit a mine!" << endl;
     boolGameBoard[userRow][userCol] = true;
     triggeredAMine(maxNumberOfRows, maxNumberOfColumns, boolGameBoard,
-                   gameBoard, maxNumOfMines, round, boolFlagLocation,
-                   knownMines);
+                   gameBoard, maxNumOfMines, round, knownMines);
 
   } else {
     boolGameBoard[userRow][userCol] = true;
@@ -244,10 +240,9 @@ pair<int, int> adjustIndex(int cornerLocation, pair<int, int> mineLocation) {
 void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
                            vector<vector<int>> &gameBoard, int maxNumberOfRows,
                            int maxNumberOfColumns, int maxNumOfMines,
-                           vector<vector<bool>> &boolFlagLocation, int &round,
-                           set<pair<int, int>> knownMines) {
+                           int &round, set<pair<int, int>> knownMines) {
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns,
-                 boolFlagLocation, knownMines);
+                  knownMines);
   printRoundHeader(round);
   round++;
 
@@ -271,14 +266,13 @@ void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
   recursiveRevealExplosion(gameBoard, boolGameBoard, userStartRow, userStartCol,
                            maxNumberOfRows, maxNumberOfColumns);
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns,
-                 boolFlagLocation, knownMines);
+                  knownMines);
 }
 
 bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
                       vector<vector<bool>> &boolGameBoard,
                       vector<vector<int>> &gameBoard, int maxNumOfMines,
-                      int userRow, int userCol, int &round,
-                      vector<vector<bool>> &boolFlagLocation,
+                      int userRow, int userCol, int &round, 
                       set<pair<int, int>> knownMines) {
   // win 1
   // lose 2
@@ -290,13 +284,12 @@ bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
 
   bool gameOver = playRoundBot(maxNumberOfColumns, maxNumberOfRows,
                                boolGameBoard, gameBoard, maxNumOfMines, userRow,
-                               userCol, round, boolFlagLocation, knownMines);
+                               userCol, round, knownMines);
   if (gameOver == true) {
   }
 
-  int revealTally =
-      printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
-                     maxNumberOfColumns, boolFlagLocation, knownMines);
+  int revealTally = printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
+                                   maxNumberOfColumns, knownMines);
 
   if (revealTally == (maxDisplay - maxNumOfMines)) {
     gameOver = true;
@@ -309,8 +302,7 @@ bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
 set<pair<int, int>>
 calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
                            vector<vector<bool>> &boolGameBoard,
-                           vector<vector<int>> &gameBoard,
-                           vector<vector<bool>> &boolFlagLocation) {
+                           vector<vector<int>> &gameBoard) {
   set<pair<int, int>> knownMines;
   for (int i = 0; i < maxNumberOfRows; i++) {
     for (int j = 0; j < maxNumberOfColumns; j++) {
@@ -332,13 +324,13 @@ calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
               // cout << "Corner: " << j << ", " << maxNumberOfRows - 1 - i <<
               // endl;
 
-              boolFlagLocation[i][j] = true;
+              //[i][j] = true;
               pair<int, int> mineLocation = {i, j};
               // cout << "entered 3" << endl;
               pair<int, int> temp = adjustIndex(cornerLocation, mineLocation);
               // cout << "entered 4" << endl;
               if (knownMines.count(temp) == 0) {
-                boolFlagLocation[temp.first][temp.second] = true;
+                //[temp.first][temp.second] = true;
                 knownMines.insert(temp);
               }
               // knownMines.push({i, j});
@@ -355,8 +347,7 @@ calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
 bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
                    int maxNumberOfColumns, int &round, int maxNumOfMines,
                    vector<vector<bool>> &boolGameBoard,
-                   vector<vector<int>> &gameBoard,
-                   vector<vector<bool>> &boolFlagLocation) {
+                   vector<vector<int>> &gameBoard ) {
 
   for (int i = 0; i < maxNumberOfRows; ++i) {
     for (int j = 0; j < maxNumberOfColumns; ++j) {
@@ -369,8 +360,7 @@ bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
       }
       // play i,j
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                       gameBoard, maxNumOfMines, i, j, round, boolFlagLocation,
-                       knownMines);
+                       gameBoard, maxNumOfMines, i, j, round, knownMines);
       round++;
     }
   }
@@ -397,17 +387,15 @@ int printBotFlaggedMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
 int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
                  vector<vector<bool>> &boolGameBoard,
                  vector<vector<int>> &gameBoard, int maxNumOfMines, int &round,
-                 set<pair<int, int>> knownMines,
-                 vector<vector<bool>> &boolFlagLocation) {
+                 set<pair<int, int>> knownMines ) {
   pair<int, int> newGuess;
 
   newGuess = {0, maxNumberOfColumns - 1};
   if (knownMines.find(newGuess) == knownMines.end()) {
-
     if (boolGameBoard[0][maxNumberOfColumns - 1] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, 0, maxNumberOfColumns - 1,
-                       round, boolFlagLocation, knownMines);
+                       round, knownMines);
       round++;
       return 0;
     }
@@ -417,7 +405,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
     if (boolGameBoard[maxNumberOfRows - 1][0] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, maxNumberOfRows - 1, 0, round,
-                       boolFlagLocation, knownMines);
+                    knownMines);
       round++;
       return 0;
     }
@@ -427,24 +415,23 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
     if (boolGameBoard[maxNumberOfRows - 1][maxNumberOfColumns - 1] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, maxNumberOfRows - 1,
-                       maxNumberOfColumns - 1, round, boolFlagLocation,
-                       knownMines);
+                       maxNumberOfColumns - 1, round, knownMines);
       round++;
       return 0;
     }
   }
   // newGuess = {0, 0};
   //  aroundMine.find(check) != aroundMine.end()
-
   /*
   if (knownMines.find(newGuess) == knownMines.end()) {
     if (boolGameBoard[0][0] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                       gameBoard, maxNumOfMines, 0, 0, round, boolFlagLocation);
+                       gameBoard, maxNumOfMines, 0, 0, round);
       return 0;
     }
   }
   */
+  
   cout << "No corners found" << endl;
   return 1;
 }
