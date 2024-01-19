@@ -266,7 +266,7 @@ bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
   // continue 3
   int maxDisplay = maxNumberOfRows * maxNumberOfColumns;
   bool win = false;
-  // round++;
+  
   printRoundHeader(round);
 
   bool gameOver = playRoundBot(maxNumberOfColumns, maxNumberOfRows,
@@ -277,7 +277,7 @@ bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
 
   int revealTally = printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
                                    maxNumberOfColumns, knownMines);
-
+  round++; 
   if (revealTally == (maxDisplay - maxNumOfMines)) {
     gameOver = true;
     win = true;
@@ -348,7 +348,7 @@ bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
       // play i,j
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, i, j, round, knownMines);
-      round++;
+    
     }
   }
   printWin(); 
@@ -383,7 +383,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, 0, maxNumberOfColumns - 1,
                        round, knownMines);
-      round++;
+ 
       return 0;
     }
   }
@@ -393,7 +393,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, maxNumberOfRows - 1, 0, round,
                     knownMines);
-      round++;
+
       return 0;
     }
   }
@@ -403,7 +403,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, maxNumberOfRows - 1,
                        maxNumberOfColumns - 1, round, knownMines);
-      round++;
+     
       return 0;
     }
   }

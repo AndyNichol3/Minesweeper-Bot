@@ -1,7 +1,7 @@
 // bug fix list
 
 // g++ main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
-//g++ -include stdafx.h main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
+// g++ -include stdafx.h main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
 
 #include "stdafx.h"
 
@@ -38,4 +38,3 @@ int main() {
     endOfGameHeader(win);
   }
 }
-
