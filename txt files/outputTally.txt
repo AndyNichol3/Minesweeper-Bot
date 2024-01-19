@@ -1,6 +1,5 @@
-win
+losses:
 
-loss:
-  final guess final mine was touching mine
-  played a known Mine?
-  
+calculated tile was  not a mine
+  known mines around = 1: 2
+  known mines around = 0: 3

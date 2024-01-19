@@ -294,43 +294,41 @@ set<pair<int, int>> botCheckForMines(set<pair<int, int>> knownMines,
                                      vector<vector<bool>> &boolGameBoard,
                                      vector<vector<int>> &gameBoard) {
 
-  for (int i = 0; i < maxNumberOfRows; ++i) {
-    for (int j = 0; j < maxNumberOfColumns; ++j) {
-      if (boolGameBoard[i][j] == false) {
+  for (int rowIndex = 0; rowIndex < maxNumberOfRows; rowIndex++) {
+    for (int colIndex = 0; colIndex < maxNumberOfColumns; colIndex++) {
+      if (boolGameBoard[rowIndex][colIndex] == false) {
         continue;
       }
-
-      int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
-      int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
       int unrevTiles = 0;
-      // int knownTally = 0;
       set<pair<int, int>> potentialMines;
+      
+      for (int subRowItterator = -1; subRowItterator <= 1; subRowItterator++) {
+        for (int subColItterator = -1; subColItterator <= 1; subColItterator++) {
 
-      for (int index = 0; index < 8; index++) {
-        int X = i + defIndexX[index];
-        int Y = j + defIndexY[index];
+          if (subRowItterator == 0 && subColItterator == 0) {
+            continue;
+          }
+          int workingRow = rowIndex + subRowItterator;
+          int workingCol = colIndex + subColItterator;
 
-        if (checkOutOfBounds(X, Y, maxNumberOfRows, maxNumberOfColumns)) {
-          // knownTally++;
+        if (checkOutOfBounds(workingRow, workingCol, maxNumberOfRows, maxNumberOfColumns)) {
           continue;
         }
-
-        if (boolGameBoard[X][Y] == false) {
+        if (boolGameBoard[workingRow][workingCol] == false) {
           unrevTiles++;
-          potentialMines.insert({X, Y});
+          potentialMines.insert({workingRow, workingCol});
         }
-      }
 
-      if (unrevTiles != gameBoard[i][j]) {
+    }
+  }
+      if (unrevTiles != gameBoard[rowIndex][colIndex]) {
         continue;
       }
-
-      for (const auto &mine : potentialMines) {
-        if (knownMines.find(mine) != knownMines.end()) {
+      for (const auto &curMine : potentialMines) {
+        if (knownMines.find(curMine) != knownMines.end()) {
           continue;
         }
-        // boolFlagLocation[mine.first][mine.second] = true;
-        knownMines.insert(mine);
+        knownMines.insert(curMine);
       }
     }
   }
@@ -353,88 +351,70 @@ tuple<int, int, int> mathWeightedGuess(set<pair<int, int>> knownMines,
 
   // weight, x, y
   tuple<int, int, int> storageTuple = {0, -1, -1};
+ 
+  for (int rowIndex = 0; rowIndex < maxNumberOfRows; ++rowIndex) {
+    for (int colIndex = 0; colIndex < maxNumberOfColumns; ++colIndex) {
 
-  for (int i = 0; i < maxNumberOfRows; ++i) {
-    for (int j = 0; j < maxNumberOfColumns; ++j) {
-
-      if (boolGameBoard[i][j] == true) {
+      if (boolGameBoard[rowIndex][colIndex] == true) {
         continue;
       }
 
-      pair<int, int> tempPair = {i, j};
+      pair<int, int> tempPair = {rowIndex, colIndex};
+      
       // if temp pair is found in, continue
       if (knownMines.find(tempPair) != knownMines.end()) {
         continue;
       }
-      // given an unrevealed tile,
-      // for all of the tiles around it,
-
-      // cout << "working with: " << get<2>(bestGuess) << " "
-      //<< maxNumberOfRows - 1 - get<1>(bestGuess) <<" with weight "<<
-      // get<0>(bestGuess) <<endl;
-
-      // cout<< endl << "working with " << j << " " << maxNumberOfRows - 1 - i
-      // << endl;
-
-      // working with pair i, j
 
       int sumOfDifferences = 0;
 
-      for (int k = -1; k < 2; ++k) {
-        for (int l = -1; l < 2; ++l) {
+      for (int subRowItterator = -1; subRowItterator <= 1; subRowItterator++) {
+        for (int subColItterator = -1; subColItterator <= 1; subColItterator++) {
           // skip current tile
-          if (k == 0 && l == 0) {
+          if (subRowItterator == 0 && subColItterator == 0) {
             continue;
           }
 
-          int X = i + k;
-          int Y = j + l;
+          int workingRow = rowIndex + subRowItterator;
+          int workingCol = colIndex + subColItterator;
           // if currrent tile out of bounds skip
-          if (checkOutOfBounds(X, Y, maxNumberOfRows, maxNumberOfColumns)) {
+          if (checkOutOfBounds(workingRow, workingCol, maxNumberOfRows,
+                               maxNumberOfColumns)) {
             continue;
           }
           // if the tile is unrevealed, skip
-          if (boolGameBoard[X][Y] == false) {
+          if (boolGameBoard[workingRow][workingCol] == false) {
             continue;
           }
 
-          pair<int, int> newGuess = {X, Y};
+          pair<int, int> newGuess = {workingRow, workingCol};
           // if new guess is found in, continue
           if (knownMines.find(newGuess) != knownMines.end()) {
             continue;
           }
-          // cout << "   working with sub int" << Y << " " << maxNumberOfRows -
-          // 1 - X << endl; calculate the difference between tile int and the
           // known mines around it add the difference to the sum total for the
           // unrevealed tile
-          // if (gameBoard[i][j] == true) {
-          // int sorrundingMineCount = 0;
-
           int sorrundingMineCount = returnSorrundingMineCount(
-              X, Y, maxNumberOfRows, maxNumberOfColumns, boolGameBoard,
-              gameBoard, knownMines);
-
-          // int returnSorrundingMineCount(int X,int Y,int maxNumberOfRows, int
-          // maxNumberOfColumns, vector<vector<bool>> &boolGameBoard,
-          // vector<vector<int>> &gameBoard, set<pair<int, int>> knownMines)
+              workingRow, workingCol, maxNumberOfRows, maxNumberOfColumns,
+              boolGameBoard, gameBoard, knownMines);
 
           // cout << sorrundingMineCount << " mines counted for tile " << Y<<
           // maxNumberOfRows - 1 - X<<endl;
 
-          int difference = abs(sorrundingMineCount - gameBoard[X][Y]);
+          int difference = abs(sorrundingMineCount - gameBoard[workingRow][workingCol]);
           sumOfDifferences += difference;
           sorrundingMineCount = 0;
-          //}
         }
       }
 
       if (sumOfDifferences > get<0>(storageTuple)) {
-        cout << "new best guess: " << j << " " << maxNumberOfRows - 1 - i
-             << " weight " << sumOfDifferences << endl;
+        cout << "new best guess: " << colIndex << " "
+             << maxNumberOfRows - 1 - rowIndex << " weight " << sumOfDifferences
+             << endl;
         cout << " replaces " << get<2>(storageTuple) << " "
              << maxNumberOfRows - 1 - get<1>(storageTuple) << " weight "
              << get<0>(storageTuple) << endl;
-        storageTuple = {sumOfDifferences, i, j};
+        storageTuple = {sumOfDifferences, rowIndex, colIndex};
       }
     }
   }

@@ -6,3 +6,7 @@
 
 // new line of logic, its less likely that a given x or y value will
 // generate in a line so if you need to guess,
+
+
+
+redo the math weighted guess function where it factors in the number of unrevealed tiles around it 
