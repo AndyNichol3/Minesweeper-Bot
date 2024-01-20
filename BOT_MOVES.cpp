@@ -228,47 +228,64 @@ bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
         int knownMineTally = 0;
         int knownRevealedTally = 0;
         int totalKnownTally = 0;
-        int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
-        int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
+        // int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+        // int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
-        for (int index = 0; index < 8; index++) {
-          int X = rowIndex + defIndexX[index];
-          int Y = colIndex + defIndexY[index];
+        for (int subRowItterator1 = -1; subRowItterator1 <= 1;
+             subRowItterator1++) {
+          for (int subColItterator1 = -1; subColItterator1 <= 1;
+               subColItterator1++) {
 
-          if (boolGameBoard[X][Y] == true) {
-            knownRevealedTally++;
-          }
+            if (subRowItterator1 == 0 && subColItterator1 == 0) {
+              continue;
+            }
 
-          pair<int, int> currentLoc = {X, Y};
-          if (knownMines.find(currentLoc) != knownMines.end()) {
-            knownMineTally++;
+            int X = rowIndex + subRowItterator1;
+            int Y = colIndex + subColItterator1;
+
+            if (boolGameBoard[X][Y] == true) {
+              knownRevealedTally++;
+            }
+
+            pair<int, int> currentLoc = {X, Y};
+            if (knownMines.find(currentLoc) != knownMines.end()) {
+              knownMineTally++;
+            }
           }
         }
 
-        // totalKnownTally = knownMineTally + knownRevealedTally;
-
         if (knownMineTally == gameBoard[rowIndex][colIndex]) {
-          for (int index2 = 0; index2 < 8; index2++) {
-            int X2 = rowIndex + defIndexX[index2];
-            int Y2 = colIndex + defIndexY[index2];
+          for (int subRowItterator2 = -1; subRowItterator2 <= 1;
+               subRowItterator2++) {
+            for (int subColItterator2 = -1; subColItterator2 <= 1;
+                 subColItterator2++) {
 
-            if (checkOutOfBounds(X2, Y2, maxNumberOfRows, maxNumberOfColumns)) {
-              continue;
-            }
+              if (subRowItterator2 == 0 && subColItterator2 == 0) {
+                continue;
+              }
 
-            // || boolFlagLocation[X2][Y2]
-            if (boolGameBoard[X2][Y2]) {
-              continue;
+              int X2 = rowIndex + subRowItterator2;
+              int Y2 = colIndex + subColItterator2;
+
+              if (checkOutOfBounds(X2, Y2, maxNumberOfRows,
+                                   maxNumberOfColumns)) {
+                continue;
+              }
+
+              // || boolFlagLocation[X2][Y2]
+              if (boolGameBoard[X2][Y2]) {
+                continue;
+              }
+              pair<int, int> newLoc = {X2, Y2};
+              if (knownMines.find(newLoc) != knownMines.end()) {
+                continue;
+              }
+              changesMade++;
+              squaresPlayed++;
+              completeBotRound(maxNumberOfColumns, maxNumberOfRows,
+                               boolGameBoard, gameBoard, maxNumOfMines, X2, Y2,
+                               round, knownMines);
             }
-            pair<int, int> newLoc = {X2, Y2};
-            if (knownMines.find(newLoc) != knownMines.end()) {
-              continue;
-            }
-            changesMade++;
-            squaresPlayed++;
-            completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
-                             gameBoard, maxNumOfMines, X2, Y2, round,
-                             knownMines);
           }
         }
       }

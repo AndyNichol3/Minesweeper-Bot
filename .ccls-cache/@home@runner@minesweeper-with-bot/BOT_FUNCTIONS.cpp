@@ -229,7 +229,7 @@ void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
                            int maxNumberOfColumns, int maxNumOfMines,
                            int &round, set<pair<int, int>> knownMines) {
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns,
-                  knownMines);
+                 knownMines);
   printRoundHeader(round);
   round++;
 
@@ -253,20 +253,20 @@ void initalizeBotGameBoard(vector<vector<bool>> &boolGameBoard,
   recursiveRevealExplosion(gameBoard, boolGameBoard, userStartRow, userStartCol,
                            maxNumberOfRows, maxNumberOfColumns);
   printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows, maxNumberOfColumns,
-                  knownMines);
+                 knownMines);
 }
 
 bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
                       vector<vector<bool>> &boolGameBoard,
                       vector<vector<int>> &gameBoard, int maxNumOfMines,
-                      int userRow, int userCol, int &round, 
+                      int userRow, int userCol, int &round,
                       set<pair<int, int>> knownMines) {
   // win 1
   // lose 2
   // continue 3
   int maxDisplay = maxNumberOfRows * maxNumberOfColumns;
   bool win = false;
-  
+
   printRoundHeader(round);
 
   bool gameOver = playRoundBot(maxNumberOfColumns, maxNumberOfRows,
@@ -277,7 +277,7 @@ bool completeBotRound(int maxNumberOfColumns, int maxNumberOfRows,
 
   int revealTally = printBoolBoard(boolGameBoard, gameBoard, maxNumberOfRows,
                                    maxNumberOfColumns, knownMines);
-  round++; 
+  round++;
   if (revealTally == (maxDisplay - maxNumOfMines)) {
     gameOver = true;
     win = true;
@@ -334,7 +334,7 @@ calculateInitialKnownMines(int maxNumberOfColumns, int maxNumberOfRows,
 bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
                    int maxNumberOfColumns, int &round, int maxNumOfMines,
                    vector<vector<bool>> &boolGameBoard,
-                   vector<vector<int>> &gameBoard ) {
+                   vector<vector<int>> &gameBoard) {
 
   for (int i = 0; i < maxNumberOfRows; ++i) {
     for (int j = 0; j < maxNumberOfColumns; ++j) {
@@ -348,10 +348,9 @@ bool foundAllMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
       // play i,j
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, i, j, round, knownMines);
-    
     }
   }
-  printWin(); 
+  printWin();
   return true;
 }
 
@@ -374,7 +373,7 @@ int printBotFlaggedMines(set<pair<int, int>> knownMines, int maxNumberOfRows,
 int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
                  vector<vector<bool>> &boolGameBoard,
                  vector<vector<int>> &gameBoard, int maxNumOfMines, int &round,
-                 set<pair<int, int>> knownMines ) {
+                 set<pair<int, int>> knownMines) {
   pair<int, int> newGuess;
 
   newGuess = {0, maxNumberOfColumns - 1};
@@ -383,7 +382,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, 0, maxNumberOfColumns - 1,
                        round, knownMines);
- 
+
       return 0;
     }
   }
@@ -392,7 +391,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
     if (boolGameBoard[maxNumberOfRows - 1][0] == false) {
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, maxNumberOfRows - 1, 0, round,
-                    knownMines);
+                       knownMines);
 
       return 0;
     }
@@ -403,7 +402,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
       completeBotRound(maxNumberOfColumns, maxNumberOfRows, boolGameBoard,
                        gameBoard, maxNumOfMines, maxNumberOfRows - 1,
                        maxNumberOfColumns - 1, round, knownMines);
-     
+
       return 0;
     }
   }
@@ -418,7 +417,7 @@ int guessCorners(int maxNumberOfRows, int maxNumberOfColumns,
     }
   }
   */
-  
+
   cout << "No corners found" << endl;
   return 1;
 }
@@ -498,4 +497,3 @@ int returnSorrundingMineCount(int X, int Y, int maxNumberOfRows,
 
   return sorrundingMineCount;
 }
-
