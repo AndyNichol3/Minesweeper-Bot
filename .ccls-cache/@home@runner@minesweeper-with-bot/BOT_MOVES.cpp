@@ -228,9 +228,8 @@ bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
         int knownMineTally = 0;
         int knownRevealedTally = 0;
         int totalKnownTally = 0;
-        // int defIndexX[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
-        // int defIndexY[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
+        // calculate the number of known mines around the target point
         for (int subRowItterator1 = -1; subRowItterator1 <= 1;
              subRowItterator1++) {
           for (int subColItterator1 = -1; subColItterator1 <= 1;
@@ -240,20 +239,23 @@ bool playBotMovesMethod2(set<pair<int, int>> knownMines, int maxNumberOfRows,
               continue;
             }
 
-            int X = rowIndex + subRowItterator1;
-            int Y = colIndex + subColItterator1;
+            int rowAroundTarget = rowIndex + subRowItterator1;
+            int colAroundTarget = colIndex + subColItterator1;
 
-            if (boolGameBoard[X][Y] == true) {
+            if (boolGameBoard[rowAroundTarget][colAroundTarget] == true) {
               knownRevealedTally++;
             }
 
-            pair<int, int> currentLoc = {X, Y};
+            pair<int, int> currentLoc = {rowAroundTarget, colAroundTarget};
+            // calculate number of known mines around the current location
             if (knownMines.find(currentLoc) != knownMines.end()) {
               knownMineTally++;
             }
           }
         }
 
+        // if the number of known mines is equal to the revealed number 
+        // on the tile were working with
         if (knownMineTally == gameBoard[rowIndex][colIndex]) {
           for (int subRowItterator2 = -1; subRowItterator2 <= 1;
                subRowItterator2++) {

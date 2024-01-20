@@ -1,4 +1,5 @@
 // bug fix list
+//(found new bug with not printing the emoji when certian function called)
 
 // g++ main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
 // g++ -include stdafx.h main.cpp PLAY_GAME.cpp BOT_FUNCTIONS.cpp BOT_MOVES.cpp
